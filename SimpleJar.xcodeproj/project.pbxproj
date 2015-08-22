@@ -1,0 +1,441 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F61021291B88F42600442741 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021281B88F42600442741 /* AppDelegate.swift */; };
+		F610212C1B88F42600442741 /* SimpleJar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */; };
+		F610212E1B88F42600442741 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* ViewController.swift */; };
+		F61021311B88F42600442741 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F610212F1B88F42600442741 /* Main.storyboard */; };
+		F61021331B88F42600442741 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F61021321B88F42600442741 /* Images.xcassets */; };
+		F61021361B88F42600442741 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F61021341B88F42600442741 /* LaunchScreen.xib */; };
+		F61021421B88F42600442741 /* SimpleJarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021411B88F42600442741 /* SimpleJarTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F610213C1B88F42600442741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F610211B1B88F42600442741 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F61021221B88F42600442741;
+			remoteInfo = SimpleJar;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F61021231B88F42600442741 /* SimpleJar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleJar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F61021271B88F42600442741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F61021281B88F42600442741 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F610212B1B88F42600442741 /* SimpleJar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleJar.xcdatamodel; sourceTree = "<group>"; };
+		F610212D1B88F42600442741 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F61021301B88F42600442741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F61021321B88F42600442741 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F61021351B88F42600442741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F610213B1B88F42600442741 /* SimpleJarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleJarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F61021401B88F42600442741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F61021411B88F42600442741 /* SimpleJarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F61021201B88F42600442741 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F61021381B88F42600442741 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F610211A1B88F42600442741 = {
+			isa = PBXGroup;
+			children = (
+				F61021251B88F42600442741 /* SimpleJar */,
+				F610213E1B88F42600442741 /* SimpleJarTests */,
+				F61021241B88F42600442741 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F61021241B88F42600442741 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F61021231B88F42600442741 /* SimpleJar.app */,
+				F610213B1B88F42600442741 /* SimpleJarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F61021251B88F42600442741 /* SimpleJar */ = {
+			isa = PBXGroup;
+			children = (
+				F61021281B88F42600442741 /* AppDelegate.swift */,
+				F610212D1B88F42600442741 /* ViewController.swift */,
+				F610212F1B88F42600442741 /* Main.storyboard */,
+				F61021321B88F42600442741 /* Images.xcassets */,
+				F61021341B88F42600442741 /* LaunchScreen.xib */,
+				F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */,
+				F61021261B88F42600442741 /* Supporting Files */,
+			);
+			path = SimpleJar;
+			sourceTree = "<group>";
+		};
+		F61021261B88F42600442741 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F61021271B88F42600442741 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F610213E1B88F42600442741 /* SimpleJarTests */ = {
+			isa = PBXGroup;
+			children = (
+				F61021411B88F42600442741 /* SimpleJarTests.swift */,
+				F610213F1B88F42600442741 /* Supporting Files */,
+			);
+			path = SimpleJarTests;
+			sourceTree = "<group>";
+		};
+		F610213F1B88F42600442741 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F61021401B88F42600442741 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F61021221B88F42600442741 /* SimpleJar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F61021451B88F42600442741 /* Build configuration list for PBXNativeTarget "SimpleJar" */;
+			buildPhases = (
+				F610211F1B88F42600442741 /* Sources */,
+				F61021201B88F42600442741 /* Frameworks */,
+				F61021211B88F42600442741 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleJar;
+			productName = SimpleJar;
+			productReference = F61021231B88F42600442741 /* SimpleJar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F610213A1B88F42600442741 /* SimpleJarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F61021481B88F42600442741 /* Build configuration list for PBXNativeTarget "SimpleJarTests" */;
+			buildPhases = (
+				F61021371B88F42600442741 /* Sources */,
+				F61021381B88F42600442741 /* Frameworks */,
+				F61021391B88F42600442741 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F610213D1B88F42600442741 /* PBXTargetDependency */,
+			);
+			name = SimpleJarTests;
+			productName = SimpleJarTests;
+			productReference = F610213B1B88F42600442741 /* SimpleJarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F610211B1B88F42600442741 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = KVTaniguchi;
+				TargetAttributes = {
+					F61021221B88F42600442741 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					F610213A1B88F42600442741 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = F61021221B88F42600442741;
+					};
+				};
+			};
+			buildConfigurationList = F610211E1B88F42600442741 /* Build configuration list for PBXProject "SimpleJar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F610211A1B88F42600442741;
+			productRefGroup = F61021241B88F42600442741 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F61021221B88F42600442741 /* SimpleJar */,
+				F610213A1B88F42600442741 /* SimpleJarTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F61021211B88F42600442741 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F61021311B88F42600442741 /* Main.storyboard in Resources */,
+				F61021361B88F42600442741 /* LaunchScreen.xib in Resources */,
+				F61021331B88F42600442741 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F61021391B88F42600442741 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F610211F1B88F42600442741 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F610212E1B88F42600442741 /* ViewController.swift in Sources */,
+				F61021291B88F42600442741 /* AppDelegate.swift in Sources */,
+				F610212C1B88F42600442741 /* SimpleJar.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F61021371B88F42600442741 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F61021421B88F42600442741 /* SimpleJarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F610213D1B88F42600442741 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F61021221B88F42600442741 /* SimpleJar */;
+			targetProxy = F610213C1B88F42600442741 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F610212F1B88F42600442741 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F61021301B88F42600442741 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F61021341B88F42600442741 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F61021351B88F42600442741 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F61021431B88F42600442741 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F61021441B88F42600442741 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F61021461B88F42600442741 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SimpleJar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F61021471B88F42600442741 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SimpleJar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F61021491B88F42600442741 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SimpleJarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleJar.app/SimpleJar";
+			};
+			name = Debug;
+		};
+		F610214A1B88F42600442741 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SimpleJarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleJar.app/SimpleJar";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F610211E1B88F42600442741 /* Build configuration list for PBXProject "SimpleJar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F61021431B88F42600442741 /* Debug */,
+				F61021441B88F42600442741 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F61021451B88F42600442741 /* Build configuration list for PBXNativeTarget "SimpleJar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F61021461B88F42600442741 /* Debug */,
+				F61021471B88F42600442741 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F61021481B88F42600442741 /* Build configuration list for PBXNativeTarget "SimpleJarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F61021491B88F42600442741 /* Debug */,
+				F610214A1B88F42600442741 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F610212B1B88F42600442741 /* SimpleJar.xcdatamodel */,
+			);
+			currentVersion = F610212B1B88F42600442741 /* SimpleJar.xcdatamodel */;
+			path = SimpleJar.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F610211B1B88F42600442741 /* Project object */;
+}
