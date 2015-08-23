@@ -33,10 +33,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let banner = ADBannerView()
-        banner.delegate = self
-        view.addSubview(banner)
-        
         canDisplayBannerAds = true
         
         var entry = ENTRY()
@@ -68,29 +64,27 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         subtractButton.addTarget(self, action: "subtractButtonPressed", forControlEvents: .TouchUpInside)
         [addButton,subtractButton].map { button -> UIButton in
             button.setTranslatesAutoresizingMaskIntoConstraints(false)
-            self.originalContentView.addSubview(button)
+            self.view.addSubview(button)
             button.layer.borderWidth = 1.0
             button.layer.borderColor = UIColor.blackColor().CGColor
-            NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: button, attribute: .Bottom, relatedBy: .Equal, toItem: self.originalContentView, attribute: .Bottom, multiplier: 1.0, constant: 0)])
             return button
         }
         
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["addBtn":addButton, "subBtn":subtractButton]))
-        
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: .AlignAllCenterY, metrics: nil, views: ["addBtn":addButton, "subBtn":subtractButton]))
         
         // TODO offet from the bottom by 50
         
         jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
         jarImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        originalContentView.addSubview(jarImageView)
+        view.addSubview(jarImageView)
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView]))
         
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[jarImg]-[add(sub)]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView, "add":addButton, "sub":subtractButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[jarImg]-[add(sub)]-50-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView, "add":addButton, "sub":subtractButton]))
         
         jarAmountView.backgroundColor = UIColor.greenColor()
         jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        originalContentView.addSubview(jarAmountView)
-        originalContentView.sendSubviewToBack(jarAmountView)
+        view.addSubview(jarAmountView)
+        view.sendSubviewToBack(jarAmountView)
         
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jar]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jar":jarAmountView]))
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: jarImageView, attribute: .Height, multiplier: 0.75, constant: 0)])
