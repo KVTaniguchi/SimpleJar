@@ -18,6 +18,7 @@
 		F61021501B892BF200442741 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F610214F1B892BF200442741 /* iAd.framework */; };
 		F61021521B89366A00442741 /* milk-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021511B89366A00442741 /* milk-256.png */; };
 		F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021551B894F9D00442741 /* milkMaskSolid.png */; };
+		F61021581B896FA800442741 /* milkSolidClearHold.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021571B896FA800442741 /* milkSolidClearHold.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		F610214F1B892BF200442741 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		F61021511B89366A00442741 /* milk-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milk-256.png"; sourceTree = "<group>"; };
 		F61021551B894F9D00442741 /* milkMaskSolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkMaskSolid.png; sourceTree = "<group>"; };
+		F61021571B896FA800442741 /* milkSolidClearHold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkSolidClearHold.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				F610214D1B890A5100442741 /* minus-100.png */,
 				F61021511B89366A00442741 /* milk-256.png */,
 				F61021551B894F9D00442741 /* milkMaskSolid.png */,
+				F61021571B896FA800442741 /* milkSolidClearHold.png */,
 				F61021261B88F42600442741 /* Supporting Files */,
 			);
 			path = SimpleJar;
@@ -214,6 +217,7 @@
 				F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */,
 				F61021331B88F42600442741 /* Images.xcassets in Resources */,
 				F610214E1B890A5100442741 /* minus-100.png in Resources */,
+				F61021581B896FA800442741 /* milkSolidClearHold.png in Resources */,
 				F610214C1B890A3D00442741 /* plus-100.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,7 +16,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     let jarKey = "com.taniguchi.JarKey"
     var jarData = [String:String]()
-    var jarSize : CGFloat = 0.0
+    var jarSize : CGFloat = 100.0
     var amountInJar : CGFloat = 0.0
     let jarSizeKey = "jarSizeKey"
     let savedAmountInJarKey = "jarSavedAmountKey"
@@ -24,16 +24,21 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     var addButton = UIButton()
     var subtractButton = UIButton()
     
-    
+    var jarImageView = UIImageView()
     var jarAmountView = UIView()
-    // jar values : 1) default jar size 2) current amount in jar
     
+    var currentAmount : Float = 0.0
+    // jar values : 1) default jar size 2) current amount in jar
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let banner = ADBannerView()
+        banner.delegate = self
+        view.addSubview(banner)
+        
         canDisplayBannerAds = true
-     
+        
         var entry = ENTRY()
         
         navigationController?.navigationBarHidden = true
@@ -49,8 +54,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
                 jarSize = CGFloat(k)
             }
         }
+        // todo set to saved amount
+        currentAmount = Float(jarSize)
         
-        view.backgroundColor = UIColor.redColor()
+        view.backgroundColor = UIColor.whiteColor()
         
         addButton.setImage(UIImage(named: "plus-100"), forState: .Normal)
         addButton.addTarget(self, action: "addButtonPressed", forControlEvents: .TouchUpInside)
@@ -70,22 +77,41 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["addBtn":addButton, "subBtn":subtractButton]))
         
+        
+        // TODO offet from the bottom by 50
+        
+        jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
+        jarImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        originalContentView.addSubview(jarImageView)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView]))
+        
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[jarImg]-[add(sub)]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView, "add":addButton, "sub":subtractButton]))
+        
         jarAmountView.backgroundColor = UIColor.greenColor()
         jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
         originalContentView.addSubview(jarAmountView)
+        originalContentView.sendSubviewToBack(jarAmountView)
         
-    
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jar]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jar":jarAmountView]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[jar]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jar":jarAmountView]))
-        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: addButton, attribute: .Top, multiplier: 1.0, constant: 10)])
-        
-        let jarImageView = UIImageView(image: UIImage(named: "milkMaskSolid"))
-//        jarImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        jarImageView.sizeToFit()
-        originalContentView.addSubview(jarImageView)
-        
-        jarAmountView.maskView = jarImageView
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: jarImageView, attribute: .Height, multiplier: 0.75, constant: 0)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: 0)])
 
+//        UIImage *_maskingImage = [UIImage imageNamed:@"ipadmask.jpg"];
+//        CALayer *_maskingLayer = [CALayer layer];
+//        _maskingLayer.frame = vistafunda.bounds;
+//        [_maskingLayer setContents:(id)[_maskingImage CGImage]];
+//        [vistafunda.layer setMask:_maskingLayer];
+//        vistafunda.layer.masksToBounds = YES;
+        
+//        let maskingImage = UIImage(named: "milkMaskSolid")
+//        let maskingLayer = CALayer()
+//        maskingLayer.frame = CGRectMake(0, 150, 200, 400)
+//        maskingLayer.opacity = 1
+//        maskingLayer.contents = maskingImage
+//        jarAmountView.layer.mask = maskingLayer
+    }
+    
+    override func viewDidLayoutSubviews() {
     }
     
     func addButtonPressed () {
@@ -98,9 +124,17 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func subtractButtonPressed () {
+        
+
+        // 306.5
+        currentAmount -= 1.0
+        println(currentAmount)
+        let initialHeight = jarAmountView.frame.height
+        let decrement = initialHeight/jarSize
+        
         var frame = jarAmountView.frame
-        frame.size.height -= 1.0
-        frame.origin.y += 1.0
+        frame.size.height -= decrement
+        frame.origin.y += decrement
         UIView.animateWithDuration(0.01, animations: {
             self.jarAmountView.frame = frame
         })
