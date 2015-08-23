@@ -9,11 +9,15 @@
 /* Begin PBXBuildFile section */
 		F61021291B88F42600442741 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021281B88F42600442741 /* AppDelegate.swift */; };
 		F610212C1B88F42600442741 /* SimpleJar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */; };
-		F610212E1B88F42600442741 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* ViewController.swift */; };
-		F61021311B88F42600442741 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F610212F1B88F42600442741 /* Main.storyboard */; };
+		F610212E1B88F42600442741 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; };
 		F61021331B88F42600442741 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F61021321B88F42600442741 /* Images.xcassets */; };
 		F61021361B88F42600442741 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F61021341B88F42600442741 /* LaunchScreen.xib */; };
 		F61021421B88F42600442741 /* SimpleJarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021411B88F42600442741 /* SimpleJarTests.swift */; };
+		F610214C1B890A3D00442741 /* plus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F610214B1B890A3D00442741 /* plus-100.png */; };
+		F610214E1B890A5100442741 /* minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F610214D1B890A5100442741 /* minus-100.png */; };
+		F61021501B892BF200442741 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F610214F1B892BF200442741 /* iAd.framework */; };
+		F61021521B89366A00442741 /* milk-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021511B89366A00442741 /* milk-256.png */; };
+		F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021551B894F9D00442741 /* milkMaskSolid.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,13 +35,17 @@
 		F61021271B88F42600442741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F61021281B88F42600442741 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F610212B1B88F42600442741 /* SimpleJar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleJar.xcdatamodel; sourceTree = "<group>"; };
-		F610212D1B88F42600442741 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F61021301B88F42600442741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F610212D1B88F42600442741 /* JarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JarViewController.swift; sourceTree = "<group>"; };
 		F61021321B88F42600442741 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F61021351B88F42600442741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F610213B1B88F42600442741 /* SimpleJarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleJarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61021401B88F42600442741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F61021411B88F42600442741 /* SimpleJarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarTests.swift; sourceTree = "<group>"; };
+		F610214B1B890A3D00442741 /* plus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-100.png"; sourceTree = "<group>"; };
+		F610214D1B890A5100442741 /* minus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus-100.png"; sourceTree = "<group>"; };
+		F610214F1B892BF200442741 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		F61021511B89366A00442741 /* milk-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milk-256.png"; sourceTree = "<group>"; };
+		F61021551B894F9D00442741 /* milkMaskSolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkMaskSolid.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F61021501B892BF200442741 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +70,7 @@
 		F610211A1B88F42600442741 = {
 			isa = PBXGroup;
 			children = (
+				F610214F1B892BF200442741 /* iAd.framework */,
 				F61021251B88F42600442741 /* SimpleJar */,
 				F610213E1B88F42600442741 /* SimpleJarTests */,
 				F61021241B88F42600442741 /* Products */,
@@ -80,11 +90,14 @@
 			isa = PBXGroup;
 			children = (
 				F61021281B88F42600442741 /* AppDelegate.swift */,
-				F610212D1B88F42600442741 /* ViewController.swift */,
-				F610212F1B88F42600442741 /* Main.storyboard */,
+				F610212D1B88F42600442741 /* JarViewController.swift */,
 				F61021321B88F42600442741 /* Images.xcassets */,
 				F61021341B88F42600442741 /* LaunchScreen.xib */,
 				F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */,
+				F610214B1B890A3D00442741 /* plus-100.png */,
+				F610214D1B890A5100442741 /* minus-100.png */,
+				F61021511B89366A00442741 /* milk-256.png */,
+				F61021551B894F9D00442741 /* milkMaskSolid.png */,
 				F61021261B88F42600442741 /* Supporting Files */,
 			);
 			path = SimpleJar;
@@ -164,6 +177,7 @@
 				TargetAttributes = {
 					F61021221B88F42600442741 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 3B3FT42G96;
 					};
 					F610213A1B88F42600442741 = {
 						CreatedOnToolsVersion = 6.4;
@@ -195,9 +209,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F61021311B88F42600442741 /* Main.storyboard in Resources */,
+				F61021521B89366A00442741 /* milk-256.png in Resources */,
 				F61021361B88F42600442741 /* LaunchScreen.xib in Resources */,
+				F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */,
 				F61021331B88F42600442741 /* Images.xcassets in Resources */,
+				F610214E1B890A5100442741 /* minus-100.png in Resources */,
+				F610214C1B890A3D00442741 /* plus-100.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,7 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F610212E1B88F42600442741 /* ViewController.swift in Sources */,
+				F610212E1B88F42600442741 /* JarViewController.swift in Sources */,
 				F61021291B88F42600442741 /* AppDelegate.swift in Sources */,
 				F610212C1B88F42600442741 /* SimpleJar.xcdatamodeld in Sources */,
 			);
@@ -240,14 +257,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F610212F1B88F42600442741 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F61021301B88F42600442741 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F61021341B88F42600442741 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -344,6 +353,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SimpleJar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -354,6 +364,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SimpleJar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
