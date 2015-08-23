@@ -19,6 +19,7 @@
 		F61021521B89366A00442741 /* milk-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021511B89366A00442741 /* milk-256.png */; };
 		F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021551B894F9D00442741 /* milkMaskSolid.png */; };
 		F61021581B896FA800442741 /* milkSolidClearHold.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021571B896FA800442741 /* milkSolidClearHold.png */; };
+		F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = F63F6C101B8A87D700518408 /* plus-100OffWhite.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		F61021511B89366A00442741 /* milk-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milk-256.png"; sourceTree = "<group>"; };
 		F61021551B894F9D00442741 /* milkMaskSolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkMaskSolid.png; sourceTree = "<group>"; };
 		F61021571B896FA800442741 /* milkSolidClearHold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkSolidClearHold.png; sourceTree = "<group>"; };
+		F63F6C101B8A87D700518408 /* plus-100OffWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-100OffWhite.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				F61021511B89366A00442741 /* milk-256.png */,
 				F61021551B894F9D00442741 /* milkMaskSolid.png */,
 				F61021571B896FA800442741 /* milkSolidClearHold.png */,
+				F63F6C101B8A87D700518408 /* plus-100OffWhite.png */,
 				F61021261B88F42600442741 /* Supporting Files */,
 			);
 			path = SimpleJar;
@@ -217,6 +220,7 @@
 				F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */,
 				F61021331B88F42600442741 /* Images.xcassets in Resources */,
 				F610214E1B890A5100442741 /* minus-100.png in Resources */,
+				F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */,
 				F61021581B896FA800442741 /* milkSolidClearHold.png in Resources */,
 				F610214C1B890A3D00442741 /* plus-100.png in Resources */,
 			);
@@ -428,6 +432,7 @@
 				F61021471B88F42600442741 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F61021481B88F42600442741 /* Build configuration list for PBXNativeTarget "SimpleJarTests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +441,7 @@
 				F610214A1B88F42600442741 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -12,47 +12,33 @@ import iAd
 
 class JarViewController: UIViewController, ADBannerViewDelegate {
     
-    var entries = [NSManagedObject]()
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
-    let jarKey = "com.taniguchi.JarKey"
     var jarData = [String:String]()
-    var jarSize : CGFloat = 100.0
-    var amountInJar : CGFloat = 0.0
-    let jarSizeKey = "jarSizeKey"
-    let savedAmountInJarKey = "jarSavedAmountKey"
-    
-    var addButton = UIButton()
-    var subtractButton = UIButton()
-    
-    var jarImageView = UIImageView()
-    var jarAmountView = UIView()
-    
-    var currentAmount : Float = 0.0
-    // jar values : 1) default jar size 2) current amount in jar
-    
-    var delta :Float = 0.0
-    var currentJarFrameHeight : CGFloat = 0.0
-    
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey"
+    var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton()
+    var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
+    var jarAmountView = UIView(), levelView = UIView()
+    var currentAmount : Float = 0.0, delta :Float = 0.0
+    var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 100.0
     var jarHeightConstraint : NSLayoutConstraint?
-    
-//    var center: Point {
-//        get {
-//            let centerX = origin.x + (size.width / 2)
-//            let centerY = origin.y + (size.height / 2)
-//            return Point(x: centerX, y: centerY)
-//        }
-//        set(newCenter) {
-//            origin.x = newCenter.x - (size.width / 2)
-//            origin.y = newCenter.y - (size.height / 2)
-//        }
-//    }
+    var levelLabel = UILabel()
+
+    var currentAmountString : String {
+        get {
+            let formattedAmountString = String(format: "%.2f", currentAmount)
+          return "You have $\(formattedAmountString) left"
+        }
+    }
+    var allowanceString : String {
+        get {
+            return String(format: "%.2f", allowance)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         canDisplayBannerAds = true
-        
-        var entry = ENTRY()
         
         navigationController?.navigationBarHidden = true
         
@@ -60,26 +46,53 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
             let defaultSize = jarData[jarSizeKey]
             let savedAmount = jarData[savedAmountInJarKey]
+            let savedAmountHeight = jarData[savedJarHeightKey]
             if let n = NSNumberFormatter().numberFromString(savedAmount!) {
-                amountInJar = CGFloat(n)
+                currentAmount = Float(n)
             }
             if let k = NSNumberFormatter().numberFromString(defaultSize!) {
-                jarSize = CGFloat(k)
+                allowance = CGFloat(k)
+            }
+            if let j = NSNumberFormatter().numberFromString(savedAmountHeight!) {
+                currentJarFrameHeight = CGFloat(j)
             }
         }
         // todo set to saved amount
-        currentAmount = Float(jarSize)
+        currentAmount = Float(allowance)
         
         view.backgroundColor = UIColor.whiteColor()
+        levelLabel.font = UIFont(name: "Avenir", size: 25.0)
+        levelLabel.textAlignment = .Center
+        levelLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        levelLabel.text = currentAmountString
+        view.addSubview(levelLabel)
         
-        addButton.setImage(UIImage(named: "plus-100"), forState: .Normal)
+        jarImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.addSubview(jarImageView)
+        
+        jarAmountView.backgroundColor = UIColor.greenColor()
+        jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.addSubview(jarAmountView)
+        view.sendSubviewToBack(jarAmountView)
+        
+        addButton.setImage(UIImage(named: "plus-100"), forState: .Highlighted)
+        addButton.setImage(offWhiteImage("plus-100"), forState: .Normal)
         addButton.addTarget(self, action: "addButtonPressed", forControlEvents: .TouchUpInside)
 //        addButton.addTarget(self, action: "addButtonHeld", forControlEvents: UIControlEvents.to)
-        addButton.backgroundColor = UIColor.blueColor()
-        subtractButton.setImage(UIImage(named: "minus-100"), forState: .Normal)
-        subtractButton.backgroundColor = UIColor.purpleColor()
+        addButton.backgroundColor = UIColor.darkGrayColor()
+        subtractButton.setImage(UIImage(named: "minus-100"), forState: .Highlighted)
+        subtractButton.setImage(offWhiteImage("minus-100"), forState: .Normal)
+        subtractButton.backgroundColor = UIColor.darkGrayColor()
         subtractButton.addTarget(self, action: "subtractButtonPressed", forControlEvents: .TouchUpInside)
-        [addButton,subtractButton].map { button -> UIButton in
+        
+        changeAllowanceButton.setTitle("Allowance $\(allowanceString)", forState: .Normal)
+        changeAllowanceButton.backgroundColor = UIColor.darkGrayColor()
+        changeAllowanceButton.addTarget(self, action: "changeAllowanceButtonPressed", forControlEvents: .TouchUpInside)
+        addAllowanceButton.setTitle("Add $\(allowanceString)", forState: .Normal)
+        addAllowanceButton.backgroundColor = UIColor.darkGrayColor()
+        addAllowanceButton.addTarget(self, action: "addAllowanceButtonPressed", forControlEvents: .TouchUpInside)
+        [addButton, subtractButton, changeAllowanceButton, addAllowanceButton].map { button -> UIButton in
+            button.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
             button.setTranslatesAutoresizingMaskIntoConstraints(false)
             self.view.addSubview(button)
             button.layer.borderWidth = 1.0
@@ -87,50 +100,48 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
             return button
         }
         
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: .AlignAllCenterY, metrics: nil, views: ["addBtn":addButton, "subBtn":subtractButton]))
+        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel]
+        let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance][addAllowance(changeAllowance)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
+
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[levelLbl]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]-50-|", options: NSLayoutFormatOptions(0), metrics: metrics, views: views))
         
-        // TODO offet from the bottom by 50
-        
-        jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
-        jarImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(jarImageView)
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView]))
-        
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[jarImg]-[add(sub)]-50-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView, "add":addButton, "sub":subtractButton]))
-        
-//        UIImage *_maskingImage = [UIImage imageNamed:@"ipadmask.jpg"];
-//        CALayer *_maskingLayer = [CALayer layer];
-//        _maskingLayer.frame = vistafunda.bounds;
-//        [_maskingLayer setContents:(id)[_maskingImage CGImage]];
-//        [vistafunda.layer setMask:_maskingLayer];
-//        vistafunda.layer.masksToBounds = YES;
-        
-//        let maskingImage = UIImage(named: "milkMaskSolid")
-//        let maskingLayer = CALayer()
-//        maskingLayer.frame = CGRectMake(0, 150, 200, 400)
-//        maskingLayer.opacity = 1
-//        maskingLayer.contents = maskingImage
-//        jarAmountView.layer.mask = maskingLayer
-        
-        jarAmountView.backgroundColor = UIColor.greenColor()
-        jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(jarAmountView)
-        view.sendSubviewToBack(jarAmountView)
-        
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jar]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jar":jarAmountView]))
-        
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarAmount]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
         jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: jarImageView, attribute: .Height, multiplier: 0.8, constant: 0)
-        
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
-        
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: levelLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)])
+    }
+    
+    func changeAllowanceButtonPressed () {
+        
+    }
+    
+    func addAllowanceButtonPressed () {
+        
+    }
+    
+    func offWhiteImage (name:String) -> UIImage {
+        var image: UIImage = UIImage(named: name)!
+        var rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
+        UIGraphicsBeginImageContext(rect.size)
+        var context: CGContextRef = UIGraphicsGetCurrentContext()
+        CGContextClipToMask(context, rect, image.CGImage)
+        CGContextSetFillColorWithColor(context, UIColor.lightGrayColor().CGColor)
+        CGContextFillRect(context, rect)
+        var img: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         let initialHeight = Float(jarImageView.frame.height * 0.8)
-        delta = initialHeight/Float(jarSize)
+        delta = initialHeight/Float(allowance)
         
         if currentJarFrameHeight == 0 {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
@@ -139,7 +150,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         println("did layout subviews current amount : \(currentAmount) currentJarFrameHeight \(currentJarFrameHeight)")
         
         drawJarAmountViewWithHeight(currentJarFrameHeight)
-        
     }
     
     func drawJarAmountViewWithHeight (height : CGFloat) {
@@ -149,48 +159,43 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func addButtonPressed () {
+        currentAmount += 1.0
+        
         var frame = jarAmountView.frame
-        frame.size.height += 1.0
-        frame.origin.y -= 1.0
-        UIView.animateWithDuration(0.01, animations: {
+        frame.size.height += CGFloat(delta)
+        frame.origin.y -= CGFloat(delta)
+        currentJarFrameHeight = frame.size.height
+        UIView.animateWithDuration(0.1, animations: {
             self.jarAmountView.frame = frame
         })
+        levelLabel.text = currentAmountString
     }
     
     func subtractButtonPressed () {
-        
-
         // 306.5
         currentAmount -= 1.0
-
-
         
         var frame = jarAmountView.frame
         frame.size.height -= CGFloat(delta)
         frame.origin.y += CGFloat(delta)
         currentJarFrameHeight = frame.size.height
-        UIView.animateWithDuration(0.01, animations: {
+        UIView.animateWithDuration(0.1, animations: {
             self.jarAmountView.frame = frame
         })
         
-                println("Current amount : \(currentAmount) DECREMENT: \(delta) currentJarFramehight : \(currentJarFrameHeight)")
+        levelLabel.text = currentAmountString
+        println("Current amount : \(currentAmount) DECREMENT: \(delta) currentJarFramehight : \(currentJarFrameHeight) currAMNTSTRING : \(currentAmountString)")
     }
     
     func addButtonHeld () {
         println("add held")
     }
     
-    func saveEntry (entry : ENTRY) {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
-        
-        let entity = NSEntityDescription.entityForName("Entry", inManagedObjectContext: managedContext)
-        
-        let newEntry = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        
-        // set values here
-        // maybe can just instantiate the entry when adding / subtracting ?
-//        newEntry.setValue(<#value: AnyObject?#>, forKey: <#String#>)
+    func save () {
+        jarData[jarSizeKey] = "\(allowance)"
+        jarData[savedAmountInJarKey] = "\(currentAmount)"
+        jarData[savedJarHeightKey] = "\(currentJarFrameHeight)"
+        sharedDefaults.setValue(jarData, forKey: jarKey)
     }
 }
 
