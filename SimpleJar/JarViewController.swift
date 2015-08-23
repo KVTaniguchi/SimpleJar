@@ -30,6 +30,23 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     var currentAmount : Float = 0.0
     // jar values : 1) default jar size 2) current amount in jar
     
+    var delta :Float = 0.0
+    var currentJarFrameHeight : CGFloat = 0.0
+    
+    var jarHeightConstraint : NSLayoutConstraint?
+    
+//    var center: Point {
+//        get {
+//            let centerX = origin.x + (size.width / 2)
+//            let centerY = origin.y + (size.height / 2)
+//            return Point(x: centerX, y: centerY)
+//        }
+//        set(newCenter) {
+//            origin.x = newCenter.x - (size.width / 2)
+//            origin.y = newCenter.y - (size.height / 2)
+//        }
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,15 +98,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[jarImg]-[add(sub)]-50-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jarImg":jarImageView, "add":addButton, "sub":subtractButton]))
         
-        jarAmountView.backgroundColor = UIColor.greenColor()
-        jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(jarAmountView)
-        view.sendSubviewToBack(jarAmountView)
-        
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jar]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jar":jarAmountView]))
-        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: jarImageView, attribute: .Height, multiplier: 0.75, constant: 0)])
-        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: 0)])
-
 //        UIImage *_maskingImage = [UIImage imageNamed:@"ipadmask.jpg"];
 //        CALayer *_maskingLayer = [CALayer layer];
 //        _maskingLayer.frame = vistafunda.bounds;
@@ -103,9 +111,41 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
 //        maskingLayer.opacity = 1
 //        maskingLayer.contents = maskingImage
 //        jarAmountView.layer.mask = maskingLayer
+        
+        jarAmountView.backgroundColor = UIColor.greenColor()
+        jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.addSubview(jarAmountView)
+        view.sendSubviewToBack(jarAmountView)
+        
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jar]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["jar":jarAmountView]))
+        
+        jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: jarImageView, attribute: .Height, multiplier: 0.8, constant: 0)
+        
+        NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
+        
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let initialHeight = Float(jarImageView.frame.height * 0.8)
+        delta = initialHeight/Float(jarSize)
+        
+        if currentJarFrameHeight == 0 {
+            currentJarFrameHeight = jarImageView.frame.height * 0.8
+        }
+        
+        println("did layout subviews current amount : \(currentAmount) currentJarFrameHeight \(currentJarFrameHeight)")
+        
+        drawJarAmountViewWithHeight(currentJarFrameHeight)
+        
+    }
+    
+    func drawJarAmountViewWithHeight (height : CGFloat) {
+        NSLayoutConstraint.deactivateConstraints([jarHeightConstraint!])
+        jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: height)
+        NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
     }
     
     func addButtonPressed () {
@@ -122,16 +162,18 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
 
         // 306.5
         currentAmount -= 1.0
-        println(currentAmount)
-        let initialHeight = jarAmountView.frame.height
-        let decrement = initialHeight/jarSize
+
+
         
         var frame = jarAmountView.frame
-        frame.size.height -= decrement
-        frame.origin.y += decrement
+        frame.size.height -= CGFloat(delta)
+        frame.origin.y += CGFloat(delta)
+        currentJarFrameHeight = frame.size.height
         UIView.animateWithDuration(0.01, animations: {
             self.jarAmountView.frame = frame
         })
+        
+                println("Current amount : \(currentAmount) DECREMENT: \(delta) currentJarFramehight : \(currentJarFrameHeight)")
     }
     
     func addButtonHeld () {
