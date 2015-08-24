@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 import iAd
+import URBNAlert
 
-class JarViewController: UIViewController, ADBannerViewDelegate {
+class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate {
     
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
@@ -22,16 +23,22 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 100.0
     var jarHeightConstraint : NSLayoutConstraint?
     var levelLabel = UILabel()
+    var changeAllowanceView : URBNAlertViewController!
 
     var currentAmountString : String {
         get {
             let formattedAmountString = String(format: "%.2f", currentAmount)
-          return "You have $\(formattedAmountString) left"
+          return "You have \(formattedAmountString) left"
         }
     }
     var allowanceString : String {
         get {
-            return String(format: "%.2f", allowance)
+            return String(format: "$%.2f", allowance)
+        }
+        set(newAllowanceString) {
+            
+//            origin.x = newCenter.x - (size.width / 2)
+//            origin.y = newCenter.y - (size.height / 2)
         }
     }
     
@@ -39,8 +46,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         super.viewDidLoad()
         
         canDisplayBannerAds = true
-        
         navigationController?.navigationBarHidden = true
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
@@ -69,8 +76,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         
         jarImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
         view.addSubview(jarImageView)
-        
-        jarAmountView.backgroundColor = UIColor.greenColor()
+        jarAmountView.backgroundColor = UIColor(red: 22/255.0, green: 210/255.0, blue: 75/255.0, alpha: 1.0)
         jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
         view.addSubview(jarAmountView)
         view.sendSubviewToBack(jarAmountView)
@@ -85,10 +91,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         subtractButton.backgroundColor = UIColor.darkGrayColor()
         subtractButton.addTarget(self, action: "subtractButtonPressed", forControlEvents: .TouchUpInside)
         
-        changeAllowanceButton.setTitle("Allowance $\(allowanceString)", forState: .Normal)
+        changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
         changeAllowanceButton.backgroundColor = UIColor.darkGrayColor()
         changeAllowanceButton.addTarget(self, action: "changeAllowanceButtonPressed", forControlEvents: .TouchUpInside)
-        addAllowanceButton.setTitle("Add $\(allowanceString)", forState: .Normal)
+        addAllowanceButton.setTitle("Add \(allowanceString)", forState: .Normal)
         addAllowanceButton.backgroundColor = UIColor.darkGrayColor()
         addAllowanceButton.addTarget(self, action: "addAllowanceButtonPressed", forControlEvents: .TouchUpInside)
         [addButton, subtractButton, changeAllowanceButton, addAllowanceButton].map { button -> UIButton in
@@ -117,24 +123,39 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func changeAllowanceButtonPressed () {
+        changeAllowanceView = URBNAlertViewController(title: "Allowance \(allowanceString)", message: "Change your allowance")
+        let style = URBNAlertStyle()
+        style.messageAlignment = .Center
+        style.messageFont = UIFont(name: "Avenir-Light", size: 18.0)
+        style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
+        changeAllowanceView.alertStyler = style
+        changeAllowanceView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
+            if let n = NSNumberFormatter().numberFromString(self.changeAllowanceView.textField().text!) {
+                self.allowance = CGFloat(n)
+                self.changeAllowanceButton.setTitle("Allowance \(self.allowanceString)", forState: .Normal)
+            }
+        }))
         
+        changeAllowanceView.addTextFieldWithConfigurationHandler { textField in
+            textField.textAlignment = .Center
+            textField.placeholder = "\(self.allowanceString)"
+            textField.keyboardType = UIKeyboardType.NumberPad
+            textField.returnKeyType = .Done
+        }
+        
+        changeAllowanceView.show()
+    }
+    
+    func textFieldChanged (field: UITextField) {
+        println(self.changeAllowanceView.textField().text)
+        var textFieldString = changeAllowanceView.textField().text
+        textFieldString = textFieldString.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        textFieldString = textFieldString.stringByReplacingOccurrencesOfString(".00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        changeAllowanceView.textField().text = "$\(textFieldString)"
     }
     
     func addAllowanceButtonPressed () {
         
-    }
-    
-    func offWhiteImage (name:String) -> UIImage {
-        var image: UIImage = UIImage(named: name)!
-        var rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
-        UIGraphicsBeginImageContext(rect.size)
-        var context: CGContextRef = UIGraphicsGetCurrentContext()
-        CGContextClipToMask(context, rect, image.CGImage)
-        CGContextSetFillColorWithColor(context, UIColor.lightGrayColor().CGColor)
-        CGContextFillRect(context, rect)
-        var img: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return img
     }
     
     override func viewDidLayoutSubviews() {
@@ -196,6 +217,19 @@ class JarViewController: UIViewController, ADBannerViewDelegate {
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         jarData[savedJarHeightKey] = "\(currentJarFrameHeight)"
         sharedDefaults.setValue(jarData, forKey: jarKey)
+    }
+    
+    func offWhiteImage (name:String) -> UIImage {
+        var image: UIImage = UIImage(named: name)!
+        var rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
+        UIGraphicsBeginImageContext(rect.size)
+        var context: CGContextRef = UIGraphicsGetCurrentContext()
+        CGContextClipToMask(context, rect, image.CGImage)
+        CGContextSetFillColorWithColor(context, UIColor.lightGrayColor().CGColor)
+        CGContextFillRect(context, rect)
+        var img: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
     }
 }
 
