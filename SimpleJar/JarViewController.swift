@@ -16,35 +16,33 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey"
-    var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton()
+    var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton(), enterAddAmountButton = UIButton(), enterSubAmountButton = UIButton()
     var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
     var jarAmountView = UIView(), levelView = UIView()
     var currentAmount : Float = 0.0
     var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00
     var jarHeightConstraint : NSLayoutConstraint?
     var levelLabel = UILabel()
-    var changeAllowanceView : URBNAlertViewController!
-    var firstAllowanceView : URBNAlertViewController!
+    var changeAllowanceView : URBNAlertViewController!, enterAmountView : URBNAlertViewController!
 
     var currentAmountString : String {
         get {
             let formattedAmountString = String(format: "%.2f", currentAmount)
-            return "You have \(formattedAmountString) left"
+            return "You have $\(formattedAmountString) left"
         }
     }
     var allowanceString : String {
         get {
             return String(format: "$%.2f", allowance)
         }
-        set(newAllowanceString) {
-//            origin.x = newCenter.x - (size.width / 2)
-//            origin.y = newCenter.y - (size.height / 2)
-        }
     }
     
     var delta : Float {
         get {
             let initialHeight = Float(jarImageView.frame.height * 0.8)
+            if currentAmount > Float(allowance) {
+                return 0.0
+            }
             return initialHeight/Float(allowance)
         }
     }
@@ -63,6 +61,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             let savedAmountHeight = jarData[savedJarHeightKey]
             if let n = NSNumberFormatter().numberFromString(savedAmount!) {
                 currentAmount = Float(n)
+                
+                println("0000000 \(currentAmount)")
             }
             if let k = NSNumberFormatter().numberFromString(defaultSize!) {
                 allowance = CGFloat(k)
@@ -93,7 +93,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         addButton.setImage(UIImage(named: "plus-100"), forState: .Highlighted)
         addButton.setImage(offWhiteImage("plus-100"), forState: .Normal)
         addButton.addTarget(self, action: "addButtonPressed", forControlEvents: .TouchUpInside)
-//        addButton.addTarget(self, action: "addButtonHeld", forControlEvents: UIControlEvents.to)
         addButton.backgroundColor = UIColor.darkGrayColor()
         subtractButton.setImage(UIImage(named: "minus-100"), forState: .Highlighted)
         subtractButton.setImage(offWhiteImage("minus-100"), forState: .Normal)
@@ -115,7 +114,27 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             return button
         }
         
-        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel]
+        enterAddAmountButton.setImage(offWhiteImage("plus-100"), forState: .Normal)
+        enterSubAmountButton.setImage(offWhiteImage("minus-100"), forState: .Normal)
+        
+        [enterSubAmountButton, enterAddAmountButton].map{ button -> UIButton in
+            button.backgroundColor = UIColor.grayColor()
+            button.addTarget(self, action: "enterAmountButtonPressed:", forControlEvents: .TouchUpInside)
+            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.layer.borderWidth = 0.5
+            button.layer.borderColor = UIColor.blackColor().CGColor
+            button.layer.cornerRadius = 5
+            return button
+        }
+        
+        addButton.addSubview(enterAddAmountButton)
+        subtractButton.addSubview(enterSubAmountButton)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterAdd(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterSub(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[enterSub(44)]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
+        
+        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton]
         let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance][addAllowance(changeAllowance)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
@@ -134,9 +153,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        let initialHeight = Float(jarImageView.frame.height * 0.8)
-//        delta = initialHeight/Float(allowance)
-        
         if currentJarFrameHeight == 0 {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
         }
@@ -153,6 +169,56 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     // PRAGMA MARK ACTIONS
+    func enterAmountButtonPressed (sender : UIButton) {
+        var title = ""
+        var message = ""
+        if sender == enterAddAmountButton {
+            title = "Add Amount"
+        }
+        else {
+            title = "Subtract Amount"
+        }
+        
+        enterAmountView = URBNAlertViewController(title: title, message: sender == enterAddAmountButton ? "+" : "-")
+        let style = URBNAlertStyle()
+        style.messageAlignment = .Center
+        style.messageFont = UIFont(name: "Avenir-Light", size: 18.0)
+        style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
+        enterAmountView.alertStyler = style
+        enterAmountView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
+            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.enterAmountView.textField().text)) {
+                println("N IS \(n) CURRENT :\(self.currentAmount)")
+                self.currentAmount = sender == self.enterAddAmountButton ? self.currentAmount + Float(n) : self.currentAmount - Float(n)
+                self.levelLabel.text = self.currentAmountString
+
+                var frame = self.jarAmountView.frame
+                if sender == self.enterAddAmountButton {
+                    frame.size.height += CGFloat(self.delta * Float(n))
+                    frame.origin.y -= CGFloat(self.delta * Float(n))
+                }
+                else {
+                    frame.size.height -= CGFloat(self.delta * Float(n))
+                    frame.origin.y += CGFloat(self.delta * Float(n))
+                }
+
+                self.currentJarFrameHeight = frame.size.height
+                UIView.animateWithDuration(0.1, animations: {
+                    self.jarAmountView.frame = frame
+                })
+            }
+        }))
+        
+        enterAmountView.addTextFieldWithConfigurationHandler { textField in
+            textField.tag = sender == self.enterAddAmountButton ? 2 : 3
+            textField.textAlignment = .Center
+            textField.placeholder = "$0.00"
+            textField.keyboardType = UIKeyboardType.NumberPad
+            textField.returnKeyType = .Done
+        }
+        
+        enterAmountView.show()
+    }
+    
     func changeAllowanceButtonPressed () {
         var messageText = ""
         var titleText = ""
@@ -183,12 +249,13 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                     self.levelLabel.text = "You have \(formattedAmountString) left"
                 }
                 
-                                println("allance \(self.allowance) current amount :\(self.currentAmount)")
+                println("allance \(self.allowance) current amount :\(self.currentAmount)")
             }
         }))
         
         changeAllowanceView.addTextFieldWithConfigurationHandler { textField in
             textField.textAlignment = .Center
+            textField.tag = 1
             textField.placeholder = "\(self.allowanceString)"
             textField.keyboardType = UIKeyboardType.NumberPad
             textField.returnKeyType = .Done
@@ -198,7 +265,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func addAllowanceButtonPressed () {
-        
+        currentAmount += Float(allowance)
+        levelLabel.text = currentAmountString
+        currentJarFrameHeight = jarImageView.frame.height * 0.8
+        drawJarAmountViewWithHeight(jarImageView.frame.height * 0.8)
     }
     
     func addButtonPressed () {
@@ -239,6 +309,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         jarData[savedJarHeightKey] = "\(currentJarFrameHeight)"
         sharedDefaults.setValue(jarData, forKey: jarKey)
+        
+        println("***** SAVING \(currentAmount)")
     }
     
     // MARK HELPERS
@@ -255,9 +327,13 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         return img
     }
     
-    func textFieldChanged (field: UITextField!) {
-        if changeAllowanceView != nil && changeAllowanceView.view.window != nil {
+    func textFieldChanged (notif: NSNotification!) {
+        let notifTextField = notif.object as! UITextField
+        if notifTextField.tag == 1 {
             changeAllowanceView.textField().text = "$\(processAllowanceString(changeAllowanceView.textField().text))"
+        }
+        else {
+            enterAmountView.textField().text = "$\(processAllowanceString(enterAmountView.textField().text))"
         }
     }
     
