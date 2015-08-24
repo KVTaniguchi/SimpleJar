@@ -187,24 +187,39 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         enterAmountView.alertStyler = style
         enterAmountView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
             if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.enterAmountView.textField().text)) {
-                println("N IS \(n) CURRENT :\(self.currentAmount)")
-                self.currentAmount = sender == self.enterAddAmountButton ? self.currentAmount + Float(n) : self.currentAmount - Float(n)
-                self.levelLabel.text = self.currentAmountString
-
-                var frame = self.jarAmountView.frame
-                if sender == self.enterAddAmountButton {
-                    frame.size.height += CGFloat(self.delta * Float(n))
-                    frame.origin.y -= CGFloat(self.delta * Float(n))
+                if Float(n) > self.currentAmount && sender == self.enterSubAmountButton {
+                    let alert = URBNAlertViewController(title: "Exceeding allowance!", message: "That amount is more than your allowance")
+                    alert.alertStyler.blurTintColor = UIColor.redColor().colorWithAlphaComponent(0.4)
+                    alert.addAction(URBNAlertAction(title: "Ok", actionType: .Normal, actionCompleted: { action in
+                        return
+                    }))
+                    alert.show()
                 }
                 else {
-                    frame.size.height -= CGFloat(self.delta * Float(n))
-                    frame.origin.y += CGFloat(self.delta * Float(n))
+                    println("N IS \(n) CURRENT :\(self.currentAmount)")
+                    self.currentAmount = sender == self.enterAddAmountButton ? self.currentAmount + Float(n) : self.currentAmount - Float(n)
+                    self.levelLabel.text = self.currentAmountString
+                    
+                    var frame = self.jarAmountView.frame
+                    if sender == self.enterAddAmountButton {
+                        if CGFloat(n) > self.allowance {
+                            self.drawJarAmountViewWithHeight(self.jarImageView.frame.height * 0.8)
+                        }
+                        else {
+                            frame.size.height += CGFloat(self.delta * Float(n))
+                            frame.origin.y -= CGFloat(self.delta * Float(n))
+                        }
+                    }
+                    else {
+                        frame.size.height -= CGFloat(self.delta * Float(n))
+                        frame.origin.y += CGFloat(self.delta * Float(n))
+                    }
+                    
+                    self.currentJarFrameHeight = frame.size.height
+                    UIView.animateWithDuration(0.1, animations: {
+                        self.jarAmountView.frame = frame
+                    })
                 }
-
-                self.currentJarFrameHeight = frame.size.height
-                UIView.animateWithDuration(0.1, animations: {
-                    self.jarAmountView.frame = frame
-                })
             }
         }))
         
