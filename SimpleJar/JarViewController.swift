@@ -19,16 +19,17 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton()
     var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
     var jarAmountView = UIView(), levelView = UIView()
-    var currentAmount : Float = 0.0, delta :Float = 0.0
-    var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 100.0
+    var currentAmount : Float = 0.0
+    var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00
     var jarHeightConstraint : NSLayoutConstraint?
     var levelLabel = UILabel()
     var changeAllowanceView : URBNAlertViewController!
+    var firstAllowanceView : URBNAlertViewController!
 
     var currentAmountString : String {
         get {
             let formattedAmountString = String(format: "%.2f", currentAmount)
-          return "You have \(formattedAmountString) left"
+            return "You have \(formattedAmountString) left"
         }
     }
     var allowanceString : String {
@@ -36,9 +37,15 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             return String(format: "$%.2f", allowance)
         }
         set(newAllowanceString) {
-            
 //            origin.x = newCenter.x - (size.width / 2)
 //            origin.y = newCenter.y - (size.height / 2)
+        }
+    }
+    
+    var delta : Float {
+        get {
+            let initialHeight = Float(jarImageView.frame.height * 0.8)
+            return initialHeight/Float(allowance)
         }
     }
     
@@ -64,8 +71,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                 currentJarFrameHeight = CGFloat(j)
             }
         }
-        // todo set to saved amount
-        currentAmount = Float(allowance)
+        else {
+            currentAmount = Float(allowance)
+            changeAllowanceButtonPressed()
+        }
         
         view.backgroundColor = UIColor.whiteColor()
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
@@ -122,47 +131,11 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: levelLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)])
     }
     
-    func changeAllowanceButtonPressed () {
-        changeAllowanceView = URBNAlertViewController(title: "Allowance \(allowanceString)", message: "Change your allowance")
-        let style = URBNAlertStyle()
-        style.messageAlignment = .Center
-        style.messageFont = UIFont(name: "Avenir-Light", size: 18.0)
-        style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
-        changeAllowanceView.alertStyler = style
-        changeAllowanceView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
-            if let n = NSNumberFormatter().numberFromString(self.changeAllowanceView.textField().text!) {
-                self.allowance = CGFloat(n)
-                self.changeAllowanceButton.setTitle("Allowance \(self.allowanceString)", forState: .Normal)
-            }
-        }))
-        
-        changeAllowanceView.addTextFieldWithConfigurationHandler { textField in
-            textField.textAlignment = .Center
-            textField.placeholder = "\(self.allowanceString)"
-            textField.keyboardType = UIKeyboardType.NumberPad
-            textField.returnKeyType = .Done
-        }
-        
-        changeAllowanceView.show()
-    }
-    
-    func textFieldChanged (field: UITextField) {
-        println(self.changeAllowanceView.textField().text)
-        var textFieldString = changeAllowanceView.textField().text
-        textFieldString = textFieldString.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        textFieldString = textFieldString.stringByReplacingOccurrencesOfString(".00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        changeAllowanceView.textField().text = "$\(textFieldString)"
-    }
-    
-    func addAllowanceButtonPressed () {
-        
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let initialHeight = Float(jarImageView.frame.height * 0.8)
-        delta = initialHeight/Float(allowance)
+//        let initialHeight = Float(jarImageView.frame.height * 0.8)
+//        delta = initialHeight/Float(allowance)
         
         if currentJarFrameHeight == 0 {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
@@ -177,6 +150,55 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.deactivateConstraints([jarHeightConstraint!])
         jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: height)
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
+    }
+    
+    // PRAGMA MARK ACTIONS
+    func changeAllowanceButtonPressed () {
+        var messageText = ""
+        var titleText = ""
+        if sharedDefaults.objectForKey(jarKey) == nil {
+            titleText = "Welcome!"
+            messageText = "Enter your allowance below"
+        }
+        else {
+            titleText = "Allowance \(allowanceString)"
+            messageText = "Change your allowance"
+        }
+        
+        changeAllowanceView = URBNAlertViewController(title: titleText, message: messageText)
+        let style = URBNAlertStyle()
+        style.messageAlignment = .Center
+        style.messageFont = UIFont(name: "Avenir-Light", size: 18.0)
+        style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
+        changeAllowanceView.alertStyler = style
+        changeAllowanceView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
+            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.changeAllowanceView.textField().text)) {
+                self.allowance = CGFloat(n)
+
+                self.changeAllowanceButton.setTitle("Allowance \(self.allowanceString)", forState: .Normal)
+                self.addAllowanceButton.setTitle("Add \(self.allowanceString)", forState: .Normal)
+                if self.sharedDefaults.objectForKey(self.jarKey) == nil {
+                    self.currentAmount = Float(self.allowance)
+                    let formattedAmountString = String(format: "%.2f", self.allowance)
+                    self.levelLabel.text = "You have \(formattedAmountString) left"
+                }
+                
+                                println("allance \(self.allowance) current amount :\(self.currentAmount)")
+            }
+        }))
+        
+        changeAllowanceView.addTextFieldWithConfigurationHandler { textField in
+            textField.textAlignment = .Center
+            textField.placeholder = "\(self.allowanceString)"
+            textField.keyboardType = UIKeyboardType.NumberPad
+            textField.returnKeyType = .Done
+        }
+        
+        changeAllowanceView.show()
+    }
+    
+    func addAllowanceButtonPressed () {
+        
     }
     
     func addButtonPressed () {
@@ -195,7 +217,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func subtractButtonPressed () {
         // 306.5
         currentAmount -= 1.0
-        
+        println("delat \(delta)")
         var frame = jarAmountView.frame
         frame.size.height -= CGFloat(delta)
         frame.origin.y += CGFloat(delta)
@@ -219,6 +241,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         sharedDefaults.setValue(jarData, forKey: jarKey)
     }
     
+    // MARK HELPERS
     func offWhiteImage (name:String) -> UIImage {
         var image: UIImage = UIImage(named: name)!
         var rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
@@ -230,6 +253,19 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         var img: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return img
+    }
+    
+    func textFieldChanged (field: UITextField!) {
+        if changeAllowanceView != nil && changeAllowanceView.view.window != nil {
+            changeAllowanceView.textField().text = "$\(processAllowanceString(changeAllowanceView.textField().text))"
+        }
+    }
+    
+    func processAllowanceString (text:String) -> String {
+        var newText = text
+        newText = text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        newText = newText.stringByReplacingOccurrencesOfString(".00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        return newText
     }
 }
 
