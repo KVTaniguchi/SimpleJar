@@ -182,7 +182,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         enterAmountView = URBNAlertViewController(title: title, message: sender == enterAddAmountButton ? "+" : "-")
         let style = URBNAlertStyle()
         style.messageAlignment = .Center
-        style.messageFont = UIFont(name: "Avenir-Light", size: 18.0)
+        style.messageFont = UIFont(name: "Avenir-Heavy", size: 40.0)
         style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
         enterAmountView.alertStyler = style
         enterAmountView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
@@ -196,14 +196,13 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                     alert.show()
                 }
                 else {
-                    println("N IS \(n) CURRENT :\(self.currentAmount)")
-                    self.currentAmount = sender == self.enterAddAmountButton ? self.currentAmount + Float(n) : self.currentAmount - Float(n)
+                    let adjustedAmount = sender == self.enterAddAmountButton ? self.currentAmount + Float(n) : self.currentAmount - Float(n)
                     self.levelLabel.text = self.currentAmountString
                     
                     var frame = self.jarAmountView.frame
                     if sender == self.enterAddAmountButton {
-                        if CGFloat(n) > self.allowance {
-                            self.drawJarAmountViewWithHeight(self.jarImageView.frame.height * 0.8)
+                        if CGFloat(n) > self.allowance || adjustedAmount > Float(self.allowance) {
+                            frame.size.height = self.jarImageView.frame.height * 0.8
                         }
                         else {
                             frame.size.height += CGFloat(self.delta * Float(n))
@@ -211,14 +210,22 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                         }
                     }
                     else {
-                        frame.size.height -= CGFloat(self.delta * Float(n))
-                        frame.origin.y += CGFloat(self.delta * Float(n))
+                        if self.currentAmount > Float(self.allowance) {
+                            let realN = Float(self.allowance) - adjustedAmount
+                            self.currentAmount = adjustedAmount
+                            frame.size.height -= CGFloat(self.delta * realN)
+                            frame.origin.y += CGFloat(self.delta * realN)
+                        }
+                        else {
+                            frame.size.height -= CGFloat(self.delta * Float(n))
+                            frame.origin.y += CGFloat(self.delta * Float(n))
+                        }
                     }
                     
+                    self.currentAmount = adjustedAmount
                     self.currentJarFrameHeight = frame.size.height
-                    UIView.animateWithDuration(0.1, animations: {
-                        self.jarAmountView.frame = frame
-                    })
+                    self.drawJarAmountViewWithHeight(frame.size.height)
+                    self.levelLabel.text = self.currentAmountString
                 }
             }
         }))
@@ -261,10 +268,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                 if self.sharedDefaults.objectForKey(self.jarKey) == nil {
                     self.currentAmount = Float(self.allowance)
                     let formattedAmountString = String(format: "%.2f", self.allowance)
-                    self.levelLabel.text = "You have \(formattedAmountString) left"
+                    self.levelLabel.text = self.currentAmountString
                 }
-                
-                println("allance \(self.allowance) current amount :\(self.currentAmount)")
             }
         }))
         
