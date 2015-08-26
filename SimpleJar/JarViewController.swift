@@ -61,8 +61,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             let savedAmountHeight = jarData[savedJarHeightKey]
             if let n = NSNumberFormatter().numberFromString(savedAmount!) {
                 currentAmount = Float(n)
-                
-                println("0000000 \(currentAmount)")
             }
             if let k = NSNumberFormatter().numberFromString(defaultSize!) {
                 allowance = CGFloat(k)
@@ -156,8 +154,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         if currentJarFrameHeight == 0 {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
         }
-        
-        println("did layout subviews current amount : \(currentAmount) currentJarFrameHeight \(currentJarFrameHeight)")
         
         drawJarAmountViewWithHeight(currentJarFrameHeight)
     }
@@ -307,7 +303,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func subtractButtonPressed () {
         // 306.5
         currentAmount -= 1.0
-        println("delat \(delta)")
         var frame = jarAmountView.frame
         frame.size.height -= CGFloat(delta)
         frame.origin.y += CGFloat(delta)
@@ -317,11 +312,9 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         })
         
         levelLabel.text = currentAmountString
-        println("Current amount : \(currentAmount) DECREMENT: \(delta) currentJarFramehight : \(currentJarFrameHeight) currAMNTSTRING : \(currentAmountString)")
     }
     
     func addButtonHeld () {
-        println("add held")
     }
     
     func save () {
@@ -329,8 +322,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         jarData[savedJarHeightKey] = "\(currentJarFrameHeight)"
         sharedDefaults.setValue(jarData, forKey: jarKey)
-        
-        println("***** SAVING \(currentAmount)")
     }
     
     // MARK HELPERS
