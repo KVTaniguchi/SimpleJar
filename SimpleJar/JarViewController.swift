@@ -90,7 +90,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         flashLabel.textAlignment = .Center
         flashLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         flashLabel.textColor = UIColor.clearColor()
-        flashLabel.text = "$100.00"
         flashLabel.font = UIFont(name: "AvenirNext-UltraLight", size: 60)
         jarImageView.addSubview(flashLabel)
         
@@ -310,19 +309,29 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func addButtonPressed () {
+        var frame = jarAmountView.frame
         currentAmount += 1.0
         animateWithDirection(true)
-        var frame = jarAmountView.frame
+        levelLabel.text = currentAmountString
+        if currentAmount >= Float(allowance) {
+            currentJarFrameHeight = jarImageView.frame.size.height * 0.8
+            drawJarAmountViewWithHeight(currentJarFrameHeight)
+            return
+        }
+
         frame.size.height += CGFloat(delta)
         frame.origin.y -= CGFloat(delta)
         currentJarFrameHeight = frame.size.height
         UIView.animateWithDuration(0.1, animations: {
             self.jarAmountView.frame = frame
         })
-        levelLabel.text = currentAmountString
+
     }
     
     func subtractButtonPressed () {
+        if currentAmount == 0 {
+            return
+        }
         currentAmount -= 1.0
         animateWithDirection(false)
         var frame = jarAmountView.frame
