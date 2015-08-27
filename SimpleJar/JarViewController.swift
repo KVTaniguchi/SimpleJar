@@ -22,7 +22,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var currentAmount : Float = 0.0
     var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00
     var jarHeightConstraint : NSLayoutConstraint?
-    var levelLabel = UILabel()
+    var levelLabel = UILabel(), flashLabel = UILabel()
     var changeAllowanceView : URBNAlertViewController!, enterAmountView : URBNAlertViewController!
 
     var currentAmountString : String {
@@ -36,7 +36,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             return String(format: "$%.2f", allowance)
         }
     }
-    
     var delta : Float {
         get {
             let initialHeight = Float(jarImageView.frame.height * 0.8)
@@ -88,6 +87,13 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         view.addSubview(jarAmountView)
         view.sendSubviewToBack(jarAmountView)
         
+        flashLabel.textAlignment = .Center
+        flashLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        flashLabel.textColor = UIColor.clearColor()
+        flashLabel.text = "$100.00"
+        flashLabel.font = UIFont(name: "AvenirNext-UltraLight", size: 60)
+        jarImageView.addSubview(flashLabel)
+        
         addButton.setImage(UIImage(named: "plus-100"), forState: .Highlighted)
         addButton.setImage(offWhiteImage("plus-100"), forState: .Normal)
         addButton.addTarget(self, action: "addButtonPressed", forControlEvents: .TouchUpInside)
@@ -132,13 +138,14 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[enterSub(44)]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
         
-        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton]
+        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel]
         let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance][addAllowance(changeAllowance)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
 
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[levelLbl]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[flashLbl]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]-50-|", options: NSLayoutFormatOptions(0), metrics: metrics, views: views))
         
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarAmount]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
@@ -146,6 +153,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: levelLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 120)])
     }
     
     override func viewDidLayoutSubviews() {
@@ -164,18 +172,30 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
     }
     
-    // PRAGMA MARK ACTIONS
+    // MARK ANIMATIONS
+    func animateWithDirection (up : Bool) {
+        flashLabel.text = String(format: "$%.2f", currentAmount)
+        flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
+        flashLabel.transform = CGAffineTransformScale(flashLabel.transform, 0.25, 0.25)
+        UIView.animateWithDuration(0.6, animations: { () in
+            self.flashLabel.alpha = 1.0
+            self.flashLabel.textColor = UIColor.lightGrayColor()
+            self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 4, 4)
+        }) { complete in
+            if complete {
+                UIView.animateWithDuration(0.8, animations: { () in
+                    self.flashLabel.alpha = 0.0
+                    self.flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
+                    self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 1, 1)
+                    })
+            }
+        }
+        // 2 CA emitter of dollars going off the top
+    }
+    
+    // MARK ACTIONS
     func enterAmountButtonPressed (sender : UIButton) {
-        var title = ""
-        var message = ""
-        if sender == enterAddAmountButton {
-            title = "Add Amount"
-        }
-        else {
-            title = "Subtract Amount"
-        }
-        
-        enterAmountView = URBNAlertViewController(title: title, message: sender == enterAddAmountButton ? "+" : "-")
+        enterAmountView = URBNAlertViewController(title: sender == enterAddAmountButton ? "Add Amount" : "SubtractAmount", message: sender == enterAddAmountButton ? "+" : "-")
         let style = URBNAlertStyle()
         style.messageAlignment = .Center
         style.messageFont = UIFont(name: "Avenir-Heavy", size: 40.0)
@@ -222,6 +242,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                     self.currentJarFrameHeight = frame.size.height
                     self.drawJarAmountViewWithHeight(frame.size.height)
                     self.levelLabel.text = self.currentAmountString
+                    
+                    self.animateWithDirection(sender == self.enterAddAmountButton)
                 }
             }
         }))
@@ -289,7 +311,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     
     func addButtonPressed () {
         currentAmount += 1.0
-        
+        animateWithDirection(true)
         var frame = jarAmountView.frame
         frame.size.height += CGFloat(delta)
         frame.origin.y -= CGFloat(delta)
@@ -301,8 +323,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func subtractButtonPressed () {
-        // 306.5
         currentAmount -= 1.0
+        animateWithDirection(false)
         var frame = jarAmountView.frame
         frame.size.height -= CGFloat(delta)
         frame.origin.y += CGFloat(delta)
