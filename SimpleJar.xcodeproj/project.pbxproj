@@ -20,6 +20,8 @@
 		F61021521B89366A00442741 /* milk-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021511B89366A00442741 /* milk-256.png */; };
 		F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021551B894F9D00442741 /* milkMaskSolid.png */; };
 		F61021581B896FA800442741 /* milkSolidClearHold.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021571B896FA800442741 /* milkSolidClearHold.png */; };
+		F61862241B8EB63600321992 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862231B8EB63600321992 /* coin@2x.png */; };
+		F61862261B8EC31200321992 /* greenDollarSign.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862251B8EC31200321992 /* greenDollarSign.png */; };
 		F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = F63F6C101B8A87D700518408 /* plus-100OffWhite.png */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		F61021511B89366A00442741 /* milk-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milk-256.png"; sourceTree = "<group>"; };
 		F61021551B894F9D00442741 /* milkMaskSolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkMaskSolid.png; sourceTree = "<group>"; };
 		F61021571B896FA800442741 /* milkSolidClearHold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkSolidClearHold.png; sourceTree = "<group>"; };
+		F61862231B8EB63600321992 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
+		F61862251B8EC31200321992 /* greenDollarSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenDollarSign.png; sourceTree = "<group>"; };
 		F63F6C101B8A87D700518408 /* plus-100OffWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-100OffWhite.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +121,7 @@
 		F61021251B88F42600442741 /* SimpleJar */ = {
 			isa = PBXGroup;
 			children = (
+				F61862231B8EB63600321992 /* coin@2x.png */,
 				F61021281B88F42600442741 /* AppDelegate.swift */,
 				F610212D1B88F42600442741 /* JarViewController.swift */,
 				F61021321B88F42600442741 /* Images.xcassets */,
@@ -128,6 +133,7 @@
 				F61021551B894F9D00442741 /* milkMaskSolid.png */,
 				F61021571B896FA800442741 /* milkSolidClearHold.png */,
 				F63F6C101B8A87D700518408 /* plus-100OffWhite.png */,
+				F61862251B8EC31200321992 /* greenDollarSign.png */,
 				F61021261B88F42600442741 /* Supporting Files */,
 			);
 			path = SimpleJar;
@@ -243,6 +249,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F61021521B89366A00442741 /* milk-256.png in Resources */,
+				F61862241B8EB63600321992 /* coin@2x.png in Resources */,
+				F61862261B8EC31200321992 /* greenDollarSign.png in Resources */,
 				F61021361B88F42600442741 /* LaunchScreen.xib in Resources */,
 				F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */,
 				F61021331B88F42600442741 /* Images.xcassets in Resources */,

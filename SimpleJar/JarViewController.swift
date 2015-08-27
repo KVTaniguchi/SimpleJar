@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import iAd
 import URBNAlert
+import QuartzCore
 
 class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate {
     
@@ -24,6 +25,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var jarHeightConstraint : NSLayoutConstraint?
     var levelLabel = UILabel(), flashLabel = UILabel()
     var changeAllowanceView : URBNAlertViewController!, enterAmountView : URBNAlertViewController!
+    let emitterLayer = CAEmitterLayer()
 
     var currentAmountString : String {
         get {
@@ -173,23 +175,48 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     
     // MARK ANIMATIONS
     func animateWithDirection (up : Bool) {
+        emitterLayer.emitterPosition = CGPointMake(view.center.x, CGRectGetMinY(jarAmountView.frame))
+        emitterLayer.zPosition = 10
+        emitterLayer.emitterSize = CGSizeMake(10, 0)
+        emitterLayer.emitterShape = kCAEmitterLayerSphere
+        
+        let emitterCell = CAEmitterCell()
+        emitterCell.scale = 0.1
+        emitterCell.scaleRange = 0.2
+        emitterCell.emissionRange = CGFloat(2*M_PI_2)
+        emitterCell.lifetime = 5.0
+        emitterCell.birthRate = 10
+        emitterCell.velocity = 200
+        emitterCell.velocityRange = 50
+        emitterCell.yAcceleration = 250
+        emitterCell.contents = UIImage(named: "greenDollarSign")?.CGImage
+        
+        emitterLayer.emitterCells = [emitterCell]
+        
         flashLabel.text = String(format: "$%.2f", currentAmount)
         flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
         flashLabel.transform = CGAffineTransformScale(flashLabel.transform, 0.25, 0.25)
         UIView.animateWithDuration(0.6, animations: { () in
+            if !up {
+                self.jarImageView.layer.addSublayer(self.emitterLayer)
+            }
+            
             self.flashLabel.alpha = 1.0
             self.flashLabel.textColor = UIColor.lightGrayColor()
             self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 4, 4)
         }) { complete in
             if complete {
                 UIView.animateWithDuration(0.8, animations: { () in
+                    if !up {
+                        self.emitterLayer.removeFromSuperlayer()
+                    }
+                    
                     self.flashLabel.alpha = 0.0
                     self.flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
                     self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 1, 1)
                     })
             }
         }
-        // 2 CA emitter of dollars going off the top
     }
     
     // MARK ACTIONS
