@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "0700"
+   version = "2.0">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F6C7C9C71B92510500D8DE7A"
+               BuildableName = "SimpleJarWatch.app"
+               BlueprintName = "SimpleJarWatch"
+               ReferencedContainer = "container:SimpleJar.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F6C7C9D31B92510500D8DE7A"
+               BuildableName = "SimpleJarWatch Extension.appex"
+               BlueprintName = "SimpleJarWatch Extension"
+               ReferencedContainer = "container:SimpleJar.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F61021221B88F42600442741"
+               BuildableName = "SimpleJar.app"
+               BlueprintName = "SimpleJar"
+               ReferencedContainer = "container:SimpleJar.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F6F9E42E1B9255D40083B6DC"
+               BuildableName = "SimpleJarTUITests.xctest"
+               BlueprintName = "SimpleJarTUITests"
+               ReferencedContainer = "container:SimpleJar.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F6B213C71B92588800FDDD8D"
+               BuildableName = "SimpleJarUITests.xctest"
+               BlueprintName = "SimpleJarUITests"
+               ReferencedContainer = "container:SimpleJar.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F6C7C9C71B92510500D8DE7A"
+            BuildableName = "SimpleJarWatch.app"
+            BlueprintName = "SimpleJarWatch"
+            ReferencedContainer = "container:SimpleJar.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES"
+      launchAutomaticallySubstyle = "32">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.carousel"
+         RemotePath = "/SimpleJar">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F6C7C9C71B92510500D8DE7A"
+            BuildableName = "SimpleJarWatch.app"
+            BlueprintName = "SimpleJarWatch"
+            ReferencedContainer = "container:SimpleJar.xcodeproj">
+         </BuildableReference>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F6C7C9C71B92510500D8DE7A"
+            BuildableName = "SimpleJarWatch.app"
+            BlueprintName = "SimpleJarWatch"
+            ReferencedContainer = "container:SimpleJar.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES"
+      launchAutomaticallySubstyle = "32">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.carousel"
+         RemotePath = "/SimpleJar">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F6C7C9C71B92510500D8DE7A"
+            BuildableName = "SimpleJarWatch.app"
+            BlueprintName = "SimpleJarWatch"
+            ReferencedContainer = "container:SimpleJar.xcodeproj">
+         </BuildableReference>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F6C7C9C71B92510500D8DE7A"
+            BuildableName = "SimpleJarWatch.app"
+            BlueprintName = "SimpleJarWatch"
+            ReferencedContainer = "container:SimpleJar.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
