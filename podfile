@@ -1,0 +1,2 @@
+use_frameworks!
+pod 'URBNAlert', '~> 1.8'

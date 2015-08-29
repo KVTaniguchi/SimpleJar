@@ -1,0 +1,6 @@
+framework module URBNConvenience {
+  umbrella header "URBNConvenience-umbrella.h"
+
+  export *
+  module * { export * }
+}

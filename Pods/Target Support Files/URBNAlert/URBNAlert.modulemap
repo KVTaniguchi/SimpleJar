@@ -1,0 +1,6 @@
+framework module URBNAlert {
+  umbrella header "URBNAlert-umbrella.h"
+
+  export *
+  module * { export * }
+}

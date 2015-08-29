@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>URBNAlert-URBNAlert.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>URBNAlert.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>URBNConvenience.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>31E5DC97DCC9EB9F72F06B7E91E13B59</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8DE80659201CAB3CB45F1938CC697D48</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>940A8B4FCE8D4FC8F2206E46195E0B86</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFF2BDAD5CE895B5AF3F8B7CEBE64D0E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
