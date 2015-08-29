@@ -4,10 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Complication - SimpleJarWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>SimpleJar.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>SimpleJarTUITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>SimpleJarWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -18,6 +33,21 @@
 			<true/>
 		</dict>
 		<key>F610213A1B88F42600442741</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6B213C71B92588800FDDD8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6C7C9C71B92510500D8DE7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6F9E42E1B9255D40083B6DC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

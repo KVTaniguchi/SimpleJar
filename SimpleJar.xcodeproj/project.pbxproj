@@ -23,6 +23,14 @@
 		F61862241B8EB63600321992 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862231B8EB63600321992 /* coin@2x.png */; };
 		F61862261B8EC31200321992 /* greenDollarSign.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862251B8EC31200321992 /* greenDollarSign.png */; };
 		F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = F63F6C101B8A87D700518408 /* plus-100OffWhite.png */; };
+		F6C7C9CC1B92510500D8DE7A /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CA1B92510500D8DE7A /* Interface.storyboard */; };
+		F6C7C9CE1B92510500D8DE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */; };
+		F6C7C9D51B92510500D8DE7A /* SimpleJarWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F6C7C9D41B92510500D8DE7A /* SimpleJarWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F6C7C9DA1B92510500D8DE7A /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C7C9D91B92510500D8DE7A /* InterfaceController.swift */; };
+		F6C7C9DC1B92510500D8DE7A /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C7C9DB1B92510500D8DE7A /* ExtensionDelegate.swift */; };
+		F6C7C9DE1B92510500D8DE7A /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C7C9DD1B92510500D8DE7A /* ComplicationController.swift */; };
+		F6C7C9E01B92510500D8DE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9DF1B92510500D8DE7A /* Assets.xcassets */; };
+		F6C7C9E41B92510500D8DE7A /* SimpleJarWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +41,46 @@
 			remoteGlobalIDString = F61021221B88F42600442741;
 			remoteInfo = SimpleJar;
 		};
+		F6C7C9D61B92510500D8DE7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F610211B1B88F42600442741 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F6C7C9D31B92510500D8DE7A;
+			remoteInfo = "SimpleJarWatch Extension";
+		};
+		F6C7C9E21B92510500D8DE7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F610211B1B88F42600442741 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F6C7C9C71B92510500D8DE7A;
+			remoteInfo = SimpleJarWatch;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F6C7C9EA1B92510500D8DE7A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F6C7C9D51B92510500D8DE7A /* SimpleJarWatch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6C7C9EC1B92510500D8DE7A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				F6C7C9E41B92510500D8DE7A /* SimpleJarWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		18BBB34D4C275BE6B7A43F90 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +105,16 @@
 		F61862231B8EB63600321992 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		F61862251B8EC31200321992 /* greenDollarSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenDollarSign.png; sourceTree = "<group>"; };
 		F63F6C101B8A87D700518408 /* plus-100OffWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-100OffWhite.png"; sourceTree = "<group>"; };
+		F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleJarWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6C7C9CB1B92510500D8DE7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F6C7C9CF1B92510500D8DE7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6C7C9D41B92510500D8DE7A /* SimpleJarWatch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SimpleJarWatch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6C7C9D91B92510500D8DE7A /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		F6C7C9DB1B92510500D8DE7A /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		F6C7C9DD1B92510500D8DE7A /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		F6C7C9DF1B92510500D8DE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F6C7C9E11B92510500D8DE7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +128,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F61021381B88F42600442741 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6C7C9D11B92510500D8DE7A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -103,6 +167,8 @@
 				F610214F1B892BF200442741 /* iAd.framework */,
 				F61021251B88F42600442741 /* SimpleJar */,
 				F610213E1B88F42600442741 /* SimpleJarTests */,
+				F6C7C9C91B92510500D8DE7A /* SimpleJarWatch */,
+				F6C7C9D81B92510500D8DE7A /* SimpleJarWatch Extension */,
 				F61021241B88F42600442741 /* Products */,
 				D70F1C1E13C2FD821693F2D1 /* Pods */,
 				857C65D3044B8C08F610D1A7 /* Frameworks */,
@@ -114,6 +180,8 @@
 			children = (
 				F61021231B88F42600442741 /* SimpleJar.app */,
 				F610213B1B88F42600442741 /* SimpleJarTests.xctest */,
+				F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */,
+				F6C7C9D41B92510500D8DE7A /* SimpleJarWatch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,6 +232,28 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		F6C7C9C91B92510500D8DE7A /* SimpleJarWatch */ = {
+			isa = PBXGroup;
+			children = (
+				F6C7C9CA1B92510500D8DE7A /* Interface.storyboard */,
+				F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */,
+				F6C7C9CF1B92510500D8DE7A /* Info.plist */,
+			);
+			path = SimpleJarWatch;
+			sourceTree = "<group>";
+		};
+		F6C7C9D81B92510500D8DE7A /* SimpleJarWatch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F6C7C9D91B92510500D8DE7A /* InterfaceController.swift */,
+				F6C7C9DB1B92510500D8DE7A /* ExtensionDelegate.swift */,
+				F6C7C9DD1B92510500D8DE7A /* ComplicationController.swift */,
+				F6C7C9DF1B92510500D8DE7A /* Assets.xcassets */,
+				F6C7C9E11B92510500D8DE7A /* Info.plist */,
+			);
+			path = "SimpleJarWatch Extension";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -177,10 +267,12 @@
 				F61021211B88F42600442741 /* Resources */,
 				8F45794FE7B9DA20F289B09D /* Embed Pods Frameworks */,
 				06EF9CDA8DD6C1E29838B91B /* Copy Pods Resources */,
+				F6C7C9EC1B92510500D8DE7A /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F6C7C9E31B92510500D8DE7A /* PBXTargetDependency */,
 			);
 			name = SimpleJar;
 			productName = SimpleJar;
@@ -205,6 +297,40 @@
 			productReference = F610213B1B88F42600442741 /* SimpleJarTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F6C7C9C71B92510500D8DE7A /* SimpleJarWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6C7C9EB1B92510500D8DE7A /* Build configuration list for PBXNativeTarget "SimpleJarWatch" */;
+			buildPhases = (
+				F6C7C9C61B92510500D8DE7A /* Resources */,
+				F6C7C9EA1B92510500D8DE7A /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F6C7C9D71B92510500D8DE7A /* PBXTargetDependency */,
+			);
+			name = SimpleJarWatch;
+			productName = SimpleJarWatch;
+			productReference = F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		F6C7C9D31B92510500D8DE7A /* SimpleJarWatch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6C7C9E91B92510500D8DE7A /* Build configuration list for PBXNativeTarget "SimpleJarWatch Extension" */;
+			buildPhases = (
+				F6C7C9D01B92510500D8DE7A /* Sources */,
+				F6C7C9D11B92510500D8DE7A /* Frameworks */,
+				F6C7C9D21B92510500D8DE7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SimpleJarWatch Extension";
+			productName = "SimpleJarWatch Extension";
+			productReference = F6C7C9D41B92510500D8DE7A /* SimpleJarWatch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -224,6 +350,13 @@
 						CreatedOnToolsVersion = 6.4;
 						TestTargetID = F61021221B88F42600442741;
 					};
+					F6C7C9C71B92510500D8DE7A = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 3B3FT42G96;
+					};
+					F6C7C9D31B92510500D8DE7A = {
+						CreatedOnToolsVersion = 7.0;
+					};
 				};
 			};
 			buildConfigurationList = F610211E1B88F42600442741 /* Build configuration list for PBXProject "SimpleJar" */;
@@ -241,6 +374,8 @@
 			targets = (
 				F61021221B88F42600442741 /* SimpleJar */,
 				F610213A1B88F42600442741 /* SimpleJarTests */,
+				F6C7C9C71B92510500D8DE7A /* SimpleJarWatch */,
+				F6C7C9D31B92510500D8DE7A /* SimpleJarWatch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -267,6 +402,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6C7C9C61B92510500D8DE7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6C7C9CE1B92510500D8DE7A /* Assets.xcassets in Resources */,
+				F6C7C9CC1B92510500D8DE7A /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6C7C9D21B92510500D8DE7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6C7C9E01B92510500D8DE7A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +491,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F6C7C9D01B92510500D8DE7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6C7C9DC1B92510500D8DE7A /* ExtensionDelegate.swift in Sources */,
+				F6C7C9DA1B92510500D8DE7A /* InterfaceController.swift in Sources */,
+				F6C7C9DE1B92510500D8DE7A /* ComplicationController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -346,6 +508,16 @@
 			isa = PBXTargetDependency;
 			target = F61021221B88F42600442741 /* SimpleJar */;
 			targetProxy = F610213C1B88F42600442741 /* PBXContainerItemProxy */;
+		};
+		F6C7C9D71B92510500D8DE7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F6C7C9D31B92510500D8DE7A /* SimpleJarWatch Extension */;
+			targetProxy = F6C7C9D61B92510500D8DE7A /* PBXContainerItemProxy */;
+		};
+		F6C7C9E31B92510500D8DE7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F6C7C9C71B92510500D8DE7A /* SimpleJarWatch */;
+			targetProxy = F6C7C9E21B92510500D8DE7A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -356,6 +528,14 @@
 				F61021351B88F42600442741 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		F6C7C9CA1B92510500D8DE7A /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6C7C9CB1B92510500D8DE7A /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -397,7 +577,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -435,7 +615,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -479,6 +659,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SimpleJarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleJar.app/SimpleJar";
@@ -494,9 +675,78 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SimpleJarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleJar.app/SimpleJar";
+			};
+			name = Release;
+		};
+		F6C7C9E51B92510500D8DE7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = YES;
+				IBSC_MODULE = SimpleJarWatch_Extension;
+				INFOPLIST_FILE = SimpleJarWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.SimpleJar.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		F6C7C9E61B92510500D8DE7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = SimpleJarWatch_Extension;
+				INFOPLIST_FILE = SimpleJarWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.SimpleJar.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		F6C7C9E71B92510500D8DE7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = "SimpleJarWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.SimpleJar.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		F6C7C9E81B92510500D8DE7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				INFOPLIST_FILE = "SimpleJarWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.SimpleJar.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -526,6 +776,24 @@
 			buildConfigurations = (
 				F61021491B88F42600442741 /* Debug */,
 				F610214A1B88F42600442741 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6C7C9E91B92510500D8DE7A /* Build configuration list for PBXNativeTarget "SimpleJarWatch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6C7C9E71B92510500D8DE7A /* Debug */,
+				F6C7C9E81B92510500D8DE7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6C7C9EB1B92510500D8DE7A /* Build configuration list for PBXNativeTarget "SimpleJarWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6C7C9E51B92510500D8DE7A /* Debug */,
+				F6C7C9E61B92510500D8DE7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
