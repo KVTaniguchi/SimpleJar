@@ -20,7 +20,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton(), enterAddAmountButton = UIButton(), enterSubAmountButton = UIButton()
     var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
     var jarAmountView = UIView(), levelView = UIView()
-    var currentAmount : Float = 0.0
     var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00
     var jarHeightConstraint : NSLayoutConstraint?
     var levelLabel = UILabel(), flashLabel = UILabel()
@@ -28,6 +27,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     let emitterLayer = CAEmitterLayer()
     var timerStarted = false
     var timer : NSTimer!
+    
+    var currentAmount : Float = 0.0
 
     var currentAmountString : String {
         get {
@@ -341,7 +342,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func addButtonPressed () {
         var frame = jarAmountView.frame
         currentAmount += 1.0
-        animateWithDirection(true)
+        
+        invalidateTimer()
+        startTimer()
+        
         if currentAmount >= Float(allowance) {
             currentJarFrameHeight = jarImageView.frame.size.height * 0.8
             drawJarAmountViewWithHeight(currentJarFrameHeight)
@@ -354,9 +358,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         UIView.animateWithDuration(0.1, animations: {
             self.jarAmountView.frame = frame
         })
-
-        invalidateTimer()
-        startTimer()
     }
     
     func subtractButtonPressed () {

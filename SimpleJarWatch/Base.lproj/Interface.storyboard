@@ -8,7 +8,37 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SimpleJarWatch" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SimpleJarWatch" customModuleProvider="target">
+                    <items>
+                        <group width="1" alignment="center" verticalAlignment="bottom" id="28t-LO-G2Z">
+                            <items>
+                                <button width="44" alignment="left" verticalAlignment="center" title="+" id="nFI-fY-0dL">
+                                    <color key="backgroundColor" red="0.0" green="0.83120265149999994" blue="0.060322269550000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </button>
+                                <button width="44" alignment="right" verticalAlignment="center" title="-" id="QGk-kC-Zzo">
+                                    <color key="backgroundColor" red="0.83120265149999994" green="0.0" blue="0.0083548499979999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </button>
+                            </items>
+                        </group>
+                        <label alignment="center" verticalAlignment="center" text="$0.00" id="Zi1-SL-u5r">
+                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                        </label>
+                        <group width="1" alignment="center" id="e3B-qL-shn">
+                            <items>
+                                <label alignment="center" text="Allowance" id="bu3-tm-SC4"/>
+                            </items>
+                        </group>
+                        <label alignment="center" text="$0.00" id="mGg-i5-sAl">
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
+                    </items>
+                    <connections>
+                        <outlet property="addAmountButton" destination="nFI-fY-0dL" id="V8G-wH-sRH"/>
+                        <outlet property="allowanceLabel" destination="mGg-i5-sAl" id="ZST-Xh-TAf"/>
+                        <outlet property="currentAmountLabel" destination="Zi1-SL-u5r" id="wAr-2F-Uyq"/>
+                        <outlet property="subtractAmountButton" destination="QGk-kC-Zzo" id="DJm-ft-x7Z"/>
+                    </connections>
+                </controller>
             </objects>
             <point key="canvasLocation" x="205" y="350"/>
         </scene>
