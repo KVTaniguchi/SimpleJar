@@ -26,6 +26,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var levelLabel = UILabel(), flashLabel = UILabel()
     var changeAllowanceView : URBNAlertViewController!, enterAmountView : URBNAlertViewController!
     let emitterLayer = CAEmitterLayer()
+    var timerStarted = false
+    var timer : NSTimer!
 
     var currentAmountString : String {
         get {
@@ -267,7 +269,9 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                     self.currentAmount = adjustedAmount
                     self.currentJarFrameHeight = frame.size.height
                     self.drawJarAmountViewWithHeight(frame.size.height)
-                    self.levelLabel.text = self.currentAmountString
+                    
+                    self.invalidateTimer()
+                    self.startTimer()
                     
                     self.animateWithDirection(sender == self.enterAddAmountButton)
                 }
@@ -339,7 +343,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         var frame = jarAmountView.frame
         currentAmount += 1.0
         animateWithDirection(true)
-        levelLabel.text = currentAmountString
         if currentAmount >= Float(allowance) {
             currentJarFrameHeight = jarImageView.frame.size.height * 0.8
             drawJarAmountViewWithHeight(currentJarFrameHeight)
@@ -353,6 +356,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             self.jarAmountView.frame = frame
         })
 
+        invalidateTimer()
+        startTimer()
     }
     
     func subtractButtonPressed () {
@@ -369,7 +374,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             self.jarAmountView.frame = frame
         })
         
-        levelLabel.text = currentAmountString
+        invalidateTimer()
+        startTimer()
     }
     
     func addButtonHeld () {
@@ -383,6 +389,23 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     // MARK HELPERS
+    func invalidateTimer () {
+        if (timer != nil) {
+            timer.invalidate()
+            timer = nil
+        }
+    }
+    
+    func startTimer () {
+        if timer == nil {
+            timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "updateLevelLabel", userInfo: nil, repeats: false)
+        }
+    }
+    
+    func updateLevelLabel () {
+        levelLabel.text = currentAmountString
+    }
+    
     func offWhiteImage (name:String) -> UIImage {
         var image: UIImage = UIImage(named: name)!
         var rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
