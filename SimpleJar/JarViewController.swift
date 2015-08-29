@@ -80,19 +80,19 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         view.backgroundColor = UIColor.whiteColor()
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
         levelLabel.textAlignment = .Center
-        levelLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        levelLabel.translatesAutoresizingMaskIntoConstraints = false
         levelLabel.text = currentAmountString
         view.addSubview(levelLabel)
         
-        jarImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        jarImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(jarImageView)
         jarAmountView.backgroundColor = UIColor(red: 22/255.0, green: 210/255.0, blue: 75/255.0, alpha: 1.0)
-        jarAmountView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        jarAmountView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(jarAmountView)
         view.sendSubviewToBack(jarAmountView)
         
         flashLabel.textAlignment = .Center
-        flashLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        flashLabel.translatesAutoresizingMaskIntoConstraints = false
         flashLabel.textColor = UIColor.clearColor()
         flashLabel.font = UIFont(name: "AvenirNext-UltraLight", size: 60)
         jarImageView.addSubview(flashLabel)
@@ -112,46 +112,45 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         addAllowanceButton.setTitle("Add \(allowanceString)", forState: .Normal)
         addAllowanceButton.backgroundColor = UIColor.darkGrayColor()
         addAllowanceButton.addTarget(self, action: "addAllowanceButtonPressed", forControlEvents: .TouchUpInside)
-        [addButton, subtractButton, changeAllowanceButton, addAllowanceButton].map { button -> UIButton in
+        
+        for button in [addButton, subtractButton, changeAllowanceButton, addAllowanceButton] {
             button.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(button)
             button.layer.borderWidth = 1.0
             button.layer.borderColor = UIColor.blackColor().CGColor
-            return button
         }
         
         enterAddAmountButton.setImage(offWhiteImage("plus-100"), forState: .Normal)
         enterSubAmountButton.setImage(offWhiteImage("minus-100"), forState: .Normal)
         
-        [enterSubAmountButton, enterAddAmountButton].map{ button -> UIButton in
+        for button in [enterSubAmountButton, enterAddAmountButton] {
             button.backgroundColor = UIColor.grayColor()
             button.addTarget(self, action: "enterAmountButtonPressed:", forControlEvents: .TouchUpInside)
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.borderWidth = 0.5
             button.layer.borderColor = UIColor.blackColor().CGColor
             button.layer.cornerRadius = 5
-            return button
         }
         
         addButton.addSubview(enterAddAmountButton)
         subtractButton.addSubview(enterSubAmountButton)
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterAdd(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterSub(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[enterSub(44)]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterAdd(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterSub(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[enterSub(44)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
         
         let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel]
         let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance][addAllowance(changeAllowance)]|", options: .AlignAllTop | .AlignAllBottom, metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance][addAllowance(changeAllowance)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
 
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[levelLbl]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[flashLbl]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]-50-|", options: NSLayoutFormatOptions(0), metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[levelLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[flashLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]-50-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views: views))
         
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarAmount]|", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarAmount]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: jarImageView, attribute: .Height, multiplier: 0.8, constant: 0)
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
@@ -230,7 +229,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
         enterAmountView.alertStyler = style
         enterAmountView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
-            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.enterAmountView.textField().text)) {
+            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.enterAmountView.textField().text!)) {
                 if Float(n) > self.currentAmount && sender == self.enterSubAmountButton {
                     let alert = URBNAlertViewController(title: "Exceeding allowance!", message: "That amount is more than your allowance")
                     alert.alertStyler.blurTintColor = UIColor.redColor().colorWithAlphaComponent(0.4)
@@ -308,7 +307,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
         changeAllowanceView.alertStyler = style
         changeAllowanceView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
-            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.changeAllowanceView.textField().text)) {
+            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.changeAllowanceView.textField().text!)) {
                 self.allowance = CGFloat(n)
 
                 self.changeAllowanceButton.setTitle("Allowance \(self.allowanceString)", forState: .Normal)
@@ -407,14 +406,14 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func offWhiteImage (name:String) -> UIImage {
-        var image: UIImage = UIImage(named: name)!
-        var rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
+        let image: UIImage = UIImage(named: name)!
+        let rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
         UIGraphicsBeginImageContext(rect.size)
-        var context: CGContextRef = UIGraphicsGetCurrentContext()
+        let context: CGContextRef = UIGraphicsGetCurrentContext()!
         CGContextClipToMask(context, rect, image.CGImage)
         CGContextSetFillColorWithColor(context, UIColor.lightGrayColor().CGColor)
         CGContextFillRect(context, rect)
-        var img: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let img: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return img
     }
@@ -422,10 +421,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func textFieldChanged (notif: NSNotification!) {
         let notifTextField = notif.object as! UITextField
         if notifTextField.tag == 1 {
-            changeAllowanceView.textField().text = "$\(processAllowanceString(changeAllowanceView.textField().text))"
+            changeAllowanceView.textField().text = "$\(processAllowanceString(changeAllowanceView.textField().text!))"
         }
         else {
-            enterAmountView.textField().text = "$\(processAllowanceString(enterAmountView.textField().text))"
+            enterAmountView.textField().text = "$\(processAllowanceString(enterAmountView.textField().text!))"
         }
     }
     
@@ -436,4 +435,3 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         return newText
     }
 }
-
