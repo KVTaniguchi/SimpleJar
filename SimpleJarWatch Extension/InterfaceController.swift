@@ -12,10 +12,13 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
-    @IBOutlet var currentAmountLabel: WKInterfaceLabel!
     @IBOutlet var allowanceLabel: WKInterfaceLabel!
     @IBOutlet var addAmountButton: WKInterfaceButton!
     @IBOutlet var subtractAmountButton: WKInterfaceButton!
+    
+    @IBOutlet var currentAmountPicker: WKInterfacePicker!
+    
+
     
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
@@ -27,16 +30,32 @@ class InterfaceController: WKInterfaceController {
         super.awakeWithContext(context)
         
         updateData()
+        
+        var pickerItems = [WKPickerItem]()
+        let intAmount = Int(currentAmount) + 1000
+        for index in 0...intAmount {
+            let pickerItem = WKPickerItem()
+            pickerItem.title = "$\(index).00"
+            pickerItems.append(pickerItem)
+        }
+        
+        currentAmountPicker.setItems(pickerItems)
+        currentAmountPicker.setSelectedItemIndex(Int(currentAmount))
+    }
+    
+    @IBAction func pickerChangedValue(value: Int) {
+        print("picker did change \(value)")
+        currentAmount = Float(value)
     }
     
     @IBAction func addButtonPress() {
         currentAmount += 1.0
-        currentAmountLabel.setText(String(format: "$%.2f", currentAmount))
+        currentAmountPicker.setSelectedItemIndex(Int(currentAmount))
     }
     
     @IBAction func subtractButtonPress() {
         currentAmount -= 1.0
-        currentAmountLabel.setText(String(format: "$%.2f", currentAmount))
+        currentAmountPicker.setSelectedItemIndex(Int(currentAmount))
     }
     
     func updateData () {
@@ -54,8 +73,7 @@ class InterfaceController: WKInterfaceController {
         }
         
         print("WATCH CURRENT AMOUNT \(currentAmount) ALLOWANCE \(allowance)")
-        
-        currentAmountLabel.setText(String(format: "$%.2f", currentAmount))
+
         allowanceLabel.setText(String(format: "$%.2f", allowance))
     }
 

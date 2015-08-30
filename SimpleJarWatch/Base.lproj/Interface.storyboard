@@ -26,22 +26,24 @@
                                 </button>
                             </items>
                         </group>
-                        <label alignment="center" verticalAlignment="center" text="$0.00" textAlignment="center" id="Zi1-SL-u5r">
-                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                        </label>
                         <group width="1" alignment="center" id="e3B-qL-shn">
                             <items>
                                 <label alignment="center" text="Allowance" id="bu3-tm-SC4"/>
                             </items>
                         </group>
                         <label alignment="center" text="$0.00" id="mGg-i5-sAl">
-                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                            <fontDescription key="font" type="system" pointSize="17"/>
                         </label>
+                        <picker width="1" height="42" alignment="center" verticalAlignment="center" focusStyle="stack" id="1ia-AI-LzJ">
+                            <connections>
+                                <action selector="pickerChangedValue:" destination="AgC-eL-Hgc" id="QBu-0r-3d4"/>
+                            </connections>
+                        </picker>
                     </items>
                     <connections>
                         <outlet property="addAmountButton" destination="nFI-fY-0dL" id="V8G-wH-sRH"/>
                         <outlet property="allowanceLabel" destination="mGg-i5-sAl" id="ZST-Xh-TAf"/>
-                        <outlet property="currentAmountLabel" destination="Zi1-SL-u5r" id="wAr-2F-Uyq"/>
+                        <outlet property="currentAmountPicker" destination="1ia-AI-LzJ" id="Ai2-Hg-bFt"/>
                         <outlet property="subtractAmountButton" destination="QGk-kC-Zzo" id="DJm-ft-x7Z"/>
                     </connections>
                 </controller>
