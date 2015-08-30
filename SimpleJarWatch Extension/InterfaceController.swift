@@ -7,6 +7,7 @@
 //
 
 import WatchKit
+import WatchConnectivity
 import Foundation
 
 
@@ -70,7 +71,7 @@ class InterfaceController: WKInterfaceController {
         sharedDefaults.setValue(jarData, forKey: jarKey)
         
         do {
-            try extensionDelegate.session.updateApplicationContext(jarData)
+            try WCSession.defaultSession().updateApplicationContext(jarData)
         }
         catch {
             print("wut")

@@ -14,10 +14,11 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
-    let session = WCSession.defaultSession()
     var currentAmount : Float = 0.0, allowance : Float = 0.0
 
     func applicationDidFinishLaunching() {
+        let session = WCSession.defaultSession()
+        
         if (WCSession.isSupported()) {
             session.delegate = self
             session.activateSession()
@@ -36,7 +37,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             }
         }
         
-        print("EXT DID FINISH LAOUCN : \(jarData)")
+        print("EXT DID FINISH LAOUCN : \(jarData) CURRENT AMOUNT : \(currentAmount) ALLOW : \(allowance)")
     }
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
@@ -51,7 +52,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             allowance = Float(k)
         }
 
-        sharedDefaults.setValue(applicationContext, forKey: jarKey)
+        NSUserDefaults.standardUserDefaults().setValue(applicationContext, forKey: jarKey)
     }
 
     func applicationDidBecomeActive() {
@@ -60,6 +61,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
 
     func applicationWillResignActive() {
         if sharedDefaults.objectForKey(jarKey) != nil {
+            let session = WCSession.defaultSession()
             do {
                 try session.updateApplicationContext(jarData)
             }
