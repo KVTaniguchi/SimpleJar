@@ -21,9 +21,22 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         if (WCSession.isSupported()) {
             session.delegate = self
             session.activateSession()
-            
-            print("DID FINISH EXT : \(session)")
         }
+        
+        if sharedDefaults.objectForKey(jarKey) != nil {
+            jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+            
+            let defaultSize = jarData[jarSizeKey]
+            let savedAmount = jarData[savedAmountInJarKey]
+            if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+                currentAmount = Float(n)
+            }
+            if let k = NSNumberFormatter().numberFromString(defaultSize!) {
+                allowance = Float(k)
+            }
+        }
+        
+        print("EXT DID FINISH LAOUCN : \(jarData)")
     }
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {

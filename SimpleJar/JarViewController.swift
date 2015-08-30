@@ -341,7 +341,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func addButtonPressed () {
         var frame = jarAmountView.frame
         currentAmount += 1.0
-        
+        animateWithDirection(true)
         invalidateTimer()
         startTimer()
         

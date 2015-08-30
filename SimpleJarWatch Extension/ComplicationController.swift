@@ -54,7 +54,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
         }
         
         handler(nil)
-        handler(nil)
     }
     
     func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
@@ -80,7 +79,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
         switch complication.family {
         case .ModularLarge :
             print("mod large")
-//            handler(defaultModularLargeTemplate())
+            handler(defaultModularLargeTemplate())
             break
         case .ModularSmall :
             print("mod small")
@@ -98,14 +97,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
     func defaultModularLargeTemplate () -> CLKComplicationTemplateModularLargeTallBody {
         let placeHolder = CLKComplicationTemplateModularLargeTallBody()
         placeHolder.headerTextProvider = CLKSimpleTextProvider(text: "Remaining:")
-//        placeHolder.bodyTextProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", extensionDelegate.currentAmount))
+        placeHolder.bodyTextProvider = CLKSimpleTextProvider(text: String(format: "$0.00"))
         return placeHolder
     }
     
     func defaultModularSmallTemplate () -> CLKComplicationTemplateModularSmallRingText {
         let placeHolder = CLKComplicationTemplateModularSmallRingText()
-//        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", extensionDelegate.currentAmount))
-//        placeHolder.fillFraction = extensionDelegate.currentAmount / extensionDelegate.allowance
+        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$0.00"))
+        placeHolder.fillFraction = extensionDelegate.currentAmount / extensionDelegate.allowance
         placeHolder.ringStyle = .Closed
         return placeHolder
     }

@@ -42,8 +42,6 @@ class InterfaceController: WKInterfaceController {
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
             
-            print("UPDATE DATA IFC : \(jarData)")
-            
             let defaultSize = jarData[jarSizeKey]
             let savedAmount = jarData[savedAmountInJarKey]
             if let n = NSNumberFormatter().numberFromString(savedAmount!) {
