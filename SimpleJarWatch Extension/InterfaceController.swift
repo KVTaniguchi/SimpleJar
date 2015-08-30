@@ -18,20 +18,65 @@ class InterfaceController: WKInterfaceController {
     
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey"
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
+    let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
+    var currentAmount : Float = 0.0, allowance : Float = 0.0
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
+        updateData()
+    }
+    
+    @IBAction func addButtonPress() {
+        currentAmount += 1.0
+        currentAmountLabel.setText(String(format: "$%.2f", currentAmount))
+    }
+    
+    @IBAction func subtractButtonPress() {
+        currentAmount -= 1.0
+        currentAmountLabel.setText(String(format: "$%.2f", currentAmount))
+    }
+    
+    func updateData () {
+        if sharedDefaults.objectForKey(jarKey) != nil {
+            jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+            
+            print("UPDATE DATA IFC : \(jarData)")
+            
+            let defaultSize = jarData[jarSizeKey]
+            let savedAmount = jarData[savedAmountInJarKey]
+            if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+                currentAmount = Float(n)
+            }
+            if let k = NSNumberFormatter().numberFromString(defaultSize!) {
+                allowance = Float(k)
+            }
+        }
         
+        print("WATCH CURRENT AMOUNT \(currentAmount) ALLOWANCE \(allowance)")
+        
+        currentAmountLabel.setText(String(format: "$%.2f", currentAmount))
+        allowanceLabel.setText(String(format: "$%.2f", allowance))
     }
 
     override func willActivate() {
+        updateData()
 
         super.willActivate()
     }
 
     override func didDeactivate() {
+        jarData[jarSizeKey] = "\(allowance)"
+        jarData[savedAmountInJarKey] = "\(currentAmount)"
+        sharedDefaults.setValue(jarData, forKey: jarKey)
+        
+        do {
+            try extensionDelegate.session.updateApplicationContext(jarData)
+        }
+        catch {
+            print("wut")
+        }
 
         super.didDeactivate()
     }

@@ -7,11 +7,38 @@
 //
 
 import WatchKit
+import WatchConnectivity
 
-class ExtensionDelegate: NSObject, WKExtensionDelegate {
+class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
+    
+    var sharedDefaults = NSUserDefaults.standardUserDefaults()
+    var jarData = [String:String]()
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
+    let session = WCSession.defaultSession()
+    var currentAmount : Float = 0.0, allowance : Float = 0.0
 
     func applicationDidFinishLaunching() {
-        // Perform any final initialization of your application.
+        if (WCSession.isSupported()) {
+            session.delegate = self
+            session.activateSession()
+            
+            print("DID FINISH EXT : \(session)")
+        }
+    }
+    
+    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+        print("ON WATCH : \(applicationContext)")
+        jarData = applicationContext as! [String:String]
+        let defaultSize = jarData[jarSizeKey]
+        let savedAmount = jarData[savedAmountInJarKey]
+        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+            currentAmount = Float(n)
+        }
+        if let k = NSNumberFormatter().numberFromString(defaultSize!) {
+            allowance = Float(k)
+        }
+
+        sharedDefaults.setValue(applicationContext, forKey: jarKey)
     }
 
     func applicationDidBecomeActive() {
@@ -19,8 +46,15 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
 
     func applicationWillResignActive() {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, etc.
+        if sharedDefaults.objectForKey(jarKey) != nil {
+            do {
+                try session.updateApplicationContext(jarData)
+            }
+            catch {
+                print("wut")
+            }
+        }
     }
-
 }
+
+

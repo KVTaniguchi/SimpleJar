@@ -12,15 +12,21 @@
                     <items>
                         <group width="1" alignment="center" verticalAlignment="bottom" id="28t-LO-G2Z">
                             <items>
-                                <button width="44" alignment="left" verticalAlignment="center" title="+" id="nFI-fY-0dL">
+                                <button width="0.5" alignment="left" verticalAlignment="center" title="+" id="nFI-fY-0dL">
                                     <color key="backgroundColor" red="0.0" green="0.83120265149999994" blue="0.060322269550000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="addButtonPress" destination="AgC-eL-Hgc" id="GYf-ee-YkV"/>
+                                    </connections>
                                 </button>
-                                <button width="44" alignment="right" verticalAlignment="center" title="-" id="QGk-kC-Zzo">
+                                <button width="0.5" alignment="right" verticalAlignment="center" title="-" id="QGk-kC-Zzo">
                                     <color key="backgroundColor" red="0.83120265149999994" green="0.0" blue="0.0083548499979999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="subtractButtonPress" destination="AgC-eL-Hgc" id="YF9-2Z-SXf"/>
+                                    </connections>
                                 </button>
                             </items>
                         </group>
-                        <label alignment="center" verticalAlignment="center" text="$0.00" id="Zi1-SL-u5r">
+                        <label alignment="center" verticalAlignment="center" text="$0.00" textAlignment="center" id="Zi1-SL-u5r">
                             <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                         </label>
                         <group width="1" alignment="center" id="e3B-qL-shn">

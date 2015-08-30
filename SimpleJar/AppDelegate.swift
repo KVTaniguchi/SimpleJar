@@ -8,13 +8,17 @@
 
 import UIKit
 import CoreData
+import WatchConnectivity
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 
     var window: UIWindow?
     var mainNavController : UINavigationController?
     var jarViewController : JarViewController?
+    var sharedDefaults = NSUserDefaults.standardUserDefaults()
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey"
+    let session = WCSession.defaultSession()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
@@ -43,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        session.delegate = self
+        session.activateSession()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -57,8 +63,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     
+    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+        print("APP GOT : \(applicationContext)")
+        sharedDefaults.setObject(applicationContext, forKey: jarKey)
+    }
+    
     func sendDataToWatch () {
-        
+        if WCSession.isSupported() {
+            if sharedDefaults.objectForKey(jarKey) != nil {
+                if session.paired && session.watchAppInstalled {
+                    let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+                    do {
+                        try session.updateApplicationContext(jarData)
+                    }
+                    catch {
+                        print("wut")
+                    }
+                    
+                    print("APP : Sending out app context \(jarData)")
+                }
+                
+            }
+        }
     }
 
     // MARK: - Core Data stack

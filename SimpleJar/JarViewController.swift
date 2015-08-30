@@ -315,7 +315,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                 self.addAllowanceButton.setTitle("Add \(self.allowanceString)", forState: .Normal)
                 if self.sharedDefaults.objectForKey(self.jarKey) == nil {
                     self.currentAmount = Float(self.allowance)
-                    let formattedAmountString = String(format: "%.2f", self.allowance)
                     self.levelLabel.text = self.currentAmountString
                 }
             }

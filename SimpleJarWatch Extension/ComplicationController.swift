@@ -7,9 +7,11 @@
 //
 
 import ClockKit
+import WatchKit
 
-
-class ComplicationController: NSObject, CLKComplicationDataSource {
+class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDelegate {
+    
+    let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
     
     // MARK: - Timeline Configuration
     
@@ -32,7 +34,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     
     func getCurrentTimelineEntryForComplication(complication: CLKComplication, withHandler handler: ((CLKComplicationTimelineEntry?) -> Void)) {
-        // Call the handler with the current timeline entry
+
+//        var entry = CLKComplicationTimelineEntry()
+        
+        switch complication.family {
+        case .ModularLarge :
+            print("mod large")
+//            entry = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: getDeviceInfoForModularLargeTemplate(extensionDelegate.items))
+//            handler(entry)
+            break
+        case .ModularSmall :
+            print("mod small")
+        case .UtilitarianLarge:
+            print("util large")
+        case .UtilitarianSmall :
+            print("util small")
+        case .CircularSmall:
+            print("circ small")
+        }
+        
+        handler(nil)
         handler(nil)
     }
     
@@ -56,31 +77,37 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Placeholder Templates
     
     func getPlaceholderTemplateForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTemplate?) -> Void) {
-//        switch complication.family {
-//        case .ModularLarge :
-//            print("mod large")
+        switch complication.family {
+        case .ModularLarge :
+            print("mod large")
 //            handler(defaultModularLargeTemplate())
-//            break
-//        case .ModularSmall :
-//            print("mod small")
+            break
+        case .ModularSmall :
+            print("mod small")
 //            handler(defaultModularSmallTemplate())
-//        case .UtilitarianLarge:
-//            print("util large")
-//        case .UtilitarianSmall :
-//            print("util small")
-//        case .CircularSmall:
-//            print("circ small")
-//        }
+        case .UtilitarianLarge:
+            print("util large")
+        case .UtilitarianSmall :
+            print("util small")
+        case .CircularSmall:
+            print("circ small")
+        }
         handler(nil)
     }
+
+    func defaultModularLargeTemplate () -> CLKComplicationTemplateModularLargeTallBody {
+        let placeHolder = CLKComplicationTemplateModularLargeTallBody()
+        placeHolder.headerTextProvider = CLKSimpleTextProvider(text: "Remaining:")
+//        placeHolder.bodyTextProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", extensionDelegate.currentAmount))
+        return placeHolder
+    }
     
-//    func defaultModularLargeTemplate () -> CLKComplicationTemplateModularLargeColumns {
-//        
-//    }
-//    
-//    func defaultModularSmallTemplate () -> CLKComplicationTemplateModularSmallRingImage {
-//        
-//    }
-    
+    func defaultModularSmallTemplate () -> CLKComplicationTemplateModularSmallRingText {
+        let placeHolder = CLKComplicationTemplateModularSmallRingText()
+//        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", extensionDelegate.currentAmount))
+//        placeHolder.fillFraction = extensionDelegate.currentAmount / extensionDelegate.allowance
+        placeHolder.ringStyle = .Closed
+        return placeHolder
+    }
     
 }
