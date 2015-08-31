@@ -104,7 +104,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             }
         }
         
-        updateComplication()
+        let oldAmountString = jarData[savedAmountInJarKey]
+        if let n = NSNumberFormatter().numberFromString(oldAmountString!) {
+            let oldAmount = Float(n)
+            if oldAmount != currentAmount {
+                updateComplication()
+            }
+        }
+        
     }
 }
 

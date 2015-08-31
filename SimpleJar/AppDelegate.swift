@@ -66,7 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         print("APP GOT : \(applicationContext)")
         sharedDefaults.setObject(applicationContext, forKey: jarKey)
+        
     }
+    
+    
     
     func sendDataToWatch () {
         if WCSession.isSupported() {
