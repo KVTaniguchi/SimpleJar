@@ -71,6 +71,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             }
             if let j = NSNumberFormatter().numberFromString(savedAmountHeight!) {
                 currentJarFrameHeight = CGFloat(j)
+                
+                // TODO - run a method here to see if the current jar frame height makes sense given the current amount and the allowance
+                // if the 
+                updateJarViewWithAmount(CGFloat(currentAmount), up: false)
             }
         }
         else {
@@ -287,6 +291,36 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         }
         
         enterAmountView.show()
+    }
+    
+    func updateJarViewWithAmount (newAmount : CGFloat, up : Bool) {
+        var frame = jarAmountView.frame
+        let adjustedAmount = up ? currentAmount + Float(newAmount) : currentAmount - Float(newAmount)
+        if up {
+            if newAmount > allowance || adjustedAmount > Float(allowance) {
+                frame.size.height = jarImageView.frame.height * 0.8
+            }
+            else {
+                frame.size.height += CGFloat(delta * Float(newAmount))
+                frame.origin.y -= CGFloat(delta * Float(newAmount))
+            }
+        }
+        else {
+            if currentAmount > Float(allowance) {
+                let realN = Float(allowance) - adjustedAmount
+                currentAmount = adjustedAmount
+                frame.size.height -= CGFloat(delta * realN)
+                frame.origin.y += CGFloat(delta * realN)
+            }
+            else {
+                frame.size.height -= CGFloat(delta * Float(newAmount))
+                frame.origin.y += CGFloat(delta * Float(newAmount))
+            }
+        }
+        
+        currentAmount = adjustedAmount
+        currentJarFrameHeight = frame.size.height
+        levelLabel.text = currentAmountString
     }
     
     func changeAllowanceButtonPressed () {

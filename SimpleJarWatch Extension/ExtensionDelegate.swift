@@ -16,6 +16,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     var jarData = [String:String]()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
     var currentAmount : Float = 0.0, allowance : Float = 0.0
+//    var updateClosure : ((jarData:[String:String]) -> ())?
 
     func applicationDidFinishLaunching() {
         let session = WCSession.defaultSession()
@@ -68,8 +69,16 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         if let k = NSNumberFormatter().numberFromString(defaultSize!) {
             allowance = Float(k)
         }
-
+        
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        
+        // update the IFC, update the comp
+        // call closure
+//        if updateClosure != nil {
+//            updateClosure!(jarData: jarData)
+//        }
+        
+        updateComplication()
     }
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
@@ -84,6 +93,15 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         }
         
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        
+        // update the IFC, update the comp
+        // call closure
+        
+//        if updateClosure != nil {
+//            updateClosure!(jarData: jarData)
+//        }
+        
+        updateComplication()
         replyHandler(["reply":"GOT THE MESSAGE"])
     }
 
@@ -102,6 +120,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             catch {
                 print("wut")
             }
+            
+            session.sendMessage(jarData, replyHandler: nil, errorHandler: nil)
         }
         
         let oldAmountString = jarData[savedAmountInJarKey]

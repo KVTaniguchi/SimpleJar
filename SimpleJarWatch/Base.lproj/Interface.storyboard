@@ -28,13 +28,14 @@
                         </group>
                         <group width="1" alignment="center" id="e3B-qL-shn">
                             <items>
-                                <label alignment="center" text="Allowance" id="bu3-tm-SC4"/>
+                                <label alignment="center" verticalAlignment="bottom" text="Allowance" id="bu3-tm-SC4"/>
+                                <imageView width="34" height="34" alignment="left" image="Icon-24.png" contentMode="center" id="5kP-2g-Eh9"/>
                             </items>
                         </group>
                         <label alignment="center" text="$0.00" id="mGg-i5-sAl">
                             <fontDescription key="font" type="system" pointSize="17"/>
                         </label>
-                        <picker width="1" height="42" alignment="center" verticalAlignment="center" focusStyle="sequence" id="1ia-AI-LzJ">
+                        <picker width="1" height="45" alignment="center" verticalAlignment="center" focusStyle="sequence" id="1ia-AI-LzJ">
                             <connections>
                                 <action selector="pickerChangedValue:" destination="AgC-eL-Hgc" id="QBu-0r-3d4"/>
                             </connections>

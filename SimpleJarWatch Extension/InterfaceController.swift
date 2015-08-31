@@ -40,6 +40,9 @@ class InterfaceController: WKInterfaceController {
         
         currentAmountPicker.setItems(pickerItems)
         currentAmountPicker.setSelectedItemIndex(Int(currentAmount))
+        
+        // extension closure
+        
     }
     
     @IBAction func pickerChangedValue(value: Int) {
@@ -99,5 +102,4 @@ class InterfaceController: WKInterfaceController {
 
         super.didDeactivate()
     }
-
 }

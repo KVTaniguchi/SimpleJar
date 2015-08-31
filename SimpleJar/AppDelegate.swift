@@ -64,13 +64,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        print("APP GOT : \(applicationContext)")
-        sharedDefaults.setObject(applicationContext, forKey: jarKey)
+        let jarData = applicationContext as! [String:String]
+        sharedDefaults.setObject(jarData, forKey: jarKey)
         
+        // call method to update the IFC
+        print("APP DID GET CONTEXT \(jarData)")
+        let newAmount = extractAmount(jarData)
+        jarViewController?.updateJarViewWithAmount(newAmount, up: newAmount > CGFloat((jarViewController?.currentAmount)!))
     }
     
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
+        let jarData = message as! [String:String]
+        sharedDefaults.setObject(jarData, forKey: jarKey)
+        
+        print("APP DID GET SEND MESSAGE : \(jarData)")
+        // call method to update the JARVC
+        let newAmount = extractAmount(jarData)
+        jarViewController?.updateJarViewWithAmount(newAmount, up: newAmount > CGFloat((jarViewController?.currentAmount)!))
+    }
     
-    
+    func extractAmount (jarData : [String:String]) -> CGFloat {
+        let savedAmount = jarData[savedAmountInJarKey]
+        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+            return CGFloat(n)
+        }
+        return 0.0
+    }
+
     func sendDataToWatch () {
         if WCSession.isSupported() {
             if sharedDefaults.objectForKey(jarKey) != nil {
