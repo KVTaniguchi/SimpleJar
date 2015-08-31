@@ -18,8 +18,6 @@ class InterfaceController: WKInterfaceController {
     
     @IBOutlet var currentAmountPicker: WKInterfacePicker!
     
-
-    
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
@@ -36,6 +34,7 @@ class InterfaceController: WKInterfaceController {
         for index in 0...intAmount {
             let pickerItem = WKPickerItem()
             pickerItem.title = "$\(index).00"
+            pickerItem.caption = "Remaining:"
             pickerItems.append(pickerItem)
         }
         
@@ -44,18 +43,20 @@ class InterfaceController: WKInterfaceController {
     }
     
     @IBAction func pickerChangedValue(value: Int) {
-        print("picker did change \(value)")
         currentAmount = Float(value)
+        extensionDelegate.currentAmount = currentAmount
     }
     
     @IBAction func addButtonPress() {
         currentAmount += 1.0
         currentAmountPicker.setSelectedItemIndex(Int(currentAmount))
+        extensionDelegate.currentAmount = currentAmount
     }
     
     @IBAction func subtractButtonPress() {
         currentAmount -= 1.0
         currentAmountPicker.setSelectedItemIndex(Int(currentAmount))
+        extensionDelegate.currentAmount = currentAmount
     }
     
     func updateData () {
@@ -84,6 +85,7 @@ class InterfaceController: WKInterfaceController {
     }
 
     override func didDeactivate() {
+        print("IF: didDeactivate")
         jarData[jarSizeKey] = "\(allowance)"
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         sharedDefaults.setValue(jarData, forKey: jarKey)

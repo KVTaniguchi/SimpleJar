@@ -7,6 +7,7 @@
 //
 
 import WatchKit
+import ClockKit
 import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
@@ -38,6 +39,22 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         }
         
         print("EXT DID FINISH LAOUCN : \(jarData) CURRENT AMOUNT : \(currentAmount) ALLOW : \(allowance)")
+        updateComplication()
+    }
+    
+    func updateComplication () {
+        let clkServer = CLKComplicationServer.sharedInstance()
+        if clkServer.activeComplications != nil {
+            print(clkServer.activeComplications)
+            print(clkServer.activeComplications.count)
+            let comp = clkServer.activeComplications.first
+            if comp?.family == CLKComplicationFamily.ModularLarge {
+                clkServer.reloadTimelineForComplication(comp)
+            }
+            if comp?.family == CLKComplicationFamily.ModularSmall {
+                clkServer.reloadTimelineForComplication(comp)
+            }
+        }
     }
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
@@ -52,7 +69,22 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             allowance = Float(k)
         }
 
-        NSUserDefaults.standardUserDefaults().setValue(applicationContext, forKey: jarKey)
+        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+    }
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        jarData = message as! [String:String]
+        let defaultSize = jarData[jarSizeKey]
+        let savedAmount = jarData[savedAmountInJarKey]
+        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+            currentAmount = Float(n)
+        }
+        if let k = NSNumberFormatter().numberFromString(defaultSize!) {
+            allowance = Float(k)
+        }
+        
+        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        replyHandler(["reply":"GOT THE MESSAGE"])
     }
 
     func applicationDidBecomeActive() {
@@ -60,6 +92,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
 
     func applicationWillResignActive() {
+        jarData[savedAmountInJarKey] = "\(currentAmount)"
+        sharedDefaults.setObject(jarData, forKey: jarKey)
         if sharedDefaults.objectForKey(jarKey) != nil {
             let session = WCSession.defaultSession()
             do {
@@ -69,6 +103,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                 print("wut")
             }
         }
+        
+        updateComplication()
     }
 }
 

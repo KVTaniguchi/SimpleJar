@@ -34,7 +34,7 @@
                         <label alignment="center" text="$0.00" id="mGg-i5-sAl">
                             <fontDescription key="font" type="system" pointSize="17"/>
                         </label>
-                        <picker width="1" height="42" alignment="center" verticalAlignment="center" focusStyle="stack" id="1ia-AI-LzJ">
+                        <picker width="1" height="42" alignment="center" verticalAlignment="center" focusStyle="sequence" id="1ia-AI-LzJ">
                             <connections>
                                 <action selector="pickerChangedValue:" destination="AgC-eL-Hgc" id="QBu-0r-3d4"/>
                             </connections>
