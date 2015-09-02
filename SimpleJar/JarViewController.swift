@@ -16,7 +16,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey"
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey", jarImageFrameKey = "jarImageFrameKey"
     var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton(), enterAddAmountButton = UIButton(), enterSubAmountButton = UIButton()
     var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
     var jarAmountView = UIView(), levelView = UIView()
@@ -74,7 +74,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                 
                 // TODO - run a method here to see if the current jar frame height makes sense given the current amount and the allowance
                 // if the 
-                updateJarViewWithAmount(CGFloat(currentAmount), up: false)
+//                updateJarViewWithAmount(CGFloat(currentAmount), up: false)
             }
         }
         else {
@@ -168,6 +168,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         
         if currentJarFrameHeight == 0 {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
+            
+            jarData[jarImageFrameKey] = "\(jarImageView.frame)"
         }
         
         drawJarAmountViewWithHeight(currentJarFrameHeight)
@@ -294,6 +296,11 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func updateJarViewWithAmount (newAmount : CGFloat, up : Bool) {
+        
+        print(up ? "YES UP" : "NO DOWN")
+        
+        print("NEW AMOUNT \(newAmount)")
+        
         var frame = jarAmountView.frame
         let adjustedAmount = up ? currentAmount + Float(newAmount) : currentAmount - Float(newAmount)
         if up {

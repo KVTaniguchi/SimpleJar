@@ -16,7 +16,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     var jarData = [String:String]()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
     var currentAmount : Float = 0.0, allowance : Float = 0.0
-//    var updateClosure : ((jarData:[String:String]) -> ())?
 
     func applicationDidFinishLaunching() {
         let session = WCSession.defaultSession()
@@ -46,8 +45,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func updateComplication () {
         let clkServer = CLKComplicationServer.sharedInstance()
         if clkServer.activeComplications != nil {
-            print(clkServer.activeComplications)
-            print(clkServer.activeComplications.count)
             let comp = clkServer.activeComplications.first
             if comp?.family == CLKComplicationFamily.ModularLarge {
                 clkServer.reloadTimelineForComplication(comp)
@@ -72,12 +69,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
         
-        // update the IFC, update the comp
-        // call closure
-//        if updateClosure != nil {
-//            updateClosure!(jarData: jarData)
-//        }
-        
         updateComplication()
     }
     
@@ -93,13 +84,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         }
         
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
-        
-        // update the IFC, update the comp
-        // call closure
-        
-//        if updateClosure != nil {
-//            updateClosure!(jarData: jarData)
-//        }
         
         updateComplication()
         replyHandler(["reply":"GOT THE MESSAGE"])

@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     var mainNavController : UINavigationController?
     var jarViewController : JarViewController?
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey"
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey", jarImageFrameKey = "jarImageFrameKey"
     let session = WCSession.defaultSession()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -69,18 +69,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         
         // call method to update the IFC
         print("APP DID GET CONTEXT \(jarData)")
-        let newAmount = extractAmount(jarData)
-        jarViewController?.updateJarViewWithAmount(newAmount, up: newAmount > CGFloat((jarViewController?.currentAmount)!))
+        updateJarViewWithAmount(jarData)
     }
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
         let jarData = message as! [String:String]
         sharedDefaults.setObject(jarData, forKey: jarKey)
         
+        // extract and fix the jarframe height here
+        
         print("APP DID GET SEND MESSAGE : \(jarData)")
         // call method to update the JARVC
-        let newAmount = extractAmount(jarData)
-        jarViewController?.updateJarViewWithAmount(newAmount, up: newAmount > CGFloat((jarViewController?.currentAmount)!))
+        updateJarViewWithAmount(jarData)
+    }
+    
+    func updateJarViewWithAmount (newJarData: [String:String]) {
+        var oldJarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+        
+        let oldCurrentAmount = extractAmount(oldJarData)
+        let oldAllowance = extractAllowance(oldJarData)
+        
+        let newCurrentAmount = extractAmount(newJarData)
+        
+        let goingUp = newCurrentAmount > CGFloat(oldCurrentAmount)
+        var newFrame = CGRectFromString(oldJarData[jarImageFrameKey]!)
+        
+        let delta = Float(newFrame.height * 0.8)/Float(oldAllowance)
+        
+        if goingUp {
+            if newCurrentAmount > CGFloat(oldAllowance) {
+                let n = oldJarData[jarImageFrameKey]
+                if let h = NSNumberFormatter().numberFromString(n!) {
+                    newFrame.size.height = CGFloat(h) * 0.8
+                }
+            }
+            else {
+                newFrame.size.height += CGFloat(delta * Float(newCurrentAmount - oldCurrentAmount))
+                newFrame.origin.y -= CGFloat(delta * Float(newCurrentAmount - oldCurrentAmount))
+            }
+        }
+        else {
+            newFrame.size.height -= CGFloat(delta * Float(oldCurrentAmount - newCurrentAmount))
+            newFrame.origin.y += CGFloat(delta * Float(oldCurrentAmount - newCurrentAmount))
+        }
+        
+        oldJarData[savedAmountInJarKey] = "\(newCurrentAmount)"
+        oldJarData[savedJarHeightKey] = "\(newFrame.size.height)"
+        sharedDefaults.setObject(oldJarData, forKey: jarKey)
+        sharedDefaults.synchronize()
     }
     
     func extractAmount (jarData : [String:String]) -> CGFloat {
@@ -90,7 +126,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         }
         return 0.0
     }
-
+    
+    func extractJarFrameHeight (jarData : [String:String]) -> CGFloat {
+        let savedHeight = jarData[savedJarHeightKey]
+        if let n = NSNumberFormatter().numberFromString(savedHeight!) {
+            return CGFloat(n)
+        }
+        return 0.0
+    }
+    
+    func extractAllowance (jarData : [String:String]) -> Float {
+        let savedAllowance = jarData[jarSizeKey]
+        if let n = NSNumberFormatter().numberFromString(savedAllowance!) {
+            return Float(n)
+        }
+        return 0.0
+    }
+    
     func sendDataToWatch () {
         if WCSession.isSupported() {
             if sharedDefaults.objectForKey(jarKey) != nil {
