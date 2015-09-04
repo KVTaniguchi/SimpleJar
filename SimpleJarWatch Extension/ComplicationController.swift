@@ -50,6 +50,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
             break
         case .ModularSmall :
             print("00 mod small")
+            let smallMod = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularSmallTemplate())
+            handler(smallMod)
+            break
         case .UtilitarianLarge:
             print("00 util large")
         case .UtilitarianSmall :
@@ -131,12 +134,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
         return placeHolder
     }
     
-    func defaultModularSmallTemplate () -> CLKComplicationTemplateModularSmallRingText {
+    func defaultModularSmallTemplate () -> CLKComplicationTemplateModularSmallSimpleText {
         setData()
-        let placeHolder = CLKComplicationTemplateModularSmallRingText()
-        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", currentAmount))
-        placeHolder.fillFraction = 1.0
-        placeHolder.ringStyle = .Closed
+        let placeHolder = CLKComplicationTemplateModularSmallSimpleText()
+        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$%f", currentAmount))
         return placeHolder
     }
     
@@ -144,13 +145,20 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
             
-            let defaultSize = jarData[jarSizeKey]
-            let savedAmount = jarData[savedAmountInJarKey]
-            if let n = NSNumberFormatter().numberFromString(savedAmount!) {
-                currentAmount = Float(n)
+            if var defaultSize = jarData[jarSizeKey] {
+                if defaultSize.isEmpty {
+                    defaultSize = "100"
+                }
+                else {
+                    if let k = NSNumberFormatter().numberFromString(defaultSize) {
+                        allowance = Float(k)
+                    }
+                }
             }
-            if let k = NSNumberFormatter().numberFromString(defaultSize!) {
-                allowance = Float(k)
+            if let savedAmount = jarData[savedAmountInJarKey] {
+                if let n = NSNumberFormatter().numberFromString(savedAmount) {
+                    currentAmount = Float(n)
+                }
             }
         }
     }

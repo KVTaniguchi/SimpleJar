@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6703310000F789F84C9261E1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BBB34D4C275BE6B7A43F90 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F61021291B88F42600442741 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021281B88F42600442741 /* AppDelegate.swift */; };
-		F610212C1B88F42600442741 /* SimpleJar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */; };
 		F610212E1B88F42600442741 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; };
 		F61021331B88F42600442741 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F61021321B88F42600442741 /* Images.xcassets */; };
 		F61021361B88F42600442741 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F61021341B88F42600442741 /* LaunchScreen.xib */; };
@@ -90,7 +89,6 @@
 		F61021231B88F42600442741 /* SimpleJar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleJar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61021271B88F42600442741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F61021281B88F42600442741 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F610212B1B88F42600442741 /* SimpleJar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleJar.xcdatamodel; sourceTree = "<group>"; };
 		F610212D1B88F42600442741 /* JarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JarViewController.swift; sourceTree = "<group>"; };
 		F61021321B88F42600442741 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F61021351B88F42600442741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 				F610212D1B88F42600442741 /* JarViewController.swift */,
 				F61021321B88F42600442741 /* Images.xcassets */,
 				F61021341B88F42600442741 /* LaunchScreen.xib */,
-				F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */,
 				F610214B1B890A3D00442741 /* plus-100.png */,
 				F610214D1B890A5100442741 /* minus-100.png */,
 				F61021511B89366A00442741 /* milk-256.png */,
@@ -484,7 +481,6 @@
 			files = (
 				F610212E1B88F42600442741 /* JarViewController.swift in Sources */,
 				F61021291B88F42600442741 /* AppDelegate.swift in Sources */,
-				F610212C1B88F42600442741 /* SimpleJar.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,19 +807,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		F610212A1B88F42600442741 /* SimpleJar.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F610212B1B88F42600442741 /* SimpleJar.xcdatamodel */,
-			);
-			currentVersion = F610212B1B88F42600442741 /* SimpleJar.xcdatamodel */;
-			path = SimpleJar.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = F610211B1B88F42600442741 /* Project object */;
 }

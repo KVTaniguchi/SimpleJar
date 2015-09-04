@@ -16,7 +16,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", savedJarHeightKey = "savedJarHeightKey" ,jarKey = "com.taniguchi.JarKey", jarImageFrameKey = "jarImageFrameKey"
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"
     var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton(), enterAddAmountButton = UIButton(), enterSubAmountButton = UIButton()
     var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
     var jarAmountView = UIView(), levelView = UIView()
@@ -51,36 +51,58 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+                print("$$$$$$$ VIDS WILL APPEPAR ")
+        updateData()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
-        canDisplayBannerAds = true
-        navigationController?.navigationBarHidden = true
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
-        
+        print("VIDS DID APPEAR &&&&&&&")
+        updateJarView()
+    }
+    
+    func updateData () {
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
             let defaultSize = jarData[jarSizeKey]
             let savedAmount = jarData[savedAmountInJarKey]
-            let savedAmountHeight = jarData[savedJarHeightKey]
             if let n = NSNumberFormatter().numberFromString(savedAmount!) {
                 currentAmount = Float(n)
             }
             if let k = NSNumberFormatter().numberFromString(defaultSize!) {
                 allowance = CGFloat(k)
             }
-            if let j = NSNumberFormatter().numberFromString(savedAmountHeight!) {
-                currentJarFrameHeight = CGFloat(j)
-                
-                // TODO - run a method here to see if the current jar frame height makes sense given the current amount and the allowance
-                // if the 
-//                updateJarViewWithAmount(CGFloat(currentAmount), up: false)
-            }
         }
         else {
             currentAmount = Float(allowance)
             changeAllowanceButtonPressed()
         }
+        
+        print("finished updating data to current amount: \(currentAmount) height : \(currentJarFrameHeight)")
+    }
+    
+    func updateJarView () {
+        if !jarData.isEmpty {
+            print("UPADTE JAR VARE : \(currentAmountString)")
+            levelLabel.text = currentAmountString
+            changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
+            drawJarAmountViewWithHeight(currentJarFrameHeight)
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        canDisplayBannerAds = true
+        navigationController?.navigationBarHidden = true
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateJarView", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "clearAll", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         view.backgroundColor = UIColor.whiteColor()
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
@@ -161,6 +183,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: levelLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 120)])
+        
+        print("JAR VIEW Finished VDL")
     }
     
     override func viewDidLayoutSubviews() {
@@ -168,8 +192,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         
         if currentJarFrameHeight == 0 {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
-            
-            jarData[jarImageFrameKey] = "\(jarImageView.frame)"
+        }
+        if currentAmount > 0 {
+            let ratio = CGFloat(currentAmount)/allowance
+            currentJarFrameHeight = ratio * jarImageView.frame.height * 0.8
         }
         
         drawJarAmountViewWithHeight(currentJarFrameHeight)
@@ -210,7 +236,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             }
             
             self.flashLabel.alpha = 1.0
-            self.flashLabel.textColor = UIColor.lightGrayColor()
+            self.flashLabel.textColor = UIColor.darkGrayColor()
             self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 4, 4)
         }) { complete in
             if complete {
@@ -293,41 +319,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         }
         
         enterAmountView.show()
-    }
-    
-    func updateJarViewWithAmount (newAmount : CGFloat, up : Bool) {
-        
-        print(up ? "YES UP" : "NO DOWN")
-        
-        print("NEW AMOUNT \(newAmount)")
-        
-        var frame = jarAmountView.frame
-        let adjustedAmount = up ? currentAmount + Float(newAmount) : currentAmount - Float(newAmount)
-        if up {
-            if newAmount > allowance || adjustedAmount > Float(allowance) {
-                frame.size.height = jarImageView.frame.height * 0.8
-            }
-            else {
-                frame.size.height += CGFloat(delta * Float(newAmount))
-                frame.origin.y -= CGFloat(delta * Float(newAmount))
-            }
-        }
-        else {
-            if currentAmount > Float(allowance) {
-                let realN = Float(allowance) - adjustedAmount
-                currentAmount = adjustedAmount
-                frame.size.height -= CGFloat(delta * realN)
-                frame.origin.y += CGFloat(delta * realN)
-            }
-            else {
-                frame.size.height -= CGFloat(delta * Float(newAmount))
-                frame.origin.y += CGFloat(delta * Float(newAmount))
-            }
-        }
-        
-        currentAmount = adjustedAmount
-        currentJarFrameHeight = frame.size.height
-        levelLabel.text = currentAmountString
     }
     
     func changeAllowanceButtonPressed () {
@@ -424,7 +415,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func save () {
         jarData[jarSizeKey] = "\(allowance)"
         jarData[savedAmountInJarKey] = "\(currentAmount)"
-        jarData[savedJarHeightKey] = "\(currentJarFrameHeight)"
         sharedDefaults.setValue(jarData, forKey: jarKey)
     }
     
@@ -474,5 +464,9 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         newText = text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         newText = newText.stringByReplacingOccurrencesOfString(".00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         return newText
+    }
+    
+    func clearAll () {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

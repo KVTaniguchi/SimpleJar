@@ -12,40 +12,47 @@
                     <items>
                         <group width="1" alignment="center" verticalAlignment="bottom" id="28t-LO-G2Z">
                             <items>
-                                <button width="0.5" alignment="left" verticalAlignment="center" title="+" id="nFI-fY-0dL">
+                                <button width="0.5" alignment="left" title="Save" id="VnJ-dV-n1c">
                                     <color key="backgroundColor" red="0.0" green="0.83120265149999994" blue="0.060322269550000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
-                                        <action selector="addButtonPress" destination="AgC-eL-Hgc" id="GYf-ee-YkV"/>
+                                        <action selector="saveButtonPressed" destination="AgC-eL-Hgc" id="KtE-Gl-1EF"/>
                                     </connections>
                                 </button>
-                                <button width="0.5" alignment="right" verticalAlignment="center" title="-" id="QGk-kC-Zzo">
-                                    <color key="backgroundColor" red="0.83120265149999994" green="0.0" blue="0.0083548499979999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <button width="0.5" alignment="left" title="Reset" id="LCd-yF-MIx">
+                                    <color key="backgroundColor" red="1" green="0.57396091559999995" blue="0.18276013120000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
-                                        <action selector="subtractButtonPress" destination="AgC-eL-Hgc" id="YF9-2Z-SXf"/>
+                                        <action selector="resetButtonPressed" destination="AgC-eL-Hgc" id="Rbf-Ib-wWT"/>
                                     </connections>
                                 </button>
                             </items>
                         </group>
                         <group width="1" alignment="center" id="e3B-qL-shn">
                             <items>
-                                <label alignment="center" verticalAlignment="bottom" text="Allowance" id="bu3-tm-SC4"/>
-                                <imageView width="34" height="34" alignment="left" image="Icon-24.png" contentMode="center" id="5kP-2g-Eh9"/>
+                                <label alignment="left" verticalAlignment="bottom" text="You have:" id="bu3-tm-SC4"/>
+                                <label alignment="right" text="$0.00" id="mGg-i5-sAl">
+                                    <fontDescription key="font" type="system" pointSize="17"/>
+                                </label>
                             </items>
                         </group>
-                        <label alignment="center" text="$0.00" id="mGg-i5-sAl">
-                            <fontDescription key="font" type="system" pointSize="17"/>
-                        </label>
+                        <group width="1" alignment="left" id="Da2-IJ-X0B">
+                            <items>
+                                <label alignment="left" text="After:" id="UoU-4Q-hnn"/>
+                                <label alignment="right" text="$0.00" id="6ND-y9-jmk">
+                                    <fontDescription key="font" type="system" pointSize="17"/>
+                                </label>
+                            </items>
+                        </group>
                         <picker width="1" height="45" alignment="center" verticalAlignment="center" focusStyle="sequence" id="1ia-AI-LzJ">
                             <connections>
-                                <action selector="pickerChangedValue:" destination="AgC-eL-Hgc" id="QBu-0r-3d4"/>
+                                <action selector="pickerValueChanged:" destination="AgC-eL-Hgc" id="0dq-kC-qH0"/>
                             </connections>
                         </picker>
                     </items>
                     <connections>
-                        <outlet property="addAmountButton" destination="nFI-fY-0dL" id="V8G-wH-sRH"/>
+                        <outlet property="afterLabel" destination="UoU-4Q-hnn" id="o0b-Md-4QE"/>
                         <outlet property="allowanceLabel" destination="mGg-i5-sAl" id="ZST-Xh-TAf"/>
                         <outlet property="currentAmountPicker" destination="1ia-AI-LzJ" id="Ai2-Hg-bFt"/>
-                        <outlet property="subtractAmountButton" destination="QGk-kC-Zzo" id="DJm-ft-x7Z"/>
+                        <outlet property="previewLabel" destination="6ND-y9-jmk" id="skS-wr-ff4"/>
                     </connections>
                 </controller>
             </objects>
