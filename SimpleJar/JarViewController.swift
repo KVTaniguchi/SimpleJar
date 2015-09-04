@@ -53,15 +53,13 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
-                print("$$$$$$$ VIDS WILL APPEPAR ")
+        
         updateData()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        print("VIDS DID APPEAR &&&&&&&")
         updateJarView()
     }
     
@@ -81,13 +79,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             currentAmount = Float(allowance)
             changeAllowanceButtonPressed()
         }
-        
-        print("finished updating data to current amount: \(currentAmount) height : \(currentJarFrameHeight)")
     }
     
     func updateJarView () {
         if !jarData.isEmpty {
-            print("UPADTE JAR VARE : \(currentAmountString)")
             levelLabel.text = currentAmountString
             changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
             drawJarAmountViewWithHeight(currentJarFrameHeight)
@@ -100,9 +95,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         canDisplayBannerAds = true
         navigationController?.navigationBarHidden = true
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateJarView", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "clearAll", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         view.backgroundColor = UIColor.whiteColor()
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
@@ -183,8 +175,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: levelLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 120)])
-        
-        print("JAR VIEW Finished VDL")
     }
     
     override func viewDidLayoutSubviews() {
@@ -409,9 +399,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         startTimer()
     }
     
-    func addButtonHeld () {
-    }
-    
     func save () {
         jarData[jarSizeKey] = "\(allowance)"
         jarData[savedAmountInJarKey] = "\(currentAmount)"
@@ -464,9 +451,5 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         newText = text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         newText = newText.stringByReplacingOccurrencesOfString(".00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         return newText
-    }
-    
-    func clearAll () {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

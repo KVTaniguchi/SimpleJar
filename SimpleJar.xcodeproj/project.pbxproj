@@ -22,6 +22,8 @@
 		F61862241B8EB63600321992 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862231B8EB63600321992 /* coin@2x.png */; };
 		F61862261B8EC31200321992 /* greenDollarSign.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862251B8EC31200321992 /* greenDollarSign.png */; };
 		F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = F63F6C101B8A87D700518408 /* plus-100OffWhite.png */; };
+		F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F64256971B9A521D001A0497 /* SimpleJarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64256961B9A521D001A0497 /* SimpleJarUITests.swift */; };
 		F6A933D71B93EED1000151AD /* Icon-24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6A933D61B93EED1000151AD /* Icon-24@2x.png */; settings = {ASSET_TAGS = (); }; };
 		F6C7C9CC1B92510500D8DE7A /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CA1B92510500D8DE7A /* Interface.storyboard */; };
 		F6C7C9CE1B92510500D8DE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */; };
@@ -35,6 +37,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		F610213C1B88F42600442741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F610211B1B88F42600442741 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F61021221B88F42600442741;
+			remoteInfo = SimpleJar;
+		};
+		F64256991B9A521D001A0497 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F610211B1B88F42600442741 /* Project object */;
 			proxyType = 1;
@@ -104,7 +113,10 @@
 		F61862231B8EB63600321992 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		F61862251B8EC31200321992 /* greenDollarSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenDollarSign.png; sourceTree = "<group>"; };
 		F63F6C101B8A87D700518408 /* plus-100OffWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-100OffWhite.png"; sourceTree = "<group>"; };
-		F6A933D61B93EED1000151AD /* Icon-24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-24@2x.png"; sourceTree = "<group>"; };
+		F64256941B9A521D001A0497 /* SimpleJarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleJarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F64256961B9A521D001A0497 /* SimpleJarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarUITests.swift; sourceTree = "<group>"; };
+		F64256981B9A521D001A0497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6A933D61B93EED1000151AD /* Icon-24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-24@2x.png"; path = "../SimpleJarWatch/Icon-24@2x.png"; sourceTree = "<group>"; };
 		F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleJarWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C7C9CB1B92510500D8DE7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -128,6 +140,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F61021381B88F42600442741 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F64256911B9A521D001A0497 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -169,6 +188,7 @@
 				F610213E1B88F42600442741 /* SimpleJarTests */,
 				F6C7C9C91B92510500D8DE7A /* SimpleJarWatch */,
 				F6C7C9D81B92510500D8DE7A /* SimpleJarWatch Extension */,
+				F64256951B9A521D001A0497 /* SimpleJarUITests */,
 				F61021241B88F42600442741 /* Products */,
 				D70F1C1E13C2FD821693F2D1 /* Pods */,
 				857C65D3044B8C08F610D1A7 /* Frameworks */,
@@ -182,6 +202,7 @@
 				F610213B1B88F42600442741 /* SimpleJarTests.xctest */,
 				F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */,
 				F6C7C9D41B92510500D8DE7A /* SimpleJarWatch Extension.appex */,
+				F64256941B9A521D001A0497 /* SimpleJarUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,11 +252,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		F64256951B9A521D001A0497 /* SimpleJarUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F64256961B9A521D001A0497 /* SimpleJarUITests.swift */,
+				F64256981B9A521D001A0497 /* Info.plist */,
+			);
+			path = SimpleJarUITests;
+			sourceTree = "<group>";
+		};
 		F6C7C9C91B92510500D8DE7A /* SimpleJarWatch */ = {
 			isa = PBXGroup;
 			children = (
 				F6C7C9CA1B92510500D8DE7A /* Interface.storyboard */,
-				F6A933D61B93EED1000151AD /* Icon-24@2x.png */,
 				F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */,
 				F6C7C9CF1B92510500D8DE7A /* Info.plist */,
 			);
@@ -248,6 +277,7 @@
 				F6C7C9D91B92510500D8DE7A /* InterfaceController.swift */,
 				F6C7C9DB1B92510500D8DE7A /* ExtensionDelegate.swift */,
 				F6C7C9DD1B92510500D8DE7A /* ComplicationController.swift */,
+				F6A933D61B93EED1000151AD /* Icon-24@2x.png */,
 				F6C7C9DF1B92510500D8DE7A /* Assets.xcassets */,
 				F6C7C9E11B92510500D8DE7A /* Info.plist */,
 			);
@@ -296,6 +326,24 @@
 			productName = SimpleJarTests;
 			productReference = F610213B1B88F42600442741 /* SimpleJarTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F64256931B9A521D001A0497 /* SimpleJarUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F642569B1B9A521D001A0497 /* Build configuration list for PBXNativeTarget "SimpleJarUITests" */;
+			buildPhases = (
+				F64256901B9A521D001A0497 /* Sources */,
+				F64256911B9A521D001A0497 /* Frameworks */,
+				F64256921B9A521D001A0497 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F642569A1B9A521D001A0497 /* PBXTargetDependency */,
+			);
+			name = SimpleJarUITests;
+			productName = SimpleJarUITests;
+			productReference = F64256941B9A521D001A0497 /* SimpleJarUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		F6C7C9C71B92510500D8DE7A /* SimpleJarWatch */ = {
 			isa = PBXNativeTarget;
@@ -350,6 +398,10 @@
 						CreatedOnToolsVersion = 6.4;
 						TestTargetID = F61021221B88F42600442741;
 					};
+					F64256931B9A521D001A0497 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = F61021221B88F42600442741;
+					};
 					F6C7C9C71B92510500D8DE7A = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 3B3FT42G96;
@@ -377,6 +429,7 @@
 				F610213A1B88F42600442741 /* SimpleJarTests */,
 				F6C7C9C71B92510500D8DE7A /* SimpleJarWatch */,
 				F6C7C9D31B92510500D8DE7A /* SimpleJarWatch Extension */,
+				F64256931B9A521D001A0497 /* SimpleJarUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -400,6 +453,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F61021391B88F42600442741 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F64256921B9A521D001A0497 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -488,7 +548,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */,
 				F61021421B88F42600442741 /* SimpleJarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F64256901B9A521D001A0497 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F64256971B9A521D001A0497 /* SimpleJarUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +578,11 @@
 			isa = PBXTargetDependency;
 			target = F61021221B88F42600442741 /* SimpleJar */;
 			targetProxy = F610213C1B88F42600442741 /* PBXContainerItemProxy */;
+		};
+		F642569A1B9A521D001A0497 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F61021221B88F42600442741 /* SimpleJar */;
+			targetProxy = F64256991B9A521D001A0497 /* PBXContainerItemProxy */;
 		};
 		F6C7C9D71B92510500D8DE7A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -688,6 +762,31 @@
 			};
 			name = Release;
 		};
+		F642569C1B9A521D001A0497 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = SimpleJarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.SimpleJarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SimpleJar;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		F642569D1B9A521D001A0497 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SimpleJarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.SimpleJarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SimpleJar;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		F6C7C9E51B92510500D8DE7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -787,6 +886,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		F642569B1B9A521D001A0497 /* Build configuration list for PBXNativeTarget "SimpleJarUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F642569C1B9A521D001A0497 /* Debug */,
+				F642569D1B9A521D001A0497 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		F6C7C9E91B92510500D8DE7A /* Build configuration list for PBXNativeTarget "SimpleJarWatch Extension" */ = {
 			isa = XCConfigurationList;

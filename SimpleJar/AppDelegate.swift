@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     let session = WCSession.defaultSession()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
         mainNavController = UINavigationController()
         jarViewController = JarViewController()
         mainNavController?.pushViewController(jarViewController!, animated: false)
@@ -32,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
 
     func applicationWillResignActive(application: UIApplication) {
+        sendDataToWatch()
         jarViewController?.save()
     }
 
@@ -44,13 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         session.delegate = self
         session.activateSession()
         
-        print("did enter foreforeound")
         jarViewController?.updateData()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         jarViewController?.updateJarView()
-        print("did become active")
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -61,15 +59,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         let jarData = applicationContext as! [String:String]
         
-        print("APP DID GET CONTEXT \(jarData)")
         updateJarViewWithAmount(jarData)
     }
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
         let jarData = message as! [String:String]
         
-        
-        print("APP DID GET SEND MESSAGE : \(jarData)")
         // call method to update the JARVC
         updateJarViewWithAmount(jarData)
     }
@@ -78,7 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         var oldJarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
         let newCurrentAmount = extractAmount(newJarData)
         oldJarData[savedAmountInJarKey] = "\(newCurrentAmount)"
-        print("UPDATE JAR AMOUNT :\(oldJarData)")
         sharedDefaults.setObject(oldJarData, forKey: jarKey)
         sharedDefaults.synchronize()
         jarViewController?.jarData = oldJarData
@@ -116,9 +110,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                     session.sendMessage(jarData, replyHandler: { reply in
                         print("RESPONSE : \(reply)")
                     }, errorHandler: { error in
-                            print("ERROR : \(error)")
+                        print("ERROR : \(error)")
                     })
-                    print("APP : Sending out app context \(jarData)")
                 }
             }
         }

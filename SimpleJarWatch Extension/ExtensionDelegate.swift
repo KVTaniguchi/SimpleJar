@@ -41,7 +41,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             }
         }
         
-        print("EXT DID FINISH LAOUCN : \(jarData) CURRENT AMOUNT : \(currentAmount) ALLOW : \(allowance)")
         updateComplication()
     }
     
@@ -59,7 +58,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        print("ON WATCH : \(applicationContext)")
         jarData = applicationContext as! [String:String]
         let defaultSize = jarData[jarSizeKey]
         let savedAmount = jarData[savedAmountInJarKey]
@@ -98,6 +96,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
 
     func applicationDidBecomeActive() {
+        print("did become active")
+        
+        if updateClosure != nil {
+            updateClosure()
+        }
+        updateComplication()
     }
 
     func applicationWillResignActive() {
@@ -115,7 +119,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             
             session.sendMessage(jarData, replyHandler: nil, errorHandler: nil)
         }
-        print("calling will resign active current amoutn \(currentAmount) jar dara \(jarData)")
         updateComplication()
     }
 }

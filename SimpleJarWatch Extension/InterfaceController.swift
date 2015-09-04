@@ -48,7 +48,6 @@ class InterfaceController: WKInterfaceController {
         updateData()
         // extension closure
         extensionDelegate.updateClosure = {
-            print("calling closure")
             self.updateData()
         }
     }
@@ -81,7 +80,6 @@ class InterfaceController: WKInterfaceController {
     }
     
     func updateData () {
-        print("calling update data")
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
             
@@ -102,17 +100,20 @@ class InterfaceController: WKInterfaceController {
     }
 
     override func willActivate() {
+        print("will activate")
+        
+        updateData()
+        
         super.willActivate()
     }
     
     override func willDisappear() {
         saveData()
-        print("IF wil disapar")
+
         super.willDisappear()
     }
 
     override func didDeactivate() {
-        print("IF: didDeactivate")
         saveData()
         super.didDeactivate()
     }
@@ -133,8 +134,5 @@ class InterfaceController: WKInterfaceController {
         }
         
         WCSession.defaultSession().sendMessage(jarData, replyHandler: nil, errorHandler: nil)
-        
-        print("finished IFC saved data")
-        
     }
 }

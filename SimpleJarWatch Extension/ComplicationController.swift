@@ -39,29 +39,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
     
     func getCurrentTimelineEntryForComplication(complication: CLKComplication, withHandler handler: ((CLKComplicationTimelineEntry?) -> Void)) {
         setData()
-        
-        print("CC get current tieline, CURRENT: \(currentAmount) ALLOWANCE : \(allowance)")
-        
-        switch complication.family {
-        case .ModularLarge :
-            print("00 mod large")
-            let largeMod = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularLargeTemplate())
-            handler(largeMod)
-            break
-        case .ModularSmall :
-            print("00 mod small")
-            let smallMod = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularSmallTemplate())
-            handler(smallMod)
-            break
-        case .UtilitarianLarge:
-            print("00 util large")
-        case .UtilitarianSmall :
-            print("00 util small")
-        case .CircularSmall:
-            print("00 circ small")
-        }
-        
-        handler(nil)
+
+        handler(getTimelineEntryForFamily(complication.family))
+//        switch complication.family {
+//        case .ModularLarge :
+//            let largeMod = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularLargeTemplate())
+//            handler(largeMod)
+//            break
+//        case .ModularSmall :
+//            let smallMod = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularSmallTemplate())
+//            handler(smallMod)
+//            break
+//        case .UtilitarianLarge:
+//            print("00 util large")
+//        case .UtilitarianSmall :
+//            print("00 util small")
+//        case .CircularSmall:
+//            print("00 circ small")
+//        }
+//        
+//        handler(nil)
     }
     
     func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
@@ -75,24 +72,18 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
     }
     
     func getTimelineEntryForFamily (family : CLKComplicationFamily) -> CLKComplicationTimelineEntry {
-        setData()
-        let entry = CLKComplicationTimelineEntry()
         switch family {
         case .ModularLarge :
-            print("mod large")
             return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularLargeTemplate())
         case .ModularSmall :
-            print("mod small")
             return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularSmallTemplate())
         case .UtilitarianLarge:
-            print("util large")
+            return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultUtilLargeTemplate())
         case .UtilitarianSmall :
-            print("util small")
+            return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultUtilSmallTemplate())
         case .CircularSmall:
-            print("circ small")
+            return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultCircularSmallTemplate())
         }
-        
-        return entry
     }
     
     // MARK: - Update Scheduling
@@ -110,34 +101,49 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
         
         switch complication.family {
         case .ModularLarge :
-            print("11 mod large")
             handler(defaultModularLargeTemplate())
-            break
         case .ModularSmall :
-            print("11 mod small")
             handler(defaultModularSmallTemplate())
         case .UtilitarianLarge:
-            print("11 util large")
+            handler(defaultUtilLargeTemplate())
         case .UtilitarianSmall :
-            print("11 util small")
+            handler(defaultUtilSmallTemplate())
         case .CircularSmall:
-            print("11 circ small")
+            handler(defaultCircularSmallTemplate())
         }
         handler(nil)
     }
 
     func defaultModularLargeTemplate () -> CLKComplicationTemplateModularLargeTallBody {
-        setData()
         let placeHolder = CLKComplicationTemplateModularLargeTallBody()
         placeHolder.headerTextProvider = CLKSimpleTextProvider(text: "Remaining:")
         placeHolder.bodyTextProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", currentAmount))
         return placeHolder
     }
     
-    func defaultModularSmallTemplate () -> CLKComplicationTemplateModularSmallSimpleText {
-        setData()
-        let placeHolder = CLKComplicationTemplateModularSmallSimpleText()
-        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$%f", currentAmount))
+    func defaultModularSmallTemplate () -> CLKComplicationTemplateModularSmallStackText {
+        let placeHolder = CLKComplicationTemplateModularSmallStackText()
+        placeHolder.line1TextProvider = CLKSimpleTextProvider(text: "$")
+        placeHolder.line2TextProvider = CLKSimpleTextProvider(text: String(format: "%d", Int(currentAmount)))
+        return placeHolder
+    }
+    
+    func defaultUtilLargeTemplate () -> CLKComplicationTemplateUtilitarianLargeFlat {
+        let placeHolder = CLKComplicationTemplateUtilitarianLargeFlat()
+        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", currentAmount))
+        return placeHolder
+    }
+    
+    func defaultUtilSmallTemplate () -> CLKComplicationTemplateUtilitarianSmallFlat {
+        let placeHolder = CLKComplicationTemplateUtilitarianSmallFlat()
+        placeHolder.textProvider = CLKSimpleTextProvider(text: String(format: "$%.2f", currentAmount))
+        return placeHolder
+    }
+    
+    func defaultCircularSmallTemplate () -> CLKComplicationTemplateCircularSmallStackText {
+        let placeHolder = CLKComplicationTemplateCircularSmallStackText()
+        placeHolder.line1TextProvider = CLKSimpleTextProvider(text: "$")
+        placeHolder.line2TextProvider = CLKSimpleTextProvider(text: String(format: "%d", Int(currentAmount)))
         return placeHolder
     }
     
