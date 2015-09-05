@@ -14,7 +14,7 @@ class SimpleJarTests: XCTestCase {
     func testJarViewController () {
         let jvc = JarViewController()
         if let jarData = NSUserDefaults.standardUserDefaults().objectForKey(jvc.jarKey) {
-            print("00000 tests \(jarData)")
+            XCTAssertNotNil(jarData, "If the app is installed, should get jar Data")
         }
     }
     
