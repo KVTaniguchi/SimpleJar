@@ -183,7 +183,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         if currentJarFrameHeight == 0 {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
         }
-        if currentAmount > 0 {
+        if currentAmount < Float(allowance) {
             let ratio = CGFloat(currentAmount)/allowance
             currentJarFrameHeight = ratio * jarImageView.frame.height * 0.8
         }
