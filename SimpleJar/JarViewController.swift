@@ -84,6 +84,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func updateJarView () {
         if !jarData.isEmpty {
             levelLabel.text = currentAmountString
+            addAllowanceButton.setTitle("Add \(allowanceString)", forState: .Normal)
             changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
             drawJarAmountViewWithHeight(currentJarFrameHeight)
         }
@@ -180,10 +181,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if currentJarFrameHeight == 0 {
+        if currentJarFrameHeight == 0 || currentAmount >= Float(allowance) {
             currentJarFrameHeight = jarImageView.frame.height * 0.8
         }
-        if currentAmount < Float(allowance) {
+        else if currentAmount < Float(allowance) {
             let ratio = CGFloat(currentAmount)/allowance
             currentJarFrameHeight = ratio * jarImageView.frame.height * 0.8
         }
@@ -197,7 +198,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
     }
     
-    // MARK ANIMATIONS
+    // MARK ANIMATIONSs
     func animateWithDirection (up : Bool) {
         emitterLayer.emitterPosition = CGPointMake(view.center.x, CGRectGetMinY(jarAmountView.frame))
         emitterLayer.zPosition = 10
