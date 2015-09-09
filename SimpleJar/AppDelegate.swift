@@ -107,14 +107,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                         print("wut")
                     }
                     
-                    session.sendMessage(jarData, replyHandler: { reply in
-                        print("RESPONSE : \(reply)")
-                    }, errorHandler: { error in
-                        print("ERROR : \(error)")
-                    })
+                    if session.reachable {
+                        session.sendMessage(jarData, replyHandler: { reply in
+                            print("RESPONSE : \(reply)")
+                            }, errorHandler: { error in
+                                print("ERROR : \(error)")
+                        })
+                    }
                 }
             }
         }
     }
 }
-

@@ -17,15 +17,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"
     var currentAmount : Float = 0.0, allowance : Float = 0.0
     var updateClosure : (() -> Void) = {}
+    let session = WCSession.defaultSession()
 
     func applicationDidFinishLaunching() {
-        let session = WCSession.defaultSession()
-        
-        if (WCSession.isSupported()) {
-            session.delegate = self
-            session.activateSession()
-        }
-        
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
             
@@ -68,7 +62,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             allowance = Float(k)
         }
         
+        if (updateClosure != nil) {
+            updateClosure()
+        }
+        
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
         
         updateComplication()
     }
@@ -85,6 +84,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         }
         
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
         
         updateComplication()
         
@@ -96,8 +96,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
 
     func applicationDidBecomeActive() {
-        print("did become active")
-        
         if updateClosure != nil {
             updateClosure()
         }
@@ -109,18 +107,37 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         sharedDefaults.setObject(jarData, forKey: jarKey)
         if sharedDefaults.objectForKey(jarKey) != nil {
-            let session = WCSession.defaultSession()
-            do {
-                try session.updateApplicationContext(jarData)
-            }
-            catch {
-                print("wut")
-            }
             
-            session.sendMessage(jarData, replyHandler: nil, errorHandler: nil)
+            if (WCSession.isSupported()) {
+                session.delegate = self
+                session.activateSession()
+                
+                do {
+                    try session.updateApplicationContext(jarData)
+                }
+                catch {
+                    print("wut")
+                }
+                
+                if session.reachable {
+                    session.sendMessage(jarData, replyHandler: nil, errorHandler: nil)
+                }
+            }
         }
         updateComplication()
+        
+        print("will resign active")
+    }
+    
+    // MARK - helpers
+    func updateHelper () {
+        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        updateComplication()
+        
+        if (updateClosure != nil) {
+            updateClosure()
+        }
     }
 }
-
-

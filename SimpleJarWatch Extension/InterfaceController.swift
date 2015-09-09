@@ -108,6 +108,7 @@ class InterfaceController: WKInterfaceController {
     }
     
     override func willDisappear() {
+        print("will disappear")
         saveData()
 
         super.willDisappear()
@@ -115,6 +116,9 @@ class InterfaceController: WKInterfaceController {
 
     override func didDeactivate() {
         saveData()
+        
+        print("did deactivtate")
+        
         super.didDeactivate()
     }
     

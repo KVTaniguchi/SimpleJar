@@ -41,24 +41,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
         setData()
 
         handler(getTimelineEntryForFamily(complication.family))
-//        switch complication.family {
-//        case .ModularLarge :
-//            let largeMod = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularLargeTemplate())
-//            handler(largeMod)
-//            break
-//        case .ModularSmall :
-//            let smallMod = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularSmallTemplate())
-//            handler(smallMod)
-//            break
-//        case .UtilitarianLarge:
-//            print("00 util large")
-//        case .UtilitarianSmall :
-//            print("00 util small")
-//        case .CircularSmall:
-//            print("00 circ small")
-//        }
-//        
-//        handler(nil)
     }
     
     func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
@@ -72,6 +54,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
     }
     
     func getTimelineEntryForFamily (family : CLKComplicationFamily) -> CLKComplicationTimelineEntry {
+        setData()
         switch family {
         case .ModularLarge :
             return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultModularLargeTemplate())
@@ -89,7 +72,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
     // MARK: - Update Scheduling
     
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
-        setData()
         // Call the handler with the date when you would next like to be given the opportunity to update your complication content
         handler(nil);
     }
