@@ -25,6 +25,11 @@
 		F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F64256971B9A521D001A0497 /* SimpleJarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64256961B9A521D001A0497 /* SimpleJarUITests.swift */; };
 		F6A933D71B93EED1000151AD /* Icon-24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6A933D61B93EED1000151AD /* Icon-24@2x.png */; settings = {ASSET_TAGS = (); }; };
+		F6BD28BC1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28BA1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
+		F6BD28FB1BA1138100FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F6BD28FD1BA1188200FFF662 /* 44-shoebox.png in Resources */ = {isa = PBXBuildFile; fileRef = F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */; settings = {ASSET_TAGS = (); }; };
+		F6BD28FE1BA11F0600FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F6BD28FF1BA1294500FFF662 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021281B88F42600442741 /* AppDelegate.swift */; settings = {ASSET_TAGS = (); }; };
 		F6C7C9CC1B92510500D8DE7A /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CA1B92510500D8DE7A /* Interface.storyboard */; };
 		F6C7C9CE1B92510500D8DE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */; };
 		F6C7C9D51B92510500D8DE7A /* SimpleJarWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F6C7C9D41B92510500D8DE7A /* SimpleJarWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -117,6 +122,9 @@
 		F64256961B9A521D001A0497 /* SimpleJarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarUITests.swift; sourceTree = "<group>"; };
 		F64256981B9A521D001A0497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6A933D61B93EED1000151AD /* Icon-24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-24@2x.png"; path = "../SimpleJarWatch/Icon-24@2x.png"; sourceTree = "<group>"; };
+		F6BD28BB1BA10A2C00FFF662 /* TransactionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransactionModel.xcdatamodel; sourceTree = "<group>"; };
+		F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHistoryViewController.swift; sourceTree = "<group>"; };
+		F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "44-shoebox.png"; sourceTree = "<group>"; };
 		F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleJarWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C7C9CB1B92510500D8DE7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -213,7 +221,10 @@
 				F61862231B8EB63600321992 /* coin@2x.png */,
 				F61021281B88F42600442741 /* AppDelegate.swift */,
 				F610212D1B88F42600442741 /* JarViewController.swift */,
+				F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */,
+				F6BD28BA1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld */,
 				F61021321B88F42600442741 /* Images.xcassets */,
+				F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */,
 				F61021341B88F42600442741 /* LaunchScreen.xib */,
 				F610214B1B890A3D00442741 /* plus-100.png */,
 				F610214D1B890A5100442741 /* minus-100.png */,
@@ -447,6 +458,7 @@
 				F61021331B88F42600442741 /* Images.xcassets in Resources */,
 				F610214E1B890A5100442741 /* minus-100.png in Resources */,
 				F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */,
+				F6BD28FD1BA1188200FFF662 /* 44-shoebox.png in Resources */,
 				F61021581B896FA800442741 /* milkSolidClearHold.png in Resources */,
 				F610214C1B890A3D00442741 /* plus-100.png in Resources */,
 			);
@@ -539,6 +551,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6BD28FB1BA1138100FFF662 /* TransactionHistoryViewController.swift in Sources */,
+				F6BD28BC1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld in Sources */,
 				F610212E1B88F42600442741 /* JarViewController.swift in Sources */,
 				F61021291B88F42600442741 /* AppDelegate.swift in Sources */,
 			);
@@ -548,7 +562,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6BD28FF1BA1294500FFF662 /* AppDelegate.swift in Sources */,
 				F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */,
+				F6BD28FE1BA11F0600FFF662 /* TransactionHistoryViewController.swift in Sources */,
 				F61021421B88F42600442741 /* SimpleJarTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -894,6 +910,7 @@
 				F642569D1B9A521D001A0497 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F6C7C9E91B92510500D8DE7A /* Build configuration list for PBXNativeTarget "SimpleJarWatch Extension" */ = {
 			isa = XCConfigurationList;
@@ -914,6 +931,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F6BD28BA1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F6BD28BB1BA10A2C00FFF662 /* TransactionModel.xcdatamodel */,
+			);
+			currentVersion = F6BD28BB1BA10A2C00FFF662 /* TransactionModel.xcdatamodel */;
+			path = TransactionModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F610211B1B88F42600442741 /* Project object */;
 }
