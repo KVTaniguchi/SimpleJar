@@ -68,6 +68,12 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         updateJarView()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        save()
+    }
+    
     func updateData () {
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
@@ -457,8 +463,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         let entity = NSEntityDescription.entityForName("Transaction", inManagedObjectContext: moc)
         let transaction = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: moc)
         transaction.setValue(amount, forKey: "amount")
-        transaction.setValue(NSDate().timeIntervalSince1970, forKey: "date")
-        
+        transaction.setValue(NSDate().timeIntervalSinceReferenceDate, forKey: "date")
+        print("TIMER INTERVERVAL :\(NSDate().timeIntervalSinceReferenceDate)")
         do {
             try moc.save()
         }
