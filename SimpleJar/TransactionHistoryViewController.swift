@@ -9,10 +9,9 @@
 import UIKit
 import CoreData
 
-class TransactionHistoryViewController: UIViewController {
+class TransactionHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let fetchRequest = NSFetchRequest(entityName:"Transaction")
-    
     var fetchResults : [NSManagedObject] {
         get {
             do {
@@ -25,51 +24,74 @@ class TransactionHistoryViewController: UIViewController {
             }
         }
     }
-    
     var moc : NSManagedObjectContext {
         get {
             return appDelegate.managedObjectContext
         }
     }
+    
+    private static var formatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy   HH:mm"
+        return formatter
+        }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir", size: 20)!]
+        title = "History"
         navigationController?.navigationBarHidden = false
         view.backgroundColor = UIColor.orangeColor()
+        
+        let tableView = UITableView(frame: view.frame, style: .Plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerClass(TransactionCell.self, forCellReuseIdentifier: "cell")
+        view.addSubview(tableView)
+    }
     
-        for transaction in fetchResults {
-            let value = transaction.valueForKey("amount")
-            let date = transaction.valueForKey("date")
-            print("value \(value) date \(date)")
-        }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchResults.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let transaction = fetchResults[indexPath.row]
+        let value = transaction.valueForKey("amount") as! Float
+        let date = transaction.valueForKey("date") as! NSDate
+        let dateString = TransactionHistoryViewController.formatter.stringFromDate(date)
+        let signString = value < 0 ? "-" : "+"
+        let amountString = String(format: "\(signString) $%.2f", abs(value))
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TransactionCell
+        cell.dateLabel.text = dateString
+        cell.amountLabel.text = amountString
+        return cell
     }
 }
-//do {
-//    try moc.save()
-//}
-//catch let error as NSError {
-//    print(error)
-//}
 
-////1
-//let appDelegate =
-//UIApplication.sharedApplication().delegate as! AppDelegate
-//
-//let managedContext = appDelegate.managedObjectContext!
-//
-////2
-//let fetchRequest = NSFetchRequest(entityName:"Person")
-//
-////3
-//var error: NSError?
-//
-//let fetchedResults =
-//managedContext.executeFetchRequest(fetchRequest,
-//    error: &error) as? [NSManagedObject]
-//
-//if let results = fetchedResults {
-//    people = results
-//} else {
-//    println("Could not fetch \(error), \(error!.userInfo)")
-//}
+class TransactionCell: UITableViewCell {
+    
+    let dateLabel = UILabel(), amountLabel = UILabel()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        userInteractionEnabled = false
+        for label in [dateLabel, amountLabel] {
+            label.textColor = UIColor.darkGrayColor()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(label)
+        }
+        dateLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        amountLabel.font = UIFont(name: "AvenirNext-Bold", size: 16)
+        amountLabel.textAlignment = .Right
+        dateLabel.textAlignment = .Left
+        let views = ["dateLabel":dateLabel, "amountLabel":amountLabel]
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[dateLabel]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[dateLabel][amountLabel]-15-|", options: NSLayoutFormatOptions.AlignAllCenterY, metrics: nil, views: views))
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
