@@ -25,6 +25,8 @@
 		F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F64256971B9A521D001A0497 /* SimpleJarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64256961B9A521D001A0497 /* SimpleJarUITests.swift */; };
 		F69DA7581BA2713900018D51 /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
+		F69DA7611BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; settings = {ASSET_TAGS = (); }; };
+		F69DA7621BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; settings = {ASSET_TAGS = (); }; };
 		F6A933D71B93EED1000151AD /* Icon-24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6A933D61B93EED1000151AD /* Icon-24@2x.png */; settings = {ASSET_TAGS = (); }; };
 		F6BD28FB1BA1138100FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F6BD28FD1BA1188200FFF662 /* 44-shoebox.png in Resources */ = {isa = PBXBuildFile; fileRef = F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */; settings = {ASSET_TAGS = (); }; };
@@ -122,6 +124,7 @@
 		F64256961B9A521D001A0497 /* SimpleJarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarUITests.swift; sourceTree = "<group>"; };
 		F64256981B9A521D001A0497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F69DA7571BA2713900018D51 /* TransactionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransactionModel.xcdatamodel; sourceTree = "<group>"; };
+		F69DA7601BA284AE00018D51 /* history-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "history-128.png"; sourceTree = "<group>"; };
 		F6A933D61B93EED1000151AD /* Icon-24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-24@2x.png"; path = "../SimpleJarWatch/Icon-24@2x.png"; sourceTree = "<group>"; };
 		F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHistoryViewController.swift; sourceTree = "<group>"; };
 		F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "44-shoebox.png"; sourceTree = "<group>"; };
@@ -231,6 +234,7 @@
 				F61021551B894F9D00442741 /* milkMaskSolid.png */,
 				F61021571B896FA800442741 /* milkSolidClearHold.png */,
 				F63F6C101B8A87D700518408 /* plus-100OffWhite.png */,
+				F69DA7601BA284AE00018D51 /* history-128.png */,
 				F61862251B8EC31200321992 /* greenDollarSign.png */,
 				F61021261B88F42600442741 /* Supporting Files */,
 				F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */,
@@ -454,6 +458,7 @@
 				F61862241B8EB63600321992 /* coin@2x.png in Resources */,
 				F61862261B8EC31200321992 /* greenDollarSign.png in Resources */,
 				F61021361B88F42600442741 /* LaunchScreen.xib in Resources */,
+				F69DA7611BA284AE00018D51 /* history-128.png in Resources */,
 				F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */,
 				F61021331B88F42600442741 /* Images.xcassets in Resources */,
 				F610214E1B890A5100442741 /* minus-100.png in Resources */,
@@ -468,6 +473,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F69DA7621BA284AE00018D51 /* history-128.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
