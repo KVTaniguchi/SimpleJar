@@ -463,8 +463,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         let entity = NSEntityDescription.entityForName("Transaction", inManagedObjectContext: moc)
         let transaction = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: moc)
         transaction.setValue(amount, forKey: "amount")
-        transaction.setValue(NSDate().timeIntervalSinceReferenceDate, forKey: "date")
-        print("TIMER INTERVERVAL :\(NSDate().timeIntervalSinceReferenceDate)")
+        transaction.setValue(NSDate(), forKey: "date")
         do {
             try moc.save()
         }

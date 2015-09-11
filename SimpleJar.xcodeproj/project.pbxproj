@@ -24,8 +24,8 @@
 		F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = F63F6C101B8A87D700518408 /* plus-100OffWhite.png */; };
 		F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F64256971B9A521D001A0497 /* SimpleJarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64256961B9A521D001A0497 /* SimpleJarUITests.swift */; };
+		F69DA7581BA2713900018D51 /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		F6A933D71B93EED1000151AD /* Icon-24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6A933D61B93EED1000151AD /* Icon-24@2x.png */; settings = {ASSET_TAGS = (); }; };
-		F6BD28BC1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28BA1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		F6BD28FB1BA1138100FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F6BD28FD1BA1188200FFF662 /* 44-shoebox.png in Resources */ = {isa = PBXBuildFile; fileRef = F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */; settings = {ASSET_TAGS = (); }; };
 		F6BD28FE1BA11F0600FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -121,8 +121,8 @@
 		F64256941B9A521D001A0497 /* SimpleJarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleJarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F64256961B9A521D001A0497 /* SimpleJarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarUITests.swift; sourceTree = "<group>"; };
 		F64256981B9A521D001A0497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F69DA7571BA2713900018D51 /* TransactionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransactionModel.xcdatamodel; sourceTree = "<group>"; };
 		F6A933D61B93EED1000151AD /* Icon-24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-24@2x.png"; path = "../SimpleJarWatch/Icon-24@2x.png"; sourceTree = "<group>"; };
-		F6BD28BB1BA10A2C00FFF662 /* TransactionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransactionModel.xcdatamodel; sourceTree = "<group>"; };
 		F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHistoryViewController.swift; sourceTree = "<group>"; };
 		F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "44-shoebox.png"; sourceTree = "<group>"; };
 		F6C7C9C81B92510500D8DE7A /* SimpleJarWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleJarWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,7 +222,6 @@
 				F61021281B88F42600442741 /* AppDelegate.swift */,
 				F610212D1B88F42600442741 /* JarViewController.swift */,
 				F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */,
-				F6BD28BA1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld */,
 				F61021321B88F42600442741 /* Images.xcassets */,
 				F6BD28FC1BA1188200FFF662 /* 44-shoebox.png */,
 				F61021341B88F42600442741 /* LaunchScreen.xib */,
@@ -234,6 +233,7 @@
 				F63F6C101B8A87D700518408 /* plus-100OffWhite.png */,
 				F61862251B8EC31200321992 /* greenDollarSign.png */,
 				F61021261B88F42600442741 /* Supporting Files */,
+				F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */,
 			);
 			path = SimpleJar;
 			sourceTree = "<group>";
@@ -551,8 +551,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F69DA7581BA2713900018D51 /* TransactionModel.xcdatamodeld in Sources */,
 				F6BD28FB1BA1138100FFF662 /* TransactionHistoryViewController.swift in Sources */,
-				F6BD28BC1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld in Sources */,
 				F610212E1B88F42600442741 /* JarViewController.swift in Sources */,
 				F61021291B88F42600442741 /* AppDelegate.swift in Sources */,
 			);
@@ -933,12 +933,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F6BD28BA1BA10A2C00FFF662 /* TransactionModel.xcdatamodeld */ = {
+		F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F6BD28BB1BA10A2C00FFF662 /* TransactionModel.xcdatamodel */,
+				F69DA7571BA2713900018D51 /* TransactionModel.xcdatamodel */,
 			);
-			currentVersion = F6BD28BB1BA10A2C00FFF662 /* TransactionModel.xcdatamodel */;
+			currentVersion = F69DA7571BA2713900018D51 /* TransactionModel.xcdatamodel */;
 			path = TransactionModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
