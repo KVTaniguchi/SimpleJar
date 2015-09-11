@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     var jarViewController : JarViewController?
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey",jarKey = "com.taniguchi.JarKey"
-    let session = WCSession.defaultSession()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         mainNavController = UINavigationController()
@@ -42,8 +41,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        session.delegate = self
-        session.activateSession()
+        if #available(iOS 9.0, *) {
+            let session = WCSession.defaultSession()
+            session.delegate = self
+            session.activateSession()
+        }
+
         
         jarViewController?.updateData()
     }
@@ -57,12 +60,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         sendDataToWatch()
     }
     
+    @available(iOS 9.0, *)
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         let jarData = applicationContext as! [String:String]
         
         updateJarViewWithAmount(jarData)
     }
     
+    @available(iOS 9.0, *)
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
         let jarData = message as! [String:String]
         
@@ -97,23 +102,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     func sendDataToWatch () {
-        if WCSession.isSupported() {
-            if sharedDefaults.objectForKey(jarKey) != nil {
-                if session.paired && session.watchAppInstalled {
-                    let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
-                    do {
-                        try session.updateApplicationContext(jarData)
-                    }
-                    catch {
-                        print("wut")
-                    }
-                    
-                    if session.reachable {
-                        session.sendMessage(jarData, replyHandler: { reply in
-                            print("RESPONSE : \(reply)")
-                            }, errorHandler: { error in
-                                print("ERROR : \(error)")
-                        })
+        if #available(iOS 9.0, *) {
+            let session = WCSession.defaultSession()
+            if WCSession.isSupported() {
+                if sharedDefaults.objectForKey(jarKey) != nil {
+                    if session.paired && session.watchAppInstalled {
+                        let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+                        do {
+                            try session.updateApplicationContext(jarData)
+                        }
+                        catch {
+                            print("wut")
+                        }
+                        
+                        if session.reachable {
+                            session.sendMessage(jarData, replyHandler: { reply in
+                                print("RESPONSE : \(reply)")
+                                }, errorHandler: { error in
+                                    print("ERROR : \(error)")
+                            })
+                        }
                     }
                 }
             }

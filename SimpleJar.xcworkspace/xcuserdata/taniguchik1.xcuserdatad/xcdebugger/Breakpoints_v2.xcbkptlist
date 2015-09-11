@@ -46,13 +46,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SimpleJar/JarViewController.swift"
-            timestampString = "463635723.909593"
+            timestampString = "463636765.7541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "385"
             endingLineNumber = "385"
             landmarkName = "JarViewController"
             landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SimpleJar.JarViewController.addButtonPressed (SimpleJar.JarViewController)() -&gt; ()"
+                  moduleName = "SimpleJar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/SimpleJar/SimpleJar/JarViewController.swift"
+                  timestampString = "463636830.235623"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "387"
+                  endingLineNumber = "387"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[1] = Dead, Arg[2] = Value Promoted from InOut&gt; of SimpleJar.JarViewController.(addButtonPressed (SimpleJar.JarViewController) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "SimpleJar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/SimpleJar/SimpleJar/JarViewController.swift"
+                  timestampString = "463636830.235769"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "406"
+                  endingLineNumber = "406"
+                  offsetFromSymbolStart = "48">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
