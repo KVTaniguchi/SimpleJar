@@ -12,7 +12,7 @@ import URBNAlert
 import QuartzCore
 import CoreData
 
-class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate {
+class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
@@ -21,7 +21,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton(), enterAddAmountButton = UIButton(), enterSubAmountButton = UIButton(), transactionHistoryButton = UIButton()
     var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
     var jarAmountView = UIView(), levelView = UIView()
-    var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00
+    var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00,  startingY : CGFloat = 0.0
     var jarHeightConstraint : NSLayoutConstraint?
     var levelLabel = UILabel(), flashLabel = UILabel()
     var changeAllowanceView : URBNAlertViewController!, enterAmountView : URBNAlertViewController!
@@ -195,6 +195,40 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 120)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Right, relatedBy: .Equal, toItem: view, attribute: .Right, multiplier: 1.0, constant: -20)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Bottom, relatedBy: .Equal, toItem: subtractButton, attribute: .Top, multiplier: 1.0, constant: -30)])
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: "handleGesture:")
+
+        view.addGestureRecognizer(panGesture)
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("touches began")
+    }
+    
+    func handleGesture (gesture : UIPanGestureRecognizer) {
+        if gesture.state == .Began {
+            print("BEGAN")
+            // get start location
+            startingY = gesture.translationInView(view).y as CGFloat
+            
+            flashLabel.text = String(format: "$%.2f", currentAmount)
+            flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
+            flashLabel.textColor = UIColor.darkGrayColor()
+            flashLabel.alpha = 1.0
+        }
+        // measure distance of drag from start
+        let yPos = gesture.translationInView(view).y as CGFloat
+        let changeInY = floor((startingY - yPos)/10)
+        print("CHANGE IN Y : \(changeInY)")
+        // calculate dollar per distance
+        
+        
+        if gesture.state == .Ended {
+            print("END")
+            // clear location
+            flashLabel.alpha = 0.0
+            currentAmount = currentAmount + Float(changeInY)
+        }
     }
     
     override func viewDidLayoutSubviews() {
