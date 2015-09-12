@@ -41,65 +41,30 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func updateComplication () {
         let clkServer = CLKComplicationServer.sharedInstance()
         if clkServer.activeComplications != nil {
-            let comp = clkServer.activeComplications.first
-            if comp?.family == CLKComplicationFamily.ModularLarge {
-                clkServer.reloadTimelineForComplication(comp)
-            }
-            if comp?.family == CLKComplicationFamily.ModularSmall {
+            for comp in clkServer.activeComplications {
                 clkServer.reloadTimelineForComplication(comp)
             }
         }
     }
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        jarData = applicationContext as! [String:String]
-        let defaultSize = jarData[jarSizeKey]
-        let savedAmount = jarData[savedAmountInJarKey]
-        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
-            currentAmount = Float(n)
-        }
-        if let k = NSNumberFormatter().numberFromString(defaultSize!) {
-            allowance = Float(k)
-        }
+        saveMessage(applicationContext)
         
-        if (updateClosure != nil) {
-            updateClosure()
-        }
-        
-        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
+        updateHelper()
         updateComplication()
     }
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
-        jarData = message as! [String: String]
-        let defaultSize = jarData[jarSizeKey]
-        let savedAmount = jarData[savedAmountInJarKey]
-        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
-            currentAmount = Float(n)
-        }
-        if let k = NSNumberFormatter().numberFromString(defaultSize!) {
-            allowance = Float(k)
-        }
+        saveMessage(message)
         
-        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
+        updateHelper()
         updateComplication()
-        
-        if (updateClosure != nil) {
-            updateClosure()
-        }
         
         replyHandler(["reply":"GOT THE MESSAGE"])
     }
 
     func applicationDidBecomeActive() {
-        if updateClosure != nil {
-            updateClosure()
-        }
-        updateComplication()
+        updateHelper()
     }
 
     func applicationWillResignActive() {
@@ -130,14 +95,27 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     // MARK - helpers
+    func saveMessage (message: [String : AnyObject]) {
+        jarData = message as! [String: String]
+        let defaultSize = jarData[jarSizeKey]
+        let savedAmount = jarData[savedAmountInJarKey]
+        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+            currentAmount = Float(n)
+        }
+        if let k = NSNumberFormatter().numberFromString(defaultSize!) {
+            allowance = Float(k)
+        }
+        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     func updateHelper () {
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
         NSUserDefaults.standardUserDefaults().synchronize()
         
-        updateComplication()
-        
         if (updateClosure != nil) {
             updateClosure()
         }
+        updateComplication()
     }
 }

@@ -16,7 +16,7 @@ class TransactionHistoryViewController: UIViewController, UITableViewDataSource,
         get {
             do {
                 let fetchResults = try moc.executeFetchRequest(fetchRequest)
-                return fetchResults as! [NSManagedObject]
+                return (fetchResults as! [NSManagedObject]).reverse()
             }
             catch let error as NSError {
                 print(error)

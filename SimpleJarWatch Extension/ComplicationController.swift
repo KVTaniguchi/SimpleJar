@@ -53,6 +53,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
         handler(nil)
     }
     
+    // MARK : - Convenience
+    
     func getTimelineEntryForFamily (family : CLKComplicationFamily) -> CLKComplicationTimelineEntry {
         setData()
         switch family {
@@ -73,7 +75,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
     
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
         // Call the handler with the date when you would next like to be given the opportunity to update your complication content
-        handler(nil);
+        let calendar = NSCalendar.currentCalendar()
+        let newDate = calendar.dateByAddingUnit(.Minute, value: 30, toDate: NSDate(), options: NSCalendarOptions(rawValue: 0))
+        handler(newDate);
     }
     
     // MARK: - Placeholder Templates

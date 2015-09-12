@@ -42,12 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         if #available(iOS 9.0, *) {
-            let session = WCSession.defaultSession()
-            session.delegate = self
-            session.activateSession()
+            WCSession.defaultSession().delegate = self
+            WCSession.defaultSession().activateSession()
         }
 
-        
         jarViewController?.updateData()
     }
 
@@ -103,20 +101,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
     func sendDataToWatch () {
         if #available(iOS 9.0, *) {
-            let session = WCSession.defaultSession()
             if WCSession.isSupported() {
                 if sharedDefaults.objectForKey(jarKey) != nil {
-                    if session.paired && session.watchAppInstalled {
+                    if WCSession.defaultSession().paired && WCSession.defaultSession().watchAppInstalled {
                         let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
                         do {
-                            try session.updateApplicationContext(jarData)
+                            try WCSession.defaultSession().updateApplicationContext(jarData)
                         }
                         catch {
                             print("wut")
                         }
                         
-                        if session.reachable {
-                            session.sendMessage(jarData, replyHandler: { reply in
+                        if WCSession.defaultSession().reachable {
+                            WCSession.defaultSession().sendMessage(jarData, replyHandler: { reply in
                                 print("RESPONSE : \(reply)")
                                 }, errorHandler: { error in
                                     print("ERROR : \(error)")
