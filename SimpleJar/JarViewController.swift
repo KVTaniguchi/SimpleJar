@@ -19,7 +19,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var jarData = [String:String]()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"
     var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton(), enterAddAmountButton = UIButton(), enterSubAmountButton = UIButton(), transactionHistoryButton = UIButton()
-    var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
+    var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold")), downImageView = UIImageView(image: UIImage(named: "down-128")), upImageView = UIImageView(image: UIImage(named: "up-128"))
     var jarAmountView = UIView(), levelView = UIView()
     var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00,  startingY : CGFloat = 0.0
     var jarHeightConstraint : NSLayoutConstraint?
@@ -115,8 +115,12 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         levelLabel.text = currentAmountString
         view.addSubview(levelLabel)
         
-        jarImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(jarImageView)
+        for imageView in [jarImageView, downImageView, upImageView] {
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(imageView)
+        }
+        downImageView.alpha = 0.0
+        upImageView.alpha = 0.0
         jarAmountView.backgroundColor = UIColor(red: 22/255.0, green: 210/255.0, blue: 75/255.0, alpha: 1.0)
         jarAmountView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(jarAmountView)
@@ -175,7 +179,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[enterSub(44)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
         
-        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel, "transBtn":transactionHistoryButton]
+        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel, "transBtn":transactionHistoryButton, "down":downImageView, "up":upImageView]
         let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance][addAllowance(changeAllowance)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
@@ -196,18 +200,17 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Right, relatedBy: .Equal, toItem: view, attribute: .Right, multiplier: 1.0, constant: -20)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Bottom, relatedBy: .Equal, toItem: subtractButton, attribute: .Top, multiplier: 1.0, constant: -30)])
         
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[up]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[down]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: downImageView, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1.0, constant: -140)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: upImageView, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1.0, constant: -140)])
+        
         let panGesture = UIPanGestureRecognizer(target: self, action: "handleGesture:")
-
         view.addGestureRecognizer(panGesture)
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("touches began")
     }
     
     func handleGesture (gesture : UIPanGestureRecognizer) {
         if gesture.state == .Began {
-            print("BEGAN")
             // get start location
             startingY = gesture.translationInView(view).y as CGFloat
             
@@ -215,19 +218,47 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
             flashLabel.textColor = UIColor.darkGrayColor()
             flashLabel.alpha = 1.0
+            
+            if timerIsUp {
+                oldValue = currentAmount
+            }
+            
+            invalidateTimer()
         }
-        // measure distance of drag from start
         let yPos = gesture.translationInView(view).y as CGFloat
         let changeInY = floor((startingY - yPos)/10)
-        print("CHANGE IN Y : \(changeInY)")
-        // calculate dollar per distance
+        let adjustedAmount = currentAmount + Float(changeInY)
+        flashLabel.text = String(format: "$%.2f", adjustedAmount)
         
+        if changeInY < 0 {
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.downImageView.alpha = 1.0
+                self.upImageView.alpha = 0.0
+            })
+        }
+        else if changeInY > 0 {
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.upImageView.alpha = 1.0
+                self.downImageView.alpha = 0.0
+            })
+        }
+        
+        invalidateTimer()
         
         if gesture.state == .Ended {
-            print("END")
             // clear location
             flashLabel.alpha = 0.0
             currentAmount = currentAmount + Float(changeInY)
+            startTimer()
+            
+            let ratio = CGFloat(currentAmount)/allowance
+            currentJarFrameHeight = ratio * jarImageView.frame.height * 0.8
+            drawJarAmountViewWithHeight(currentJarFrameHeight)
+            
+            UIView.animateWithDuration(0.5, animations: {
+                self.downImageView.alpha = 0.0
+                self.upImageView.alpha = 0.0
+            })
         }
     }
     
