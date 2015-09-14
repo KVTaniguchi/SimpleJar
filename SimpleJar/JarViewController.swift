@@ -23,7 +23,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var jarAmountView = UIView(), levelView = UIView()
     var currentJarFrameHeight : CGFloat = 0.0, amountInJar : CGFloat = 0.0, allowance : CGFloat = 0.00,  startingY : CGFloat = 0.0
     var jarHeightConstraint : NSLayoutConstraint?
-    var levelLabel = UILabel(), flashLabel = UILabel()
+    var levelLabel = UILabel(), flashLabel = UILabel(), changeLabel = UILabel()
     var changeAllowanceView : URBNAlertViewController!, enterAmountView : URBNAlertViewController!
     let emitterLayer = CAEmitterLayer()
     var timerIsUp = true
@@ -126,11 +126,13 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         view.addSubview(jarAmountView)
         view.sendSubviewToBack(jarAmountView)
         
-        flashLabel.textAlignment = .Center
-        flashLabel.translatesAutoresizingMaskIntoConstraints = false
-        flashLabel.textColor = UIColor.clearColor()
-        flashLabel.font = UIFont(name: "AvenirNext-UltraLight", size: 60)
-        jarImageView.addSubview(flashLabel)
+        for label in [flashLabel, changeLabel] {
+            label.textAlignment = .Center
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.textColor = UIColor.clearColor()
+            label.font = UIFont(name: "AvenirNext-UltraLight", size: 60)
+            view.addSubview(label)
+        }
         
         addButton.setImage(UIImage(named: "plus-100"), forState: .Highlighted)
         addButton.setImage(offWhiteImage("plus-100"), forState: .Normal)
@@ -179,7 +181,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[enterSub(44)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
         
-        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel, "transBtn":transactionHistoryButton, "down":downImageView, "up":upImageView]
+        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel, "transBtn":transactionHistoryButton, "down":downImageView, "up":upImageView, "changeLbl":changeLabel]
         let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn][subBtn(addBtn)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance][addAllowance(changeAllowance)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
@@ -187,6 +189,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[levelLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[flashLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]-50-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views: views))
         
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarAmount]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
@@ -196,7 +199,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: levelLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)])
-        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 120)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: changeLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 120)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: changeLabel, attribute: .Bottom, multiplier: 1.0, constant: 120)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Right, relatedBy: .Equal, toItem: view, attribute: .Right, multiplier: 1.0, constant: -20)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Bottom, relatedBy: .Equal, toItem: subtractButton, attribute: .Top, multiplier: 1.0, constant: -30)])
         
@@ -303,17 +307,25 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         
         emitterLayer.emitterCells = [emitterCell]
         
+        // TODO remove this animation and just make it fade in
+        
+        
+        for label in [flashLabel, changeLabel] {
+            label.font = UIFont(name: "AvenirNext-Bold", size: 80)
+            label.transform = CGAffineTransformScale(flashLabel.transform, 0.25, 0.25)
+        }
         flashLabel.text = String(format: "$%.2f", currentAmount)
-        flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
-        flashLabel.transform = CGAffineTransformScale(flashLabel.transform, 0.25, 0.25)
+        changeLabel.text = String(format: "$%.2f", currentAmount - oldValue)
         UIView.animateWithDuration(0.6, animations: { () in
             if !up {
                 self.jarImageView.layer.addSublayer(self.emitterLayer)
             }
-            
             self.flashLabel.alpha = 1.0
             self.flashLabel.textColor = UIColor.darkGrayColor()
             self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 4, 4)
+            self.changeLabel.alpha = 1.0
+            self.changeLabel.textColor = UIColor.greenColor()
+            self.changeLabel.transform = CGAffineTransformScale(self.changeLabel.transform, 4, 4)
         }) { complete in
             if complete {
                 UIView.animateWithDuration(0.8, animations: { () in
@@ -321,9 +333,12 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                         self.emitterLayer.removeFromSuperlayer()
                     }
                     
-                    self.flashLabel.alpha = 0.0
-                    self.flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
-                    self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 1, 1)
+                    for label in [self.flashLabel, self.changeLabel] {
+                        label.alpha = 0.0
+                        label.font = UIFont(name: "AvenirNext-Bold", size: 80)
+                        label.transform = CGAffineTransformScale(label.transform, 1, 1)
+                    }
+                
                     })
             }
         }
