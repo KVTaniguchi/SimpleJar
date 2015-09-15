@@ -219,10 +219,12 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             // get start location
             startingY = gesture.translationInView(view).y as CGFloat
             
+            for label in [flashLabel, changeLabel] {
+                label.alpha = 1.0
+            }
+
             flashLabel.text = String(format: "$%.2f", currentAmount)
-            flashLabel.font = UIFont(name: "AvenirNext-Bold", size: 80)
             flashLabel.textColor = UIColor.darkGrayColor()
-            flashLabel.alpha = 1.0
             
             if timerIsUp {
                 oldValue = currentAmount
@@ -234,6 +236,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         let changeInY = floor((startingY - yPos)/10)
         let adjustedAmount = currentAmount + Float(changeInY)
         flashLabel.text = String(format: "$%.2f", adjustedAmount)
+        changeLabel.text = String(format: "$%.2f", (adjustedAmount - currentAmount))
+        changeLabel.textColor = (adjustedAmount - currentAmount) > 0 ? UIColor.greenColor() : UIColor.redColor()
         
         if changeInY < 0 {
             UIView.animateWithDuration(0.5, animations: { () -> Void in
@@ -252,7 +256,9 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         
         if gesture.state == .Ended {
             // clear location
-            flashLabel.alpha = 0.0
+            for label in [flashLabel, changeLabel] {
+                label.alpha = 0.0
+            }
             currentAmount = currentAmount + Float(changeInY)
             startTimer()
             
@@ -322,7 +328,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             self.changeLabel.textColor = (self.currentAmount - self.oldValue) > 0 ? UIColor.greenColor() : UIColor.redColor()
         }) { complete in
             if complete {
-                UIView.animateWithDuration(1.5, animations: {
+                UIView.animateWithDuration(2.5, animations: {
                     if !up {
                         self.emitterLayer.removeFromSuperlayer()
                     }
