@@ -65,7 +65,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        updateJarView()
+         updateJarView()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -130,7 +130,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             label.textAlignment = .Center
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textColor = UIColor.clearColor()
-            label.font = UIFont(name: "AvenirNext-UltraLight", size: 60)
+            label.alpha = 0.0
+            label.font = UIFont(name: "AvenirNext-Bold", size: 80)
             view.addSubview(label)
         }
         
@@ -199,8 +200,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: levelLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)])
-        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: changeLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 120)])
-        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: changeLabel, attribute: .Bottom, multiplier: 1.0, constant: 120)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: changeLabel, attribute: .Top, relatedBy: .Equal, toItem: jarImageView, attribute: .Top, multiplier: 1.0, constant: 110)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: flashLabel, attribute: .Top, relatedBy: .Equal, toItem: changeLabel, attribute: .Bottom, multiplier: 1.0, constant: 0)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Right, relatedBy: .Equal, toItem: view, attribute: .Right, multiplier: 1.0, constant: -20)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Bottom, relatedBy: .Equal, toItem: subtractButton, attribute: .Top, multiplier: 1.0, constant: -30)])
         
@@ -309,37 +310,27 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         
         // TODO remove this animation and just make it fade in
         
-        
-        for label in [flashLabel, changeLabel] {
-            label.font = UIFont(name: "AvenirNext-Bold", size: 80)
-            label.transform = CGAffineTransformScale(flashLabel.transform, 0.25, 0.25)
-        }
         flashLabel.text = String(format: "$%.2f", currentAmount)
         changeLabel.text = String(format: "$%.2f", currentAmount - oldValue)
-        UIView.animateWithDuration(0.6, animations: { () in
+        UIView.animateWithDuration(0.1, animations: {
             if !up {
                 self.jarImageView.layer.addSublayer(self.emitterLayer)
             }
             self.flashLabel.alpha = 1.0
             self.flashLabel.textColor = UIColor.darkGrayColor()
-            self.flashLabel.transform = CGAffineTransformScale(self.flashLabel.transform, 4, 4)
             self.changeLabel.alpha = 1.0
-            self.changeLabel.textColor = UIColor.greenColor()
-            self.changeLabel.transform = CGAffineTransformScale(self.changeLabel.transform, 4, 4)
+            self.changeLabel.textColor = (self.currentAmount - self.oldValue) > 0 ? UIColor.greenColor() : UIColor.redColor()
         }) { complete in
             if complete {
-                UIView.animateWithDuration(0.8, animations: { () in
+                UIView.animateWithDuration(1.5, animations: {
                     if !up {
                         self.emitterLayer.removeFromSuperlayer()
                     }
                     
                     for label in [self.flashLabel, self.changeLabel] {
                         label.alpha = 0.0
-                        label.font = UIFont(name: "AvenirNext-Bold", size: 80)
-                        label.transform = CGAffineTransformScale(label.transform, 1, 1)
                     }
-                
-                    })
+                })
             }
         }
     }
