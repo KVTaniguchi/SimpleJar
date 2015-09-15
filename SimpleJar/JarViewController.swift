@@ -281,7 +281,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         emitterCell.velocityRange = 50
         emitterCell.yAcceleration = 250
         emitterCell.contents = UIImage(named: "greenDollarSign")?.CGImage
-        
         emitterLayer.emitterCells = [emitterCell]
         
         // TODO remove this animation and just make it fade in
@@ -362,10 +361,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
                     self.currentAmount = adjustedAmount
                     self.currentJarFrameHeight = frame.size.height
                     self.drawJarAmountViewWithHeight(frame.size.height)
-                    
                     self.invalidateTimer()
                     self.startTimer()
-                    
                     self.animateWithDirection(sender == self.enterAddAmountButton)
                 }
             }
