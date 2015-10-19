@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         sendDataToWatch()
         jarViewController?.save()
+        updateDynamicShortcutItems()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -58,6 +59,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         sendDataToWatch()
     }
     
+    func updateDynamicShortcutItems() {
+        if #available(iOS 9.0, *) {
+            if jarViewController?.traitCollection.forceTouchCapability == .Available {
+                UIApplication.sharedApplication().shortcutItems = [UIApplicationShortcutItem(type: "com.SimpleJar.QuickTitle", localizedTitle: "Current amount : $\(jarViewController!.currentAmount)")]
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
     @available(iOS 9.0, *)
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         let jarData = applicationContext as! [String:String]
@@ -68,8 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     @available(iOS 9.0, *)
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
         let jarData = message as! [String:String]
-        
-        // call method to update the JARVC
         updateJarViewWithAmount(jarData)
     }
     

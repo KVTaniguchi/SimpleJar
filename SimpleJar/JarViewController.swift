@@ -319,7 +319,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
         enterAmountView.alertStyler = style
         enterAmountView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
-            
             if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.enterAmountView.textField().text!)) {
                 if Float(n) > self.currentAmount && sender == self.enterSubAmountButton {
                     let alert = URBNAlertViewController(title: "Exceeding allowance!", message: "That amount is more than your allowance")
