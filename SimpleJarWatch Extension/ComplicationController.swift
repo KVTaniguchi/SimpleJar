@@ -9,9 +9,8 @@
 import ClockKit
 import WatchKit
 
-class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDelegate {
-    
-    let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
+class ComplicationController: NSObject, CLKComplicationDataSource {
+
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var currentAmount : Float = 0.0, allowance : Float = 0.0
     var jarData = [String:String]()

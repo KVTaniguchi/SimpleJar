@@ -10,7 +10,6 @@ import WatchKit
 import WatchConnectivity
 import Foundation
 
-
 class InterfaceController: WKInterfaceController {
     @IBOutlet var allowanceLabel: WKInterfaceLabel!
     

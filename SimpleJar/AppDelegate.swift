@@ -64,8 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
             if jarViewController?.traitCollection.forceTouchCapability == .Available {
                 UIApplication.sharedApplication().shortcutItems = [UIApplicationShortcutItem(type: "com.SimpleJar.QuickTitle", localizedTitle: "Current amount : $\(jarViewController!.currentAmount)")]
             }
-        } else {
-            // Fallback on earlier versions
         }
     }
     
