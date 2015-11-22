@@ -205,6 +205,8 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func handleGesture (gesture : UIPanGestureRecognizer) {
+        guard currentAmount > 0 else { return }
+        
         if gesture.state == .Began {
             startingY = gesture.translationInView(view).y as CGFloat
             
@@ -259,7 +261,10 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func drawJarAmountViewWithHeight (height : CGFloat) {
+        guard height <= jarAmountView.frame.height else { return }
+        
         NSLayoutConstraint.deactivateConstraints([jarHeightConstraint!])
+        
         jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: height)
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
     }

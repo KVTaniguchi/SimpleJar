@@ -20,18 +20,16 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let session = WCSession.defaultSession()
 
     func applicationDidFinishLaunching() {
-        if sharedDefaults.objectForKey(jarKey) != nil {
-            jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
-            
-            if let defaultSize = jarData[jarSizeKey] {
-                if let k = NSNumberFormatter().numberFromString(defaultSize) {
-                    allowance = Float(k)
-                }
+        guard let data = sharedDefaults.objectForKey(jarKey) as? [String:String]  else { return }
+        if let defaultSize = data[jarSizeKey] {
+            if let k = NSNumberFormatter().numberFromString(defaultSize) {
+                allowance = Float(k)
             }
-            if let savedAmount = jarData[savedAmountInJarKey] {
-                if let n = NSNumberFormatter().numberFromString(savedAmount) {
-                    currentAmount = Float(n)
-                }
+        }
+        
+        if let savedAmount = jarData[savedAmountInJarKey] {
+            if let n = NSNumberFormatter().numberFromString(savedAmount) {
+                currentAmount = Float(n)
             }
         }
         
@@ -71,9 +69,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
 
     func applicationWillResignActive() {
-
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         sharedDefaults.setObject(jarData, forKey: jarKey)
+        
         if sharedDefaults.objectForKey(jarKey) != nil {
             
             if (WCSession.isSupported()) {
@@ -93,15 +91,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             }
         }
         updateComplication()
-        
-        print("will resign active")
     }
     
     // MARK - helpers
     func saveMessage (message: [String : AnyObject]) {
-        jarData = message as! [String: String]
-        let defaultSize = jarData[jarSizeKey]
-        let savedAmount = jarData[savedAmountInJarKey]
+        guard let data = message as? [String:String] else { return }
+        let defaultSize = data[jarSizeKey]
+        let savedAmount = data[savedAmountInJarKey]
         if let n = NSNumberFormatter().numberFromString(savedAmount!) {
             currentAmount = Float(n)
         }
@@ -110,7 +106,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         }
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
         NSUserDefaults.standardUserDefaults().synchronize()
-    }
+}
     
     func updateHelper () {
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
