@@ -45,6 +45,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                 clkServer.reloadTimelineForComplication(comp)
             }
         }
+        else {
+            clkServer.reloadTimelineForComplication(nil)
+        }
     }
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
