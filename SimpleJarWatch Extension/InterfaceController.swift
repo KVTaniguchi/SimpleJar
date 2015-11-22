@@ -99,7 +99,6 @@ class InterfaceController: WKInterfaceController {
     }
 
     override func willActivate() {
-        print("will activate")
         
         updateData()
         
