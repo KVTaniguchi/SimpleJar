@@ -61,7 +61,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         updateHelper()
         updateComplication()
         
-        replyHandler(["reply":"GOT THE MESSAGE"])
+        replyHandler(["reply":"GOT THE MESSAGE xoxoxo \(message)"])
     }
 
     func applicationDidBecomeActive() {
@@ -104,7 +104,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         if let k = NSNumberFormatter().numberFromString(defaultSize!) {
             allowance = Float(k)
         }
-        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
+        NSUserDefaults.standardUserDefaults().setValue(data, forKey: jarKey)
         NSUserDefaults.standardUserDefaults().synchronize()
 }
     

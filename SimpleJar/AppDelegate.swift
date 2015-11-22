@@ -103,17 +103,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         if #available(iOS 9.0, *) {
             if WCSession.isSupported() {
                 if sharedDefaults.objectForKey(jarKey) != nil {
-                    if WCSession.defaultSession().paired && WCSession.defaultSession().watchAppInstalled {
+                    
+                    let session = WCSession.defaultSession()
+                    session.delegate = self
+                    session.activateSession()
+                    
+                    if session.paired && session.watchAppInstalled {
                         let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
                         do {
-                            try WCSession.defaultSession().updateApplicationContext(jarData)
+                            try session.updateApplicationContext(jarData)
                         }
                         catch {
                             print("wut")
                         }
                         
-                        if WCSession.defaultSession().reachable {
-                            WCSession.defaultSession().sendMessage(jarData, replyHandler: { reply in
+                        if session.reachable {
+                            session.sendMessage(jarData, replyHandler: { reply in
                                 print("RESPONSE : \(reply)")
                                 }, errorHandler: { error in
                                     print("ERROR : \(error)")
