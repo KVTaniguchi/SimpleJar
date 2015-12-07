@@ -42,10 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        if #available(iOS 9.0, *) {
-            WCSession.defaultSession().delegate = self
-            WCSession.defaultSession().activateSession()
-        }
+        WCSession.defaultSession().delegate = self
+        WCSession.defaultSession().activateSession()
 
         jarViewController?.updateData()
     }
@@ -107,30 +105,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     func sendDataToWatch () {
-        if #available(iOS 9.0, *) {
-            if WCSession.isSupported() {
-                if sharedDefaults.objectForKey(jarKey) != nil {
+        if WCSession.isSupported() {
+            if sharedDefaults.objectForKey(jarKey) != nil {
+                
+                let session = WCSession.defaultSession()
+                session.delegate = self
+                session.activateSession()
+                
+                if session.paired && session.watchAppInstalled {
+                    let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+                    do {
+                        try session.updateApplicationContext(jarData)
+                    }
+                    catch {
+                        print("wut")
+                    }
                     
-                    let session = WCSession.defaultSession()
-                    session.delegate = self
-                    session.activateSession()
-                    
-                    if session.paired && session.watchAppInstalled {
-                        let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
-                        do {
-                            try session.updateApplicationContext(jarData)
-                        }
-                        catch {
-                            print("wut")
-                        }
-                        
-                        if session.reachable {
-                            session.sendMessage(jarData, replyHandler: { reply in
-                                print("RESPONSE : \(reply)")
-                                }, errorHandler: { error in
-                                    print("ERROR : \(error)")
-                            })
-                        }
+                    if session.reachable {
+                        session.sendMessage(jarData, replyHandler: { reply in
+                            print("RESPONSE : \(reply)")
+                            }, errorHandler: { error in
+                                print("ERROR : \(error)")
+                        })
                     }
                 }
             }

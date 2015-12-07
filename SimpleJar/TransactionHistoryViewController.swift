@@ -32,7 +32,7 @@ class TransactionHistoryViewController: UIViewController, UITableViewDataSource,
     
     private static var formatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy   HH:mm"
+        formatter.dateFormat = "MM-dd-yyyy HH:mm"
         return formatter
         }()
 
