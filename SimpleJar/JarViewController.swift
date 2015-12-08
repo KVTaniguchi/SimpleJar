@@ -12,6 +12,7 @@ import URBNAlert
 import QuartzCore
 import CoreData
 
+@available(iOS 9.0, *)
 class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

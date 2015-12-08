@@ -61,7 +61,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         updateHelper()
         updateComplication()
         
-        replyHandler(["reply":"GOT THE MESSAGE xoxoxo \(message)"])
+        replyHandler(["reply": message])
     }
 
     func applicationDidBecomeActive() {
@@ -82,7 +82,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                     try session.updateApplicationContext(jarData)
                 }
                 catch {
-                    print("wut")
+                    print("Error with session update \(error)")
                 }
                 
                 if session.reachable {

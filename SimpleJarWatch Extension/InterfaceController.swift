@@ -129,7 +129,7 @@ class InterfaceController: WKInterfaceController {
             try WCSession.defaultSession().updateApplicationContext(jarData)
         }
         catch {
-            print("wut")
+            print(error)
         }
         
         WCSession.defaultSession().sendMessage(jarData, replyHandler: nil, errorHandler: nil)

@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import WatchConnectivity
 
+@available(iOS 9.0, *)
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 

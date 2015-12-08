@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+@available(iOS 9.0, *)
 class TransactionHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let fetchRequest = NSFetchRequest(entityName:"Transaction")
