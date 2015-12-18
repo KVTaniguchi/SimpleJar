@@ -59,10 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     func updateDynamicShortcutItems() {
-        if #available(iOS 9.0, *) {
-            if jarViewController?.traitCollection.forceTouchCapability == .Available {
-                UIApplication.sharedApplication().shortcutItems = [UIApplicationShortcutItem(type: "com.SimpleJar.QuickTitle", localizedTitle: "Current amount : $\(jarViewController!.currentAmount)")]
-            }
+        if jarViewController?.traitCollection.forceTouchCapability == .Available {
+            UIApplication.sharedApplication().shortcutItems = [UIApplicationShortcutItem(type: "com.SimpleJar.QuickTitle", localizedTitle: "Current amount : $\(jarViewController!.currentAmount)")]
         }
     }
     

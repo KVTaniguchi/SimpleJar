@@ -43,12 +43,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
-        // Call the handler with the timeline entries prior to the given date
         handler(nil)
     }
     
     func getTimelineEntriesForComplication(complication: CLKComplication, afterDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
-        // Call the handler with the timeline entries after to the given date
         handler(nil)
     }
     
@@ -133,23 +131,22 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func setData () {
-        if sharedDefaults.objectForKey(jarKey) != nil {
-            jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
-            
-            if var defaultSize = jarData[jarSizeKey] {
-                if defaultSize.isEmpty {
-                    defaultSize = "100"
-                }
-                else {
-                    if let k = NSNumberFormatter().numberFromString(defaultSize) {
-                        allowance = Float(k)
-                    }
+        guard let defaults = sharedDefaults.objectForKey(jarKey) else { return }
+        jarData = defaults.objectForKey(jarKey) as! [String:String]
+        
+        if var defaultSize = jarData[jarSizeKey] {
+            if defaultSize.isEmpty {
+                defaultSize = "100"
+            }
+            else {
+                if let k = NSNumberFormatter().numberFromString(defaultSize) {
+                    allowance = Float(k)
                 }
             }
-            if let savedAmount = jarData[savedAmountInJarKey] {
-                if let n = NSNumberFormatter().numberFromString(savedAmount) {
-                    currentAmount = Float(n)
-                }
+        }
+        if let savedAmount = jarData[savedAmountInJarKey] {
+            if let n = NSNumberFormatter().numberFromString(savedAmount) {
+                currentAmount = Float(n)
             }
         }
     }

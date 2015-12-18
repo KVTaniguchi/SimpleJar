@@ -224,7 +224,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
             
             invalidateTimer()
         }
-        let yPos = gesture.translationInView(view).y as CGFloat
+        let yPos: CGFloat = gesture.translationInView(view).y
         let changeInY = floor((startingY - yPos)/10)
         let adjustedAmount = currentAmount + Float(changeInY)
         flashLabel.text = String(format: "$%.2f", adjustedAmount)
@@ -388,12 +388,12 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         var messageText = ""
         var titleText = ""
         if sharedDefaults.objectForKey(jarKey) == nil {
-            titleText = "Welcome!"
-            messageText = "Enter your allowance below"
+            titleText = NSLocalizedString("Welcome!", comment: "")
+            messageText = NSLocalizedString("Enter your allowance below", comment: "")
         }
         else {
-            titleText = "Allowance \(allowanceString)"
-            messageText = "Change your allowance"
+            titleText = NSLocalizedString("Allowance \(allowanceString)", comment: "")
+            messageText = NSLocalizedString("Change your allowance", comment: "")
         }
         
         changeAllowanceView = URBNAlertViewController(title: titleText, message: messageText)
@@ -403,14 +403,13 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
         changeAllowanceView.alertStyler = style
         changeAllowanceView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
-            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.changeAllowanceView.textField().text!)) {
-                self.allowance = CGFloat(n)
-                self.changeAllowanceButton.setTitle("Allowance \(self.allowanceString)", forState: .Normal)
-                self.addAllowanceButton.setTitle("Add \(self.allowanceString)", forState: .Normal)
-                if self.sharedDefaults.objectForKey(self.jarKey) == nil {
-                    self.currentAmount = Float(self.allowance)
-                    self.levelLabel.text = self.currentAmountString
-                }
+            guard let changedAllowance = self.changeAllowanceView.textField().text, number = NSNumberFormatter().numberFromString(self.processAllowanceString(changedAllowance)) else { return }
+            self.allowance = CGFloat(number)
+            self.changeAllowanceButton.setTitle("Allowance \(self.allowanceString)", forState: .Normal)
+            self.addAllowanceButton.setTitle("Add \(self.allowanceString)", forState: .Normal)
+            if self.sharedDefaults.objectForKey(self.jarKey) == nil {
+                self.currentAmount = Float(self.allowance)
+                self.levelLabel.text = self.currentAmountString
             }
         }))
         
@@ -491,7 +490,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     
     // MARK HELPERS
     func invalidateTimer () {
-        if (timer != nil) {
+        if timer != nil {
             timer.invalidate()
             timer = nil
         }
