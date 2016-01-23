@@ -45,7 +45,6 @@ class InterfaceController: WKInterfaceController {
         currentAmountPicker.setSelectedItemIndex(200)
         
         updateData()
-        // extension closure
         extensionDelegate.updateClosure = {
             self.updateData()
         }
@@ -99,7 +98,6 @@ class InterfaceController: WKInterfaceController {
     }
 
     override func willActivate() {
-        
         updateData()
         
         super.willActivate()
