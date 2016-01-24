@@ -80,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         sharedDefaults.setObject(oldJarData, forKey: jarKey)
         jarViewController?.jarData = oldJarData
         jarViewController?.updateData()
+        jarViewController?.updateJarView()
     }
     
     func extractAmount (jarData : [String:String]) -> CGFloat {
@@ -113,14 +114,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                             try session.updateApplicationContext(jarData)
                         }
                         catch {
-                            print("wut")
+                            print("Error updating context: \(error)")
                         }
                         
                         if session.reachable {
                             session.sendMessage(jarData, replyHandler: { reply in
                                 print("RESPONSE : \(reply)")
                                 }, errorHandler: { error in
-                                    print("ERROR : \(error)")
+                                    print("Error sending message : \(error)")
                             })
                         }
                     }
