@@ -94,7 +94,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationWillResignActiveNotification, object: nil)
         view.backgroundColor = UIColor.whiteColor()
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
         levelLabel.textAlignment = .Center
