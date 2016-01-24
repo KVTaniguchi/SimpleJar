@@ -41,11 +41,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         }
         return initialHeight/Float(allowance)
     }
-    var moc : NSManagedObjectContext {
-        get {
-            return appDelegate.managedObjectContext
-        }
-    }
+    var moc : NSManagedObjectContext { return appDelegate.managedObjectContext }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

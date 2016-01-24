@@ -61,8 +61,7 @@ class InterfaceController: WKInterfaceController {
         else {
             afterLabel.setText("After:")
             previewLabel.setText(String(format: "$%.2f", previewAmount))
-        }
-
+        }   
     }
     
     @IBAction func saveButtonPressed() {
@@ -128,7 +127,7 @@ class InterfaceController: WKInterfaceController {
             try WCSession.defaultSession().updateApplicationContext(jarData)
         }
         catch {
-            print("wut")
+            print("Warning - Error sending to watch : \(error)")
         }
         
         WCSession.defaultSession().sendMessage(jarData, replyHandler: nil, errorHandler: nil)

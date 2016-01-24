@@ -112,7 +112,6 @@
 		F61021411B88F42600442741 /* SimpleJarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarTests.swift; sourceTree = "<group>"; };
 		F610214B1B890A3D00442741 /* plus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-100.png"; sourceTree = "<group>"; };
 		F610214D1B890A5100442741 /* minus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus-100.png"; sourceTree = "<group>"; };
-		F610214F1B892BF200442741 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		F61021511B89366A00442741 /* milk-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milk-256.png"; sourceTree = "<group>"; };
 		F61021551B894F9D00442741 /* milkMaskSolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkMaskSolid.png; sourceTree = "<group>"; };
 		F61021571B896FA800442741 /* milkSolidClearHold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkSolidClearHold.png; sourceTree = "<group>"; };
@@ -192,7 +191,6 @@
 		F610211A1B88F42600442741 = {
 			isa = PBXGroup;
 			children = (
-				F610214F1B892BF200442741 /* iAd.framework */,
 				F61021251B88F42600442741 /* SimpleJar */,
 				F610213E1B88F42600442741 /* SimpleJarTests */,
 				F6C7C9C91B92510500D8DE7A /* SimpleJarWatch */,
