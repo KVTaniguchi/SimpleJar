@@ -11,7 +11,7 @@ import WatchConnectivity
 import Foundation
 
 
-class InterfaceController: WKInterfaceController {
+class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var allowanceLabel: WKInterfaceLabel!
     
     @IBOutlet var previewLabel: WKInterfaceLabel!
@@ -23,9 +23,15 @@ class InterfaceController: WKInterfaceController {
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
     let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
     var currentAmount : Float = 0.0, allowance : Float = 0.0, adjustedAmount : Float = 0.0
+    let session = WCSession.defaultSession()
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
+        
+        if (WCSession.isSupported()) {
+            session.delegate = self
+            session.activateSession()
+        }
         
         var pickerItems = [WKPickerItem]()
         for index in -200...200 {
@@ -61,7 +67,7 @@ class InterfaceController: WKInterfaceController {
         else {
             afterLabel.setText("After:")
             previewLabel.setText(String(format: "$%.2f", previewAmount))
-        }   
+        }
     }
     
     @IBAction func saveButtonPressed() {
@@ -78,9 +84,11 @@ class InterfaceController: WKInterfaceController {
     }
     
     func updateData () {
-        if sharedDefaults.objectForKey(jarKey) != nil {
-            jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.objectForKey(jarKey) != nil {
             
+            jarData = defaults.objectForKey(jarKey) as! [String:String]
+
             if let defaultSize = jarData[jarSizeKey] {
                 if let k = NSNumberFormatter().numberFromString(defaultSize) {
                     allowance = Float(k)
@@ -92,7 +100,6 @@ class InterfaceController: WKInterfaceController {
                 }
             }
         }
-        
         allowanceLabel.setText(String(format: "$%.2f", currentAmount))
         previewLabel.setText("")
     }
@@ -119,17 +126,18 @@ class InterfaceController: WKInterfaceController {
         adjustedAmount = 0.0
         previewLabel.setText("")
         jarData[savedAmountInJarKey] = "\(currentAmount)"
-        extensionDelegate.jarData = jarData
-        extensionDelegate.currentAmount = currentAmount
-        sharedDefaults.setValue(jarData, forKey: jarKey)
-        sharedDefaults.synchronize()
+        NSUserDefaults.standardUserDefaults().setObject(jarData, forKey: jarKey)
+        sharedDefaults.setObject(jarData, forKey: jarKey)
         do {
-            try WCSession.defaultSession().updateApplicationContext(jarData)
+            try session.updateApplicationContext(jarData)
         }
         catch {
             print("Warning - Error sending to watch : \(error)")
         }
         
-        WCSession.defaultSession().sendMessage(jarData, replyHandler: nil, errorHandler: nil)
+        session.sendMessage(jarData, replyHandler: nil, errorHandler: nil)
+        extensionDelegate.jarData = jarData
+        extensionDelegate.currentAmount = currentAmount
+        extensionDelegate.updateComplication()
     }
 }

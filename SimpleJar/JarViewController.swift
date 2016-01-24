@@ -93,6 +93,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         view.backgroundColor = UIColor.whiteColor()
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
@@ -473,7 +474,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     func save () {
         jarData[jarSizeKey] = "\(allowance)"
         jarData[savedAmountInJarKey] = "\(currentAmount)"
-        sharedDefaults.setValue(jarData, forKey: jarKey)
+        sharedDefaults.setObject(jarData, forKey: jarKey)
     }
     
     // MARK HELPERS

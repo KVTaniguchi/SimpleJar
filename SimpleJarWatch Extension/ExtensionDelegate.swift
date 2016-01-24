@@ -21,6 +21,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
 
     func applicationDidFinishLaunching() {
         guard let data = sharedDefaults.objectForKey(jarKey) as? [String:String]  else { return }
+        jarData = data
         if let defaultSize = data[jarSizeKey] {
             if let k = NSNumberFormatter().numberFromString(defaultSize) {
                 allowance = Float(k)
@@ -71,7 +72,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func applicationWillResignActive() {
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         sharedDefaults.setObject(jarData, forKey: jarKey)
-        
         if sharedDefaults.objectForKey(jarKey) != nil {
             
             if (WCSession.isSupported()) {
@@ -104,13 +104,11 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         if let k = NSNumberFormatter().numberFromString(defaultSize!) {
             allowance = Float(k)
         }
-        NSUserDefaults.standardUserDefaults().setValue(data, forKey: jarKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        sharedDefaults.setObject(data, forKey: jarKey)
 }
     
     func updateHelper () {
-        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        NSUserDefaults.standardUserDefaults().setObject(jarData, forKey: jarKey)
         
         updateClosure()
         updateComplication()

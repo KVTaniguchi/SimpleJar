@@ -78,7 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         let newCurrentAmount = extractAmount(newJarData)
         oldJarData[savedAmountInJarKey] = "\(newCurrentAmount)"
         sharedDefaults.setObject(oldJarData, forKey: jarKey)
-        sharedDefaults.synchronize()
         jarViewController?.jarData = oldJarData
         jarViewController?.updateData()
     }
