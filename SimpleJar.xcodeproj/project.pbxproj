@@ -840,7 +840,7 @@
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = "SimpleJarWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.MoneyJar.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.MoneyJar.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -856,7 +856,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "SimpleJarWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.MoneyJar.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.MoneyJar.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;

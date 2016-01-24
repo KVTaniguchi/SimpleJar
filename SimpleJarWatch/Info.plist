@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.Taniguchi.MoneyJar.watchkitapp</string>
+	<string>com.Taniguchi.MoneyJar</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>
