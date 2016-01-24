@@ -19,7 +19,7 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var afterLabel: WKInterfaceLabel!
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
+    let moneyJarSizeKey = "moneyJarSizeKey", savedAmountInJarKey = "moneyJarSavedAmountKey" ,jarKey = "com.taniguchi.MoneyJarKey"
     let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
     var currentAmount : Float = 0.0, allowance : Float = 0.0, adjustedAmount : Float = 0.0
     
@@ -79,14 +79,14 @@ class InterfaceController: WKInterfaceController {
     
     func updateData () {
         if sharedDefaults.objectForKey(jarKey) != nil {
-            jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+            guard let data = sharedDefaults.objectForKey(jarKey) as? [String:String] else { return }
             
-            if let defaultSize = jarData[jarSizeKey] {
+            if let defaultSize = data[moneyJarSizeKey] {
                 if let k = NSNumberFormatter().numberFromString(defaultSize) {
                     allowance = Float(k)
                 }
             }
-            if let savedAmount = jarData[savedAmountInJarKey] {
+            if let savedAmount = data[savedAmountInJarKey] {
                 if let n = NSNumberFormatter().numberFromString(savedAmount) {
                     currentAmount = Float(n)
                 }
@@ -123,6 +123,7 @@ class InterfaceController: WKInterfaceController {
         extensionDelegate.currentAmount = currentAmount
         sharedDefaults.setValue(jarData, forKey: jarKey)
         sharedDefaults.synchronize()
+        extensionDelegate.updateComplication()
         do {
             try WCSession.defaultSession().updateApplicationContext(jarData)
         }

@@ -14,7 +14,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var currentAmount : Float = 0.0, allowance : Float = 0.0
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
+    let moneyJarSizeKey = "moneyJarSizeKey", savedAmountInJarKey = "moneyJarSavedAmountKey" ,jarKey = "com.taniguchi.MoneyJarKey"
     
     // MARK: - Timeline Configuration
     
@@ -43,11 +43,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
-        handler(nil)
+        handler([getTimelineEntryForFamily(complication.family)])
     }
     
     func getTimelineEntriesForComplication(complication: CLKComplication, afterDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
-        handler(nil)
+        handler([getTimelineEntryForFamily(complication.family)])
     }
     
     // MARK : - Convenience
@@ -71,9 +71,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Update Scheduling
     
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
-        // Call the handler with the date when you would next like to be given the opportunity to update your complication content
         let calendar = NSCalendar.currentCalendar()
-        let newDate = calendar.dateByAddingUnit(.Hour, value: 1, toDate: NSDate(), options: NSCalendarOptions(rawValue: 0))
+        let newDate = calendar.dateByAddingUnit(.Day, value: 1, toDate: NSDate(), options: NSCalendarOptions(rawValue: 0))
         handler(newDate);
     }
     
@@ -126,17 +125,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func defaultCircularSmallTemplate () -> CLKComplicationTemplateCircularSmallStackText {
         let placeHolder = CLKComplicationTemplateCircularSmallStackText()
         placeHolder.line1TextProvider = CLKSimpleTextProvider(text: "$")
-        placeHolder.line2TextProvider = CLKSimpleTextProvider(text: String(format: "%d", Int(currentAmount)))
+        placeHolder.line2TextProvider = CLKSimpleTextProvider(text: String(format: "%d", Int(10.0)))
         return placeHolder
     }
     
-    func setData () {
-        guard let defaults = sharedDefaults.objectForKey(jarKey) else { return }
-        jarData = defaults.objectForKey(jarKey) as! [String:String]
+    func setData() {
+        guard let defaults = sharedDefaults.objectForKey(jarKey), jarData = defaults.objectForKey(jarKey) as? [String:String] else { return }
         
-        if var defaultSize = jarData[jarSizeKey] {
+        if let defaultSize = jarData[moneyJarSizeKey] {
             if defaultSize.isEmpty {
-                defaultSize = "100"
+                allowance = Float(100.0)
+                
             }
             else {
                 if let k = NSNumberFormatter().numberFromString(defaultSize) {

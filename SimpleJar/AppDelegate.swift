@@ -18,12 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     var mainNavController : UINavigationController?
     var jarViewController : JarViewController?
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey",jarKey = "com.taniguchi.JarKey"
+    let moneyJarSizeKey = "moneyJarSizeKey", savedAmountInJarKey = "moneyJarSavedAmountKey",jarKey = "com.taniguchi.MoneyJarKey"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         mainNavController = UINavigationController()
         jarViewController = JarViewController()
-        mainNavController?.pushViewController(jarViewController!, animated: false)
+        guard let vc = jarViewController else { return true }
+        mainNavController?.pushViewController(vc, animated: false)
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = mainNavController
         window?.makeKeyAndVisible()
@@ -59,26 +60,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     func updateDynamicShortcutItems() {
-        if jarViewController?.traitCollection.forceTouchCapability == .Available {
-            UIApplication.sharedApplication().shortcutItems = [UIApplicationShortcutItem(type: "com.SimpleJar.QuickTitle", localizedTitle: "Current amount : $\(jarViewController!.currentAmount)")]
+        guard let vc = jarViewController else { return }
+        if vc.traitCollection.forceTouchCapability == .Available {
+            UIApplication.sharedApplication().shortcutItems = [UIApplicationShortcutItem(type: "com.SimpleJar.QuickTitle", localizedTitle: "Current amount : $\(vc.currentAmount)")]
         }
     }
     
     @available(iOS 9.0, *)
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        let jarData = applicationContext as! [String:String]
-        
-        updateJarViewWithAmount(jarData)
+        guard let data = applicationContext as? [String:String] else { return }
+        updateJarViewWithAmount(data)
     }
     
     @available(iOS 9.0, *)
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
-        let jarData = message as! [String:String]
+        guard let jarData = message as? [String:String] else { return }
         updateJarViewWithAmount(jarData)
     }
     
     func updateJarViewWithAmount (newJarData: [String:String]) {
-        var oldJarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+        guard var oldJarData = sharedDefaults.objectForKey(jarKey) as? [String:String] else { return }
         let newCurrentAmount = extractAmount(newJarData)
         oldJarData[savedAmountInJarKey] = "\(newCurrentAmount)"
         sharedDefaults.setObject(oldJarData, forKey: jarKey)
@@ -88,16 +89,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     func extractAmount (jarData : [String:String]) -> CGFloat {
-        let savedAmount = jarData[savedAmountInJarKey]
-        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+        guard let savedAmount = jarData[savedAmountInJarKey] else { return 0.0 }
+        if let n = NSNumberFormatter().numberFromString(savedAmount) {
             return CGFloat(n)
         }
         return 0.0
     }
     
     func extractAllowance (jarData : [String:String]) -> Float {
-        let savedAllowance = jarData[jarSizeKey]
-        if let n = NSNumberFormatter().numberFromString(savedAllowance!) {
+        guard let savedAllowance = jarData[moneyJarSizeKey] else { return 0.0 }
+        if let n = NSNumberFormatter().numberFromString(savedAllowance) {
             return Float(n)
         }
         return 0.0
@@ -112,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                 session.activateSession()
                 
                 if session.paired && session.watchAppInstalled {
-                    let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+                    guard let jarData = sharedDefaults.objectForKey(jarKey) as? [String:String] else { return }
                     do {
                         try session.updateApplicationContext(jarData)
                     }

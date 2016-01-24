@@ -14,14 +14,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"
+    let moneyJarSizeKey = "moneyJarSizeKey", savedAmountInJarKey = "moneyJarSavedAmountKey", jarKey = "com.taniguchi.MoneyJarKey"
     var currentAmount : Float = 0.0, allowance : Float = 0.0
     var updateClosure : (() -> Void) = {}
     let session = WCSession.defaultSession()
 
     func applicationDidFinishLaunching() {
         guard let data = sharedDefaults.objectForKey(jarKey) as? [String:String]  else { return }
-        if let defaultSize = data[jarSizeKey] {
+        if let defaultSize = data[moneyJarSizeKey] {
             if let k = NSNumberFormatter().numberFromString(defaultSize) {
                 allowance = Float(k)
             }
@@ -96,12 +96,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     // MARK - helpers
     func saveMessage (message: [String : AnyObject]) {
         guard let data = message as? [String:String] else { return }
-        let defaultSize = data[jarSizeKey]
-        let savedAmount = data[savedAmountInJarKey]
-        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
+        guard let defaultSize = data[moneyJarSizeKey] else { return }
+        guard let savedAmount = data[savedAmountInJarKey] else { return }
+        if let n = NSNumberFormatter().numberFromString(savedAmount) {
             currentAmount = Float(n)
         }
-        if let k = NSNumberFormatter().numberFromString(defaultSize!) {
+        if let k = NSNumberFormatter().numberFromString(defaultSize) {
             allowance = Float(k)
         }
         NSUserDefaults.standardUserDefaults().setValue(data, forKey: jarKey)

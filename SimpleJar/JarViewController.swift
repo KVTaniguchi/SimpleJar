@@ -18,7 +18,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"
+    let moneyJarSizeKey = "moneyJarSizeKey", savedAmountInJarKey = "moneyJarSavedAmountKey", jarKey = "com.taniguchi.MoneyJarKey"
     var addButton = UIButton(), subtractButton = UIButton(), changeAllowanceButton = UIButton(), addAllowanceButton = UIButton(), enterAddAmountButton = UIButton(), enterSubAmountButton = UIButton(), transactionHistoryButton = UIButton()
     var jarImageView = UIImageView(image: UIImage(named: "milkSolidClearHold"))
     var jarAmountView = UIView(), levelView = UIView()
@@ -78,7 +78,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     func updateData () {
         if sharedDefaults.objectForKey(jarKey) != nil {
             jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
-            let defaultSize = jarData[jarSizeKey]
+            let defaultSize = jarData[moneyJarSizeKey]
             let savedAmount = jarData[savedAmountInJarKey]
             if let n = NSNumberFormatter().numberFromString(savedAmount!) {
                 currentAmount = Float(n)
@@ -483,7 +483,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     }
     
     func save () {
-        jarData[jarSizeKey] = "\(allowance)"
+        jarData[moneyJarSizeKey] = "\(allowance)"
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         sharedDefaults.setValue(jarData, forKey: jarKey)
     }
