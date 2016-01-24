@@ -15,24 +15,22 @@
 		F61021421B88F42600442741 /* SimpleJarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021411B88F42600442741 /* SimpleJarTests.swift */; };
 		F610214C1B890A3D00442741 /* plus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F610214B1B890A3D00442741 /* plus-100.png */; };
 		F610214E1B890A5100442741 /* minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F610214D1B890A5100442741 /* minus-100.png */; };
-		F61021501B892BF200442741 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F610214F1B892BF200442741 /* iAd.framework */; };
 		F61021521B89366A00442741 /* milk-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021511B89366A00442741 /* milk-256.png */; };
 		F61021561B894F9D00442741 /* milkMaskSolid.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021551B894F9D00442741 /* milkMaskSolid.png */; };
 		F61021581B896FA800442741 /* milkSolidClearHold.png in Resources */ = {isa = PBXBuildFile; fileRef = F61021571B896FA800442741 /* milkSolidClearHold.png */; };
-		F61862241B8EB63600321992 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862231B8EB63600321992 /* coin@2x.png */; };
 		F61862261B8EC31200321992 /* greenDollarSign.png in Resources */ = {isa = PBXBuildFile; fileRef = F61862251B8EC31200321992 /* greenDollarSign.png */; };
-		F61E32501BA54522002FAE2E /* down-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F61E324F1BA54522002FAE2E /* down-128.png */; settings = {ASSET_TAGS = (); }; };
-		F61E32521BA54534002FAE2E /* up-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F61E32511BA54534002FAE2E /* up-128.png */; settings = {ASSET_TAGS = (); }; };
+		F61E32501BA54522002FAE2E /* down-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F61E324F1BA54522002FAE2E /* down-128.png */; };
+		F61E32521BA54534002FAE2E /* up-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F61E32511BA54534002FAE2E /* up-128.png */; };
 		F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = F63F6C101B8A87D700518408 /* plus-100OffWhite.png */; };
-		F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; };
 		F64256971B9A521D001A0497 /* SimpleJarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64256961B9A521D001A0497 /* SimpleJarUITests.swift */; };
-		F69DA7581BA2713900018D51 /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
-		F69DA7611BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; settings = {ASSET_TAGS = (); }; };
-		F69DA7621BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; settings = {ASSET_TAGS = (); }; };
-		F6A933D71B93EED1000151AD /* Icon-24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6A933D61B93EED1000151AD /* Icon-24@2x.png */; settings = {ASSET_TAGS = (); }; };
-		F6BD28FB1BA1138100FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		F6BD28FE1BA11F0600FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		F6BD28FF1BA1294500FFF662 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021281B88F42600442741 /* AppDelegate.swift */; settings = {ASSET_TAGS = (); }; };
+		F69DA7581BA2713900018D51 /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */; };
+		F69DA7611BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; };
+		F69DA7621BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; };
+		F6A933D71B93EED1000151AD /* Icon-24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6A933D61B93EED1000151AD /* Icon-24@2x.png */; };
+		F6BD28FB1BA1138100FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; };
+		F6BD28FE1BA11F0600FFF662 /* TransactionHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD28FA1BA1138100FFF662 /* TransactionHistoryViewController.swift */; };
+		F6BD28FF1BA1294500FFF662 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021281B88F42600442741 /* AppDelegate.swift */; };
 		F6C7C9CC1B92510500D8DE7A /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CA1B92510500D8DE7A /* Interface.storyboard */; };
 		F6C7C9CE1B92510500D8DE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C7C9CD1B92510500D8DE7A /* Assets.xcassets */; };
 		F6C7C9D51B92510500D8DE7A /* SimpleJarWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F6C7C9D41B92510500D8DE7A /* SimpleJarWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -118,7 +116,6 @@
 		F61021511B89366A00442741 /* milk-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milk-256.png"; sourceTree = "<group>"; };
 		F61021551B894F9D00442741 /* milkMaskSolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkMaskSolid.png; sourceTree = "<group>"; };
 		F61021571B896FA800442741 /* milkSolidClearHold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkSolidClearHold.png; sourceTree = "<group>"; };
-		F61862231B8EB63600321992 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		F61862251B8EC31200321992 /* greenDollarSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenDollarSign.png; sourceTree = "<group>"; };
 		F61E324F1BA54522002FAE2E /* down-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-128.png"; sourceTree = "<group>"; };
 		F61E32511BA54534002FAE2E /* up-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-128.png"; sourceTree = "<group>"; };
@@ -147,7 +144,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F61021501B892BF200442741 /* iAd.framework in Frameworks */,
 				6703310000F789F84C9261E1 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,7 +219,6 @@
 		F61021251B88F42600442741 /* SimpleJar */ = {
 			isa = PBXGroup;
 			children = (
-				F61862231B8EB63600321992 /* coin@2x.png */,
 				F61021281B88F42600442741 /* AppDelegate.swift */,
 				F61E324F1BA54522002FAE2E /* down-128.png */,
 				F61E32511BA54534002FAE2E /* up-128.png */,
@@ -458,7 +453,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F61021521B89366A00442741 /* milk-256.png in Resources */,
-				F61862241B8EB63600321992 /* coin@2x.png in Resources */,
 				F61862261B8EC31200321992 /* greenDollarSign.png in Resources */,
 				F61E32501BA54522002FAE2E /* down-128.png in Resources */,
 				F61021361B88F42600442741 /* LaunchScreen.xib in Resources */,

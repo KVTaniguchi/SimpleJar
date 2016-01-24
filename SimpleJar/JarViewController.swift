@@ -12,7 +12,7 @@ import URBNAlert
 import QuartzCore
 import CoreData
 
-class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
@@ -30,24 +30,16 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     var timer : NSTimer!
     var currentAmount : Float = 0.0, oldValue : Float = 0.0
     var currentAmountString : String {
-        get {
-            let formattedAmountString = String(format: "%.2f", currentAmount)
-            return "You have $\(formattedAmountString) left"
-        }
+        let formattedAmountString = String(format: "%.2f", currentAmount)
+        return "You have $\(formattedAmountString) left"
     }
-    var allowanceString : String {
-        get {
-            return String(format: "$%.2f", allowance)
-        }
-    }
+    var allowanceString : String { return String(format: "$%.2f", allowance) }
     var delta : Float {
-        get {
-            let initialHeight = Float(jarImageView.frame.height * 0.8)
-            if currentAmount > Float(allowance) {
-                return 0.0
-            }
-            return initialHeight/Float(allowance)
+        let initialHeight = Float(jarImageView.frame.height * 0.8)
+        if currentAmount > Float(allowance) {
+            return 0.0
         }
+        return initialHeight/Float(allowance)
     }
     var moc : NSManagedObjectContext {
         get {
@@ -104,7 +96,6 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        canDisplayBannerAds = true
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         
         view.backgroundColor = UIColor.whiteColor()
@@ -187,7 +178,7 @@ class JarViewController: UIViewController, ADBannerViewDelegate, UITextFieldDele
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[levelLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[flashLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]-50-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarAmount]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[transBtn(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[transBtn(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
