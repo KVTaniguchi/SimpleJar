@@ -113,9 +113,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
         NSUserDefaults.standardUserDefaults().synchronize()
         
-        if (updateClosure != nil) {
-            updateClosure()
-        }
+        updateClosure()
         updateComplication()
     }
 }
