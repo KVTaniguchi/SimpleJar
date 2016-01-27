@@ -11,11 +11,15 @@ import XCTest
 
 class SimpleJarTests: XCTestCase {
     
-    func testJarViewController () {
+    func testJarViewController() {
         let jvc = JarViewController()
         if let jarData = NSUserDefaults.standardUserDefaults().objectForKey(jvc.jarKey) {
             XCTAssertNotNil(jarData, "If the app is installed, should get jar Data")
         }
     }
     
+    func testTransactionHistoryViewController() {
+        let thvc = TransactionHistoryViewController()
+        XCTAssertNotNil(thvc.fetchResults)
+    }
 }

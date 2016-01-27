@@ -41,7 +41,12 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         }
         return initialHeight/Float(allowance)
     }
-    var moc : NSManagedObjectContext { return appDelegate.managedObjectContext }
+    var moc : NSManagedObjectContext? {
+        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
+            return appDel.managedObjectContext
+        }
+        return nil
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -499,12 +504,13 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     }
     
     func saveTransaction (amount : Float) {
-        let entity = NSEntityDescription.entityForName("Transaction", inManagedObjectContext: moc)
-        let transaction = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: moc)
+        guard let managedObjContext = moc else { return }
+        let entity = NSEntityDescription.entityForName("Transaction", inManagedObjectContext: managedObjContext)
+        let transaction = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedObjContext)
         transaction.setValue(amount, forKey: "amount")
         transaction.setValue(NSDate(), forKey: "date")
         do {
-            try moc.save()
+            try managedObjContext.save()
         }
         catch let error as NSError {
             print(error)

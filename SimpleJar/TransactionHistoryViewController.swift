@@ -24,11 +24,7 @@ class TransactionHistoryViewController: UIViewController, UITableViewDataSource,
             }
         }
     }
-    var moc : NSManagedObjectContext {
-        get {
-            return appDelegate.managedObjectContext
-        }
-    }
+    var moc : NSManagedObjectContext { return appDelegate.managedObjectContext }
     
     private static var formatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
