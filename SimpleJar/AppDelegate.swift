@@ -178,7 +178,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
             print("CLOUD ROOT URL \(cloudRootURL.absoluteString)")
         }
         
-        let options = [NSPersistentStoreUbiquitousContentNameKey:"iCloud", NSMigratePersistentStoresAutomaticallyOption:NSNumber(bool: true), NSInferMappingModelAutomaticallyOption:NSNumber(bool: true), NSPersistentStoreUbiquitousContainerIdentifierKey:"iCloud.com.Taniguchi.MoneyJar"]
+        let options = [NSPersistentStoreUbiquitousContentNameKey:"MoneyJar", NSMigratePersistentStoresAutomaticallyOption:NSNumber(bool: true), NSInferMappingModelAutomaticallyOption:NSNumber(bool: true), NSPersistentStoreUbiquitousContainerIdentifierKey:"iCloud.com.Taniguchi.MoneyJar"]
         
         do {
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
