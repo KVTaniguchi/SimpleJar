@@ -152,10 +152,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
-        let options = [NSPersistentStoreUbiquitousContentNameKey:"comTaniguchiMoneyJar"]
-    
+        let options = [NSPersistentStoreUbiquitousContentNameKey:"comTaniguchiMoneyJar", NSMigratePersistentStoresAutomaticallyOption:NSNumber(bool: true), NSInferMappingModelAutomaticallyOption:NSNumber(bool: true)]
+        
         do {
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+            
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
