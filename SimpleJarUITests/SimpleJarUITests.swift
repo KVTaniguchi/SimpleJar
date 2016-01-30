@@ -26,4 +26,14 @@ class SimpleJarUITests: XCTestCase {
         let button = XCUIApplication().childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Button).elementBoundByIndex(3)
         button.tap()
     }
+    
+    func testSwipes() {
+        let app = XCUIApplication()
+        app.images["milkSolidClearHold"].swipeUp()
+        app.images["milkSolidClearHold"].swipeDown()
+    }
+    
+    func testEntryAddButtonPress() {
+        // TODO programmatically find the + button that is not the larger one
+    }
 }

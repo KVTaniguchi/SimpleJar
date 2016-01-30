@@ -14,7 +14,7 @@ import CoreData
 
 class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
     let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"

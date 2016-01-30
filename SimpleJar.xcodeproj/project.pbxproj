@@ -24,6 +24,7 @@
 		F63F6C111B8A87D700518408 /* plus-100OffWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = F63F6C101B8A87D700518408 /* plus-100OffWhite.png */; };
 		F642568F1B9A512F001A0497 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; };
 		F64256971B9A521D001A0497 /* SimpleJarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64256961B9A521D001A0497 /* SimpleJarUITests.swift */; };
+		F693A4B61C5D3B2D0052DBD8 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F693A4B51C5D3B2D0052DBD8 /* CloudKit.framework */; };
 		F69DA7581BA2713900018D51 /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69DA7561BA2713900018D51 /* TransactionModel.xcdatamodeld */; };
 		F69DA7611BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; };
 		F69DA7621BA284AE00018D51 /* history-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F69DA7601BA284AE00018D51 /* history-128.png */; };
@@ -122,6 +123,8 @@
 		F64256941B9A521D001A0497 /* SimpleJarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleJarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F64256961B9A521D001A0497 /* SimpleJarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleJarUITests.swift; sourceTree = "<group>"; };
 		F64256981B9A521D001A0497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F693A4B41C5D3B280052DBD8 /* SimpleJar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SimpleJar.entitlements; sourceTree = "<group>"; };
+		F693A4B51C5D3B2D0052DBD8 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		F69DA7571BA2713900018D51 /* TransactionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransactionModel.xcdatamodel; sourceTree = "<group>"; };
 		F69DA7601BA284AE00018D51 /* history-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "history-128.png"; sourceTree = "<group>"; };
 		F6A933D61B93EED1000151AD /* Icon-24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-24@2x.png"; path = "../SimpleJarWatch/Icon-24@2x.png"; sourceTree = "<group>"; };
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6703310000F789F84C9261E1 /* Pods.framework in Frameworks */,
+				F693A4B61C5D3B2D0052DBD8 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +178,7 @@
 		857C65D3044B8C08F610D1A7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F693A4B51C5D3B2D0052DBD8 /* CloudKit.framework */,
 				18BBB34D4C275BE6B7A43F90 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -217,6 +222,7 @@
 		F61021251B88F42600442741 /* SimpleJar */ = {
 			isa = PBXGroup;
 			children = (
+				F693A4B41C5D3B280052DBD8 /* SimpleJar.entitlements */,
 				F61021281B88F42600442741 /* AppDelegate.swift */,
 				F61E324F1BA54522002FAE2E /* down-128.png */,
 				F61E32511BA54534002FAE2E /* up-128.png */,
@@ -404,6 +410,11 @@
 					F61021221B88F42600442741 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 3B3FT42G96;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					F610213A1B88F42600442741 = {
 						CreatedOnToolsVersion = 6.4;
@@ -721,12 +732,15 @@
 			baseConfigurationReference = 77402D769F6754A16CD38223 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleJar/SimpleJar.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleJar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.MoneyJar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -735,12 +749,15 @@
 			baseConfigurationReference = B0ACB9A440DF6829AEB67356 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleJar/SimpleJar.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleJar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.MoneyJar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -10,12 +10,12 @@ import UIKit
 import CoreData
 
 class TransactionHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let fetchRequest = NSFetchRequest(entityName:"Transaction")
-    var fetchResults : [NSManagedObject] {
+    var fetchResults : [NSManagedObject]? {
         get {
             do {
-                let fetchResults = try moc.executeFetchRequest(fetchRequest)
+                guard let managedObjectContext = moc else { return nil }
+                let fetchResults = try managedObjectContext.executeFetchRequest(fetchRequest)
                 return (fetchResults as! [NSManagedObject]).reverse()
             }
             catch let error as NSError {
@@ -24,7 +24,9 @@ class TransactionHistoryViewController: UIViewController, UITableViewDataSource,
             }
         }
     }
-    var moc : NSManagedObjectContext { return appDelegate.managedObjectContext }
+    var moc : NSManagedObjectContext? {
+        guard let appDel = UIApplication.sharedApplication().delegate as? AppDelegate else { return nil }
+        return appDel.managedObjectContext }
     
     private static var formatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
@@ -48,11 +50,13 @@ class TransactionHistoryViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchResults.count
+        guard let results = fetchResults else { return 0 }
+        return results.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let transaction = fetchResults[indexPath.row]
+        guard let results = fetchResults else { return UITableViewCell() }
+        let transaction = results[indexPath.row]
         let value = transaction.valueForKey("amount") as! Float
         let date = transaction.valueForKey("date") as! NSDate
         let dateString = TransactionHistoryViewController.formatter.stringFromDate(date)

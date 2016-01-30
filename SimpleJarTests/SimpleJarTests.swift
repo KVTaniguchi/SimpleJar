@@ -17,9 +17,4 @@ class SimpleJarTests: XCTestCase {
             XCTAssertNotNil(jarData, "If the app is installed, should get jar Data")
         }
     }
-    
-    func testTransactionHistoryViewController() {
-        let thvc = TransactionHistoryViewController()
-        XCTAssertNotNil(thvc.fetchResults)
-    }
 }
