@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SimpleJar/AppDelegate.swift"
-            timestampString = "475364380.152428"
+            timestampString = "475873495.059022"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "sendDataToWatch()"
             landmarkType = "5">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SimpleJar/AppDelegate.swift"
-            timestampString = "475364385.280429"
+            timestampString = "475873495.059022"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "applicationDidEnterBackground(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -234,28 +234,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SimpleJar/AppDelegate.swift"
-            timestampString = "475364387.562602"
+            timestampString = "475873495.059022"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "applicationWillResignActive(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SimpleJar/AppDelegate.swift"
-            timestampString = "475364426.994996"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "sendDataToWatch()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

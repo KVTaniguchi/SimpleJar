@@ -27,7 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         window?.rootViewController = mainNavController
         window?.makeKeyAndVisible()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "cloudKitNotif", name:  NSPersistentStoreCoordinatorStoresDidChangeNotification, object: nil)
+        
         return true
+    }
+    
+    func cloudKitNotif() {
+        print("asfasdfsdfq2341234234lasdflsdfjljlk")
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -41,10 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        if #available(iOS 9.0, *) {
-            WCSession.defaultSession().delegate = self
-            WCSession.defaultSession().activateSession()
-        }
+        WCSession.defaultSession().delegate = self
+        WCSession.defaultSession().activateSession()
 
         jarViewController?.updateData()
     }
@@ -100,30 +104,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     func sendDataToWatch () {
-        if #available(iOS 9.0, *) {
-            if WCSession.isSupported() {
-                if sharedDefaults.objectForKey(jarKey) != nil {
+        if WCSession.isSupported() {
+            if sharedDefaults.objectForKey(jarKey) != nil {
+                
+                let session = WCSession.defaultSession()
+                session.delegate = self
+                session.activateSession()
+                
+                if session.paired && session.watchAppInstalled {
+                    let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+                    do {
+                        try session.updateApplicationContext(jarData)
+                    }
+                    catch {
+                        print("Error updating context: \(error)")
+                    }
                     
-                    let session = WCSession.defaultSession()
-                    session.delegate = self
-                    session.activateSession()
-                    
-                    if session.paired && session.watchAppInstalled {
-                        let jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
-                        do {
-                            try session.updateApplicationContext(jarData)
-                        }
-                        catch {
-                            print("Error updating context: \(error)")
-                        }
-                        
-                        if session.reachable {
-                            session.sendMessage(jarData, replyHandler: { reply in
-                                print("RESPONSE : \(reply)")
-                                }, errorHandler: { error in
-                                    print("Error sending message : \(error)")
-                            })
-                        }
+                    if session.reachable {
+                        session.sendMessage(jarData, replyHandler: { reply in
+                            print("RESPONSE : \(reply)")
+                            }, errorHandler: { error in
+                                print("Error sending message : \(error)")
+                        })
                     }
                 }
             }
@@ -150,8 +152,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
+        let options = [NSPersistentStoreUbiquitousContentNameKey:"comTaniguchiMoneyJar"]
+    
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
