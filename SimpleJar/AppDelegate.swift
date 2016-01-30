@@ -152,7 +152,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
-        let options = [NSPersistentStoreUbiquitousContentNameKey:"comTaniguchiMoneyJar", NSMigratePersistentStoresAutomaticallyOption:NSNumber(bool: true), NSInferMappingModelAutomaticallyOption:NSNumber(bool: true)]
+
+        
+//        -(NSURL *)cloudDirectory
+//            {
+//                NSFileManager *fileManager=[NSFileManager defaultManager];
+//                NSString *teamID=@"iCloud";
+//                NSString *bundleID=[[NSBundle mainBundle]bundleIdentifier];
+//                NSString *cloudRoot=[NSString stringWithFormat:@"%@.%@",teamID,bundleID];
+//                NSURL *cloudRootURL=[fileManager URLForUbiquityContainerIdentifier:cloudRoot];
+//                NSLog (@"cloudRootURL=%@",cloudRootURL);
+//                return cloudRootURL;
+//        }
+        
+//        NSDictionary *storeOptions =@{NSPersistentStoreUbiquitousContentNameKey: @"iCloud",
+//            NSPersistentStoreUbiquitousContentURLKey:[self cloudDirectory],
+//        };
+        
+        let fileManager = NSFileManager.defaultManager()
+        let teamID = "3B3FT42G96"
+        guard let bundleID = NSBundle.mainBundle().bundleIdentifier else  { return coordinator }
+        let cloudRoot = "\(teamID).\(bundleID)"
+        // TODO find out why this is failing
+        if let cloudRootURL = fileManager.URLForUbiquityContainerIdentifier(cloudRoot) {
+            print("CLOUD ROOT URL \(cloudRootURL.absoluteString)")
+        }
+        
+        let options = [NSPersistentStoreUbiquitousContentNameKey:"iCloud", NSMigratePersistentStoresAutomaticallyOption:NSNumber(bool: true), NSInferMappingModelAutomaticallyOption:NSNumber(bool: true), NSPersistentStoreUbiquitousContentURLKey:"iCloud.com.Taniguchi.MoneyJar"]
         
         do {
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
