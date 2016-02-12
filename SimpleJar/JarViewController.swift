@@ -14,6 +14,7 @@ import CoreData
 
 class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
+    let intructionLabel = UILabel()
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
@@ -96,6 +97,10 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationWillResignActiveNotification, object: nil)
         view.backgroundColor = UIColor.whiteColor()
+        
+        // TODO add this
+        instructionLabel.font = UIFont(name: "Avenir", size: 20)
+        
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
         levelLabel.textAlignment = .Center
         levelLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -121,15 +126,6 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
             label.font = UIFont(name: "AvenirNext-Bold", size: 80)
             view.addSubview(label)
         }
-        
-        addButton.setImage(UIImage(named: "plus-100"), forState: .Highlighted)
-        addButton.setImage(offWhiteImage("plus-100"), forState: .Normal)
-        addButton.addTarget(self, action: "addButtonPressed", forControlEvents: .TouchUpInside)
-        addButton.backgroundColor = UIColor.darkGrayColor()
-        subtractButton.setImage(UIImage(named: "minus-100"), forState: .Highlighted)
-        subtractButton.setImage(offWhiteImage("minus-100"), forState: .Normal)
-        subtractButton.backgroundColor = UIColor.darkGrayColor()
-        subtractButton.addTarget(self, action: "subtractButtonPressed", forControlEvents: .TouchUpInside)
         
         changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
         changeAllowanceButton.backgroundColor = UIColor.darkGrayColor()
@@ -160,12 +156,11 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
             button.layer.cornerRadius = 5
         }
         
-        addButton.addSubview(enterAddAmountButton)
-        subtractButton.addSubview(enterSubAmountButton)
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterAdd(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[enterSub(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[enterSub(44)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
+        view.addSubview(enterAddAmountButton)
+        view.addSubview(enterSubAmountButton)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[enterAdd(100)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[enterSub(100)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd][enterSub(enterAdd)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton, "enterSub":enterSubAmountButton]))
         
         let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel, "transBtn":transactionHistoryButton, "changeLbl":changeLabel]
         let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
@@ -420,51 +415,51 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         drawJarAmountViewWithHeight(jarImageView.frame.height * 0.8)
     }
     
-    func addButtonPressed () {
-        var frame = jarAmountView.frame
-        if timerIsUp {
-            oldValue = currentAmount
-        }
-        currentAmount += 1.0
-        animateWithDirection(true)
-        invalidateTimer()
-        startTimer()
-        
-        if currentAmount >= Float(allowance) {
-            currentJarFrameHeight = jarImageView.frame.size.height * 0.8
-            drawJarAmountViewWithHeight(currentJarFrameHeight)
-            return
-        }
-
-        frame.size.height += CGFloat(delta)
-        frame.origin.y -= CGFloat(delta)
-        currentJarFrameHeight = frame.size.height
-        UIView.animateWithDuration(0.1, animations: {
-            self.jarAmountView.frame = frame
-        })
-    }
-    
-    func subtractButtonPressed () {
-        if currentAmount == 0 {
-            return
-        }
-        if timerIsUp {
-            oldValue = currentAmount
-        }
-
-        currentAmount -= 1.0
-        animateWithDirection(false)
-        var frame = jarAmountView.frame
-        frame.size.height -= CGFloat(delta)
-        frame.origin.y += CGFloat(delta)
-        currentJarFrameHeight = frame.size.height
-        UIView.animateWithDuration(0.1, animations: {
-            self.jarAmountView.frame = frame
-        })
-        
-        invalidateTimer()
-        startTimer()
-    }
+//    func addButtonPressed () {
+//        var frame = jarAmountView.frame
+//        if timerIsUp {
+//            oldValue = currentAmount
+//        }
+//        currentAmount += 1.0
+//        animateWithDirection(true)
+//        invalidateTimer()
+//        startTimer()
+//        
+//        if currentAmount >= Float(allowance) {
+//            currentJarFrameHeight = jarImageView.frame.size.height * 0.8
+//            drawJarAmountViewWithHeight(currentJarFrameHeight)
+//            return
+//        }
+//
+//        frame.size.height += CGFloat(delta)
+//        frame.origin.y -= CGFloat(delta)
+//        currentJarFrameHeight = frame.size.height
+//        UIView.animateWithDuration(0.1, animations: {
+//            self.jarAmountView.frame = frame
+//        })
+//    }
+//    
+//    func subtractButtonPressed () {
+//        if currentAmount == 0 {
+//            return
+//        }
+//        if timerIsUp {
+//            oldValue = currentAmount
+//        }
+//
+//        currentAmount -= 1.0
+//        animateWithDirection(false)
+//        var frame = jarAmountView.frame
+//        frame.size.height -= CGFloat(delta)
+//        frame.origin.y += CGFloat(delta)
+//        currentJarFrameHeight = frame.size.height
+//        UIView.animateWithDuration(0.1, animations: {
+//            self.jarAmountView.frame = frame
+//        })
+//        
+//        invalidateTimer()
+//        startTimer()
+//    }
     
     func transactionHistoryButtonPressed () {
         let historyVC = TransactionHistoryViewController()
