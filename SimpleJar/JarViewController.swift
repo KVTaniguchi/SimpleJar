@@ -34,6 +34,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         let formattedAmountString = String(format: "%.2f", currentAmount)
         return "You have $\(formattedAmountString) left"
     }
+    var jarViewDrawn = false
     var allowanceString : String { return String(format: "$%.2f", allowance) }
     var delta : Float {
         let initialHeight = Float(jarImageView.frame.height * 0.8)
@@ -83,9 +84,19 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     
     func updateJarView () {
         if !jarData.isEmpty {
+            updateData()
             levelLabel.text = currentAmountString
             addAllowanceButton.setTitle("Add \(allowanceString)", forState: .Normal)
             changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
+            
+            if currentAmount < Float(allowance) {
+                let ratio = CGFloat(currentAmount)/allowance
+                currentJarFrameHeight = ratio * jarImageView.frame.height * 0.8
+            }
+            else if currentJarFrameHeight == 0 || currentAmount >= Float(allowance) {
+                currentJarFrameHeight = jarImageView.frame.height * 0.8
+            }
+
             drawJarAmountViewWithHeight(currentJarFrameHeight)
         }
     }
@@ -97,9 +108,6 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationWillResignActiveNotification, object: nil)
         view.backgroundColor = UIColor.whiteColor()
-        
-        // TODO add this
-
         
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
         levelLabel.textAlignment = .Center
@@ -148,6 +156,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         transactionHistoryButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
         transactionHistoryButton.layer.borderColor = UIColor.darkGrayColor().CGColor
         transactionHistoryButton.layer.borderWidth = 0.5
+        transactionHistoryButton.layer.cornerRadius = transactionHistoryButton.frame.height/2
         
         for button in [addButton, subtractButton, changeAllowanceButton, addAllowanceButton, transactionHistoryButton] {
             button.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
@@ -237,28 +246,12 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if currentJarFrameHeight == 0 || currentAmount >= Float(allowance) {
-            currentJarFrameHeight = jarImageView.frame.height * 0.8
-        }
-        else if currentAmount < Float(allowance) {
-            let ratio = CGFloat(currentAmount)/allowance
-            currentJarFrameHeight = ratio * jarImageView.frame.height * 0.8
-        }
-        
-        drawJarAmountViewWithHeight(currentJarFrameHeight)
-        transactionHistoryButton.layer.cornerRadius = transactionHistoryButton.frame.height/2
-    }
-    
     func drawJarAmountViewWithHeight (height : CGFloat) {
-//        guard height <= jarAmountView.frame.height else { return }
-        
-        NSLayoutConstraint.deactivateConstraints([jarHeightConstraint!])
-        
-        jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: height)
-        NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            NSLayoutConstraint.deactivateConstraints([self.jarHeightConstraint!])
+            self.jarHeightConstraint = NSLayoutConstraint(item: self.jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: height)
+            NSLayoutConstraint.activateConstraints([self.jarHeightConstraint!])
+        }
     }
     
     // MARK ANIMATIONSs

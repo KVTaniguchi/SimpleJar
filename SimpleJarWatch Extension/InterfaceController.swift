@@ -9,7 +9,7 @@
 import WatchKit
 import WatchConnectivity
 import Foundation
-
+import ClockKit
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var allowanceLabel: WKInterfaceLabel!
@@ -20,7 +20,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var afterLabel: WKInterfaceLabel!
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"
     let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
     var currentAmount : Float = 0.0, allowance : Float = 0.0, adjustedAmount : Float = 0.0
     let session = WCSession.defaultSession()
@@ -76,6 +76,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         currentAmountPicker.setSelectedItemIndex(200)
         previewLabel.setText("")
         afterLabel.setText("")
+        adjustedAmount = 0.0
         saveData()
     }
     
@@ -85,22 +86,33 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     func updateData () {
         let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.objectForKey(jarKey) != nil {
+        if defaults.valueForKey(jarKey) != nil {
             
             jarData = defaults.objectForKey(jarKey) as! [String:String]
-            if let defaultSize = jarData[jarSizeKey] {
-                if let k = NSNumberFormatter().numberFromString(defaultSize) {
-                    allowance = Float(k)
-                }
+//            if let defaultSize = jarData[jarSizeKey] {
+//                if let k = NSNumberFormatter().numberFromString(defaultSize) {
+//                    allowance = Float(k)
+//                }
+//            }
+//            if let savedAmount = jarData[savedAmountInJarKey] {
+//                if let n = NSNumberFormatter().numberFromString(savedAmount) {
+//                    currentAmount = Float(n)
+//                }
+//            }
+            
+            let defaultSize = jarData[jarSizeKey]
+            let savedAmount = jarData[savedAmountInJarKey]
+            
+            if let k = defaultSize {
+                allowance = Float(k as String)!
             }
-            if let savedAmount = jarData[savedAmountInJarKey] {
-                if let n = NSNumberFormatter().numberFromString(savedAmount) {
-                    currentAmount = Float(n)
-                }
+            if let n = savedAmount {
+                currentAmount = Float(n as String)!
             }
+            
+            allowanceLabel.setText(String(format: "$%.2f", currentAmount))
+            previewLabel.setText(String(format: "$%.2f", currentAmount))
         }
-        allowanceLabel.setText(String(format: "$%.2f", currentAmount))
-        previewLabel.setText("")
     }
 
     override func willActivate() {
@@ -138,5 +150,47 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         extensionDelegate.jarData = jarData
         extensionDelegate.currentAmount = currentAmount
         extensionDelegate.updateComplication()
+    }
+    
+    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+        saveMessage(applicationContext)
+        
+        updateComplication()
+    }
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        saveMessage(message)
+        
+        updateComplication()
+        
+        
+        replyHandler(["reply":"GOT THE MESSAGE xoxoxo \(message)"])
+    }
+    
+    func updateComplication () {
+        let clkServer = CLKComplicationServer.sharedInstance()
+        if clkServer.activeComplications != nil {
+            for comp in clkServer.activeComplications {
+                clkServer.reloadTimelineForComplication(comp)
+            }
+        }
+        else {
+            clkServer.reloadTimelineForComplication(nil)
+        }
+    }
+    
+    func saveMessage (message: [String : AnyObject]) {
+        let defaultSize = message[jarSizeKey] as? String
+        let savedAmount = message[savedAmountInJarKey] as? String
+        if let k = defaultSize {
+            allowance = Float(k)!
+        }
+        if let n = savedAmount {
+            currentAmount = Float(n)!
+        }
+
+        sharedDefaults.setObject(message, forKey: jarKey)
+        updateComplication()
+        updateData()
     }
 }
