@@ -89,16 +89,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         if defaults.valueForKey(jarKey) != nil {
             
             jarData = defaults.objectForKey(jarKey) as! [String:String]
-//            if let defaultSize = jarData[jarSizeKey] {
-//                if let k = NSNumberFormatter().numberFromString(defaultSize) {
-//                    allowance = Float(k)
-//                }
-//            }
-//            if let savedAmount = jarData[savedAmountInJarKey] {
-//                if let n = NSNumberFormatter().numberFromString(savedAmount) {
-//                    currentAmount = Float(n)
-//                }
-//            }
             
             let defaultSize = jarData[jarSizeKey]
             let savedAmount = jarData[savedAmountInJarKey]

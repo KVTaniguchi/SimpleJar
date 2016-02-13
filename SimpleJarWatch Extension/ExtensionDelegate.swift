@@ -22,8 +22,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func applicationDidFinishLaunching() {
         guard let data = sharedDefaults.objectForKey(jarKey) as? [String:String]  else { return }
         jarData = data
-
-        
         updateComplication()
     }
     

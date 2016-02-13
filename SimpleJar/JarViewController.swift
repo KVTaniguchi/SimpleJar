@@ -84,7 +84,6 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     
     func updateJarView () {
         if !jarData.isEmpty {
-            updateData()
             levelLabel.text = currentAmountString
             addAllowanceButton.setTitle("Add \(allowanceString)", forState: .Normal)
             changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
@@ -416,52 +415,6 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         currentJarFrameHeight = jarImageView.frame.height * 0.8
         drawJarAmountViewWithHeight(jarImageView.frame.height * 0.8)
     }
-    
-//    func addButtonPressed () {
-//        var frame = jarAmountView.frame
-//        if timerIsUp {
-//            oldValue = currentAmount
-//        }
-//        currentAmount += 1.0
-//        animateWithDirection(true)
-//        invalidateTimer()
-//        startTimer()
-//        
-//        if currentAmount >= Float(allowance) {
-//            currentJarFrameHeight = jarImageView.frame.size.height * 0.8
-//            drawJarAmountViewWithHeight(currentJarFrameHeight)
-//            return
-//        }
-//
-//        frame.size.height += CGFloat(delta)
-//        frame.origin.y -= CGFloat(delta)
-//        currentJarFrameHeight = frame.size.height
-//        UIView.animateWithDuration(0.1, animations: {
-//            self.jarAmountView.frame = frame
-//        })
-//    }
-//    
-//    func subtractButtonPressed () {
-//        if currentAmount == 0 {
-//            return
-//        }
-//        if timerIsUp {
-//            oldValue = currentAmount
-//        }
-//
-//        currentAmount -= 1.0
-//        animateWithDirection(false)
-//        var frame = jarAmountView.frame
-//        frame.size.height -= CGFloat(delta)
-//        frame.origin.y += CGFloat(delta)
-//        currentJarFrameHeight = frame.size.height
-//        UIView.animateWithDuration(0.1, animations: {
-//            self.jarAmountView.frame = frame
-//        })
-//        
-//        invalidateTimer()
-//        startTimer()
-//    }
     
     func transactionHistoryButtonPressed () {
         let historyVC = TransactionHistoryViewController()
