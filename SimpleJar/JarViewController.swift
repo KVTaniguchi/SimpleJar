@@ -14,7 +14,7 @@ import CoreData
 
 class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
-    let intructionLabel = UILabel()
+    let instructionLabel = UILabel()
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
@@ -99,7 +99,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         view.backgroundColor = UIColor.whiteColor()
         
         // TODO add this
-        instructionLabel.font = UIFont(name: "Avenir", size: 20)
+
         
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
         levelLabel.textAlignment = .Center
@@ -117,6 +117,15 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         jarAmountView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(jarAmountView)
         view.sendSubviewToBack(jarAmountView)
+        
+        instructionLabel.font = UIFont(name: "Avenir", size: 14)
+        instructionLabel.text = "Swipe up or down to change amounts."
+        instructionLabel.translatesAutoresizingMaskIntoConstraints = false
+        instructionLabel.textAlignment = .Center
+        instructionLabel.numberOfLines = 0
+        instructionLabel.lineBreakMode = .ByWordWrapping
+        instructionLabel.textColor = UIColor.darkGrayColor()
+        view.addSubview(instructionLabel)
         
         for label in [flashLabel, changeLabel] {
             label.textAlignment = .Center
@@ -158,22 +167,22 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         
         view.addSubview(enterAddAmountButton)
         view.addSubview(enterSubAmountButton)
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[enterAdd(100)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[enterSub(100)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterSub":enterSubAmountButton]))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd][enterSub(enterAdd)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["enterAdd":enterAddAmountButton, "enterSub":enterSubAmountButton]))
-        
-        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel, "transBtn":transactionHistoryButton, "changeLbl":changeLabel]
+
+        let views = ["addBtn":addButton, "subBtn":subtractButton, "jarAmount":jarAmountView, "jarImg":jarImageView, "changeAllowance":changeAllowanceButton, "addAllowance":addAllowanceButton, "levelLbl":levelLabel, "enterAddBtn":enterAddAmountButton, "enterSubBtn":enterSubAmountButton, "flashLbl":flashLabel, "transBtn":transactionHistoryButton, "changeLbl":changeLabel, "enterAdd":enterAddAmountButton, "enterSub":enterSubAmountButton, "instructionLabel":instructionLabel]
         let metrics = ["statusBarH":UIApplication.sharedApplication().statusBarFrame.height + 5]
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[enterAdd][enterSub(enterAdd)]|", options: [.AlignAllBottom, .AlignAllTop], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[addBtn]-1-[subBtn(addBtn)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeAllowance]-1-[addAllowance(changeAllowance)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarImg]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[levelLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[flashLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[changeLbl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[addBtn(subBtn)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-statusBarH-[changeAllowance(44)]-12-[levelLbl(20)]-12-[jarImg]-[enterSub(100)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[jarAmount]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[transBtn(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[transBtn(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[transBtn(44)]-30-[enterSub]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[transBtn(44)]-20-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instructionLabel(60)]", options: [], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[instructionLabel]-30-[enterAdd]", options: [], metrics: metrics, views: views))
         jarHeightConstraint = NSLayoutConstraint(item: jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: jarImageView, attribute: .Height, multiplier: 0.8, constant: 0)
         NSLayoutConstraint.activateConstraints([jarHeightConstraint!])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: jarAmountView, attribute: .Bottom, relatedBy: .Equal, toItem: jarImageView, attribute: .Bottom, multiplier: 1.0, constant: -17)])
@@ -244,7 +253,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     }
     
     func drawJarAmountViewWithHeight (height : CGFloat) {
-        guard height <= jarAmountView.frame.height else { return }
+//        guard height <= jarAmountView.frame.height else { return }
         
         NSLayoutConstraint.deactivateConstraints([jarHeightConstraint!])
         
