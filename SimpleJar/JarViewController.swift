@@ -205,7 +205,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     }
     
     func handleGesture (gesture : UIPanGestureRecognizer) {
-        guard currentAmount > 0 else { return }
+        guard currentAmount > -1 else { return }
         
         if gesture.state == .Began {
             startingY = gesture.translationInView(view).y as CGFloat
@@ -236,7 +236,13 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
             for label in [flashLabel, changeLabel] {
                 label.alpha = 0.0
             }
-            currentAmount = currentAmount + Float(changeInY)
+            
+            if currentAmount + Float(changeInY) < 1 {
+                currentAmount = 0
+            }
+            else {
+                currentAmount = currentAmount + Float(changeInY)
+            }
             startTimer()
             
             let ratio = CGFloat(currentAmount)/allowance
