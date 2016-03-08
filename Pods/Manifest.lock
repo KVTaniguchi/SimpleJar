@@ -1,13 +1,13 @@
 PODS:
-  - URBNAlert (1.8.4):
-    - URBNConvenience (~> 0.8.2)
-  - URBNConvenience (0.8.5)
+  - URBNAlert (1.9.2):
+    - URBNConvenience (> 0.8.2)
+  - URBNConvenience (1.0.0)
 
 DEPENDENCIES:
   - URBNAlert (~> 1.8)
 
 SPEC CHECKSUMS:
-  URBNAlert: ebff17ad9adf3bff067fef51b55920c6b2835dff
-  URBNConvenience: cc18027cf6698dd2a8a27cbc7b05b7388611fec9
+  URBNAlert: fdae28490518be3bdd841691daa74cb062aef682
+  URBNConvenience: 46437a01fa6b138791b1856d8d3f78154c2f1912
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
