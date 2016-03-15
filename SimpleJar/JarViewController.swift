@@ -393,14 +393,24 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         style.titleFont = UIFont(name: "Avenir-Medium", size: 20.0)
         changeAllowanceView.alertStyler = style
         changeAllowanceView.addAction(URBNAlertAction(title: "Done", actionType: .Normal, actionCompleted: { action in
-            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.changeAllowanceView.textField().text!)) {
-                self.allowance = CGFloat(n)
+            
+            
+            let updateUIClosure = {
                 self.changeAllowanceButton.setTitle("Allowance \(self.allowanceString)", forState: .Normal)
                 self.addAllowanceButton.setTitle("Add \(self.allowanceString)", forState: .Normal)
                 if self.sharedDefaults.objectForKey(self.jarKey) == nil {
                     self.currentAmount = Float(self.allowance)
                     self.levelLabel.text = self.currentAmountString
                 }
+            }
+            
+            if let n = NSNumberFormatter().numberFromString(self.processAllowanceString(self.changeAllowanceView.textField().text!)) {
+                self.allowance = CGFloat(n)
+                updateUIClosure()
+            }
+            else {
+                self.allowance = 100.0
+                updateUIClosure()
             }
         }))
         
