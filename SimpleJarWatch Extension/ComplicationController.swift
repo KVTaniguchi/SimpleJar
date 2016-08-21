@@ -68,6 +68,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
             return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultUtilSmallTemplate())
         case .CircularSmall:
             return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultCircularSmallTemplate())
+        default:
+            return CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: defaultCircularSmallTemplate())
         }
     }
     
@@ -96,6 +98,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WKExtensionDe
             handler(defaultUtilSmallTemplate())
         case .CircularSmall:
             handler(defaultCircularSmallTemplate())
+        default:
+            print("")
         }
         handler(nil)
     }

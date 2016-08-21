@@ -103,9 +103,9 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "save", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JarViewController.textFieldChanged(_:)), name: UITextFieldTextDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JarViewController.save), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JarViewController.save), name: UIApplicationWillResignActiveNotification, object: nil)
         view.backgroundColor = UIColor.whiteColor()
         
         levelLabel.font = UIFont(name: "Avenir", size: 25.0)
@@ -145,13 +145,13 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         
         changeAllowanceButton.setTitle("Allowance \(allowanceString)", forState: .Normal)
         changeAllowanceButton.backgroundColor = UIColor.darkGrayColor()
-        changeAllowanceButton.addTarget(self, action: "changeAllowanceButtonPressed", forControlEvents: .TouchUpInside)
+        changeAllowanceButton.addTarget(self, action: #selector(JarViewController.changeAllowanceButtonPressed), forControlEvents: .TouchUpInside)
         addAllowanceButton.setTitle("Add \(allowanceString)", forState: .Normal)
         addAllowanceButton.backgroundColor = UIColor.darkGrayColor()
-        addAllowanceButton.addTarget(self, action: "addAllowanceButtonPressed", forControlEvents: .TouchUpInside)
+        addAllowanceButton.addTarget(self, action: #selector(JarViewController.addAllowanceButtonPressed), forControlEvents: .TouchUpInside)
         
         transactionHistoryButton.setImage(UIImage(named: "history-128"), forState: .Normal)
-        transactionHistoryButton.addTarget(self, action: "transactionHistoryButtonPressed", forControlEvents: .TouchUpInside)
+        transactionHistoryButton.addTarget(self, action: #selector(JarViewController.transactionHistoryButtonPressed), forControlEvents: .TouchUpInside)
         transactionHistoryButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
         transactionHistoryButton.layer.borderColor = UIColor.darkGrayColor().CGColor
         transactionHistoryButton.layer.borderWidth = 0.5
@@ -168,7 +168,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         
         for button in [enterSubAmountButton, enterAddAmountButton] {
             button.backgroundColor = UIColor.grayColor()
-            button.addTarget(self, action: "enterAmountButtonPressed:", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(JarViewController.enterAmountButtonPressed(_:)), forControlEvents: .TouchUpInside)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.cornerRadius = 5
         }
@@ -200,7 +200,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Right, relatedBy: .Equal, toItem: view, attribute: .Right, multiplier: 1.0, constant: -20)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: transactionHistoryButton, attribute: .Bottom, relatedBy: .Equal, toItem: subtractButton, attribute: .Top, multiplier: 1.0, constant: -30)])
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: "handleGesture:")
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(JarViewController.handleGesture(_:)))
         view.addGestureRecognizer(panGesture)
     }
     
@@ -452,7 +452,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     
     func startTimer () {
         if timer == nil {
-            timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "updateLevelLabelAndCreateTransaction", userInfo: nil, repeats: false)
+            timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(JarViewController.updateLevelLabelAndCreateTransaction), userInfo: nil, repeats: false)
         }
     }
     
@@ -480,10 +480,10 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         let rect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
         UIGraphicsBeginImageContext(rect.size)
         let context: CGContextRef = UIGraphicsGetCurrentContext()!
-        CGContextClipToMask(context, rect, image.CGImage)
+        CGContextClipToMask(context, rect, image.CGImage!)
         CGContextSetFillColorWithColor(context, UIColor.lightGrayColor().CGColor)
         CGContextFillRect(context, rect)
-        let img: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let img: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return img
     }

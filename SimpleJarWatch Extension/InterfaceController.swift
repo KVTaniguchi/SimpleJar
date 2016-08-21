@@ -142,6 +142,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         extensionDelegate.updateComplication()
     }
     
+    @available(watchOSApplicationExtension 2.2, *)
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        
+    }
+    
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         saveMessage(applicationContext)
         
@@ -160,12 +165,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     func updateComplication () {
         let clkServer = CLKComplicationServer.sharedInstance()
         if clkServer.activeComplications != nil {
-            for comp in clkServer.activeComplications {
+            for comp in clkServer.activeComplications! {
                 clkServer.reloadTimelineForComplication(comp)
             }
-        }
-        else {
-            clkServer.reloadTimelineForComplication(nil)
         }
     }
     

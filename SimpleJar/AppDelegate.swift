@@ -61,14 +61,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         sendDataToWatch()
     }
     
-    @available(iOS 9.0, *)
+    // MARK: WC Session Delegates
+    func sessionDidBecomeInactive(session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(session: WCSession) {
+        
+    }
+    
+    @available(iOS 9.3, *)
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        
+    }
+    
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         let jarData = applicationContext as! [String:String]
         
         updateJarViewWithAmount(jarData)
     }
     
-    @available(iOS 9.0, *)
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
         let jarData = message as! [String:String]
         
