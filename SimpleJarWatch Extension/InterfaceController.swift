@@ -9,9 +9,9 @@
 import WatchKit
 import WatchConnectivity
 import Foundation
+import ClockKit
 
-
-class InterfaceController: WKInterfaceController {
+class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var allowanceLabel: WKInterfaceLabel!
     
     @IBOutlet var previewLabel: WKInterfaceLabel!
@@ -20,12 +20,18 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var afterLabel: WKInterfaceLabel!
     var sharedDefaults = NSUserDefaults.standardUserDefaults()
     var jarData = [String:String]()
-    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey" ,jarKey = "com.taniguchi.JarKey"
+    let jarSizeKey = "jarSizeKey", savedAmountInJarKey = "jarSavedAmountKey", jarKey = "com.taniguchi.JarKey"
     let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
     var currentAmount : Float = 0.0, allowance : Float = 0.0, adjustedAmount : Float = 0.0
+    let session = WCSession.defaultSession()
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
+        
+        if (WCSession.isSupported()) {
+            session.delegate = self
+            session.activateSession()
+        }
         
         var pickerItems = [WKPickerItem]()
         for index in -200...200 {
@@ -62,7 +68,6 @@ class InterfaceController: WKInterfaceController {
             afterLabel.setText("After:")
             previewLabel.setText(String(format: "$%.2f", previewAmount))
         }
-
     }
     
     @IBAction func saveButtonPressed() {
@@ -71,6 +76,7 @@ class InterfaceController: WKInterfaceController {
         currentAmountPicker.setSelectedItemIndex(200)
         previewLabel.setText("")
         afterLabel.setText("")
+        adjustedAmount = 0.0
         saveData()
     }
     
@@ -79,23 +85,24 @@ class InterfaceController: WKInterfaceController {
     }
     
     func updateData () {
-        if sharedDefaults.objectForKey(jarKey) != nil {
-            jarData = sharedDefaults.objectForKey(jarKey) as! [String:String]
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.valueForKey(jarKey) != nil {
             
-            if let defaultSize = jarData[jarSizeKey] {
-                if let k = NSNumberFormatter().numberFromString(defaultSize) {
-                    allowance = Float(k)
-                }
+            jarData = defaults.objectForKey(jarKey) as! [String:String]
+            
+            let defaultSize = jarData[jarSizeKey]
+            let savedAmount = jarData[savedAmountInJarKey]
+            
+            if let k = defaultSize {
+                allowance = Float(k as String)!
             }
-            if let savedAmount = jarData[savedAmountInJarKey] {
-                if let n = NSNumberFormatter().numberFromString(savedAmount) {
-                    currentAmount = Float(n)
-                }
+            if let n = savedAmount {
+                currentAmount = Float(n as String)!
             }
+            
+            allowanceLabel.setText(String(format: "$%.2f", currentAmount))
+            previewLabel.setText(String(format: "$%.2f", currentAmount))
         }
-        
-        allowanceLabel.setText(String(format: "$%.2f", currentAmount))
-        previewLabel.setText("")
     }
 
     override func willActivate() {
@@ -120,17 +127,62 @@ class InterfaceController: WKInterfaceController {
         adjustedAmount = 0.0
         previewLabel.setText("")
         jarData[savedAmountInJarKey] = "\(currentAmount)"
-        extensionDelegate.jarData = jarData
-        extensionDelegate.currentAmount = currentAmount
-        sharedDefaults.setValue(jarData, forKey: jarKey)
-        sharedDefaults.synchronize()
+        NSUserDefaults.standardUserDefaults().setObject(jarData, forKey: jarKey)
+        sharedDefaults.setObject(jarData, forKey: jarKey)
         do {
-            try WCSession.defaultSession().updateApplicationContext(jarData)
+            try session.updateApplicationContext(jarData)
         }
         catch {
-            print("wut")
+            print("Warning - Error sending to watch : \(error)")
         }
         
-        WCSession.defaultSession().sendMessage(jarData, replyHandler: nil, errorHandler: nil)
+        session.sendMessage(jarData, replyHandler: nil, errorHandler: nil)
+        extensionDelegate.jarData = jarData
+        extensionDelegate.currentAmount = currentAmount
+        extensionDelegate.updateComplication()
+    }
+    
+    @available(watchOSApplicationExtension 2.2, *)
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        
+    }
+    
+    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+        saveMessage(applicationContext)
+        
+        updateComplication()
+    }
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        saveMessage(message)
+        
+        updateComplication()
+        
+        
+        replyHandler(["reply":"GOT THE MESSAGE xoxoxo \(message)"])
+    }
+    
+    func updateComplication () {
+        let clkServer = CLKComplicationServer.sharedInstance()
+        if clkServer.activeComplications != nil {
+            for comp in clkServer.activeComplications! {
+                clkServer.reloadTimelineForComplication(comp)
+            }
+        }
+    }
+    
+    func saveMessage (message: [String : AnyObject]) {
+        let defaultSize = message[jarSizeKey] as? String
+        let savedAmount = message[savedAmountInJarKey] as? String
+        if let k = defaultSize {
+            allowance = Float(k)!
+        }
+        if let n = savedAmount {
+            currentAmount = Float(n)!
+        }
+
+        sharedDefaults.setObject(message, forKey: jarKey)
+        updateComplication()
+        updateData()
     }
 }

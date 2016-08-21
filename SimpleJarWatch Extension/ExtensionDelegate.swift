@@ -21,57 +21,51 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
 
     func applicationDidFinishLaunching() {
         guard let data = sharedDefaults.objectForKey(jarKey) as? [String:String]  else { return }
-        if let defaultSize = data[jarSizeKey] {
-            if let k = NSNumberFormatter().numberFromString(defaultSize) {
-                allowance = Float(k)
-            }
-        }
-        
-        if let savedAmount = jarData[savedAmountInJarKey] {
-            if let n = NSNumberFormatter().numberFromString(savedAmount) {
-                currentAmount = Float(n)
-            }
-        }
-        
+        jarData = data
         updateComplication()
     }
     
     func updateComplication () {
         let clkServer = CLKComplicationServer.sharedInstance()
         if clkServer.activeComplications != nil {
-            for comp in clkServer.activeComplications {
+            for comp in clkServer.activeComplications! {
                 clkServer.reloadTimelineForComplication(comp)
             }
         }
-        else {
-            clkServer.reloadTimelineForComplication(nil)
-        }
     }
+    
+    @available(watchOSApplicationExtension 2.2, *)
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        
+    }
+    
+    
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         saveMessage(applicationContext)
         
-        updateHelper()
         updateComplication()
     }
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
         saveMessage(message)
         
-        updateHelper()
         updateComplication()
+        updateClosure()
         
         replyHandler(["reply":"GOT THE MESSAGE xoxoxo \(message)"])
     }
 
     func applicationDidBecomeActive() {
-        updateHelper()
+        if (WCSession.isSupported()) {
+            session.delegate = self
+            session.activateSession()
+        }
     }
 
     func applicationWillResignActive() {
         jarData[savedAmountInJarKey] = "\(currentAmount)"
         sharedDefaults.setObject(jarData, forKey: jarKey)
-        
         if sharedDefaults.objectForKey(jarKey) != nil {
             
             if (WCSession.isSupported()) {
@@ -82,7 +76,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                     try session.updateApplicationContext(jarData)
                 }
                 catch {
-                    print("wut")
+                    print("ERROR \(error)")
                 }
                 
                 if session.reachable {
@@ -95,24 +89,17 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     // MARK - helpers
     func saveMessage (message: [String : AnyObject]) {
-        guard let data = message as? [String:String] else { return }
+        guard let data = message as? [String:Float] else { return }
         let defaultSize = data[jarSizeKey]
         let savedAmount = data[savedAmountInJarKey]
-        if let n = NSNumberFormatter().numberFromString(savedAmount!) {
-            currentAmount = Float(n)
+        if let k = defaultSize {
+            allowance = k
         }
-        if let k = NSNumberFormatter().numberFromString(defaultSize!) {
-            allowance = Float(k)
+        if let n = savedAmount {
+            currentAmount = n
         }
-        NSUserDefaults.standardUserDefaults().setValue(data, forKey: jarKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-}
-    
-    func updateHelper () {
-        NSUserDefaults.standardUserDefaults().setValue(jarData, forKey: jarKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
-        updateClosure()
+
+        sharedDefaults.setObject(data, forKey: jarKey)
         updateComplication()
     }
 }

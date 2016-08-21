@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0800"
    version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -70,7 +70,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F6B213C71B92588800FDDD8D"
+               BlueprintIdentifier = "F64256931B9A521D001A0497"
                BuildableName = "SimpleJarUITests.xctest"
                BlueprintName = "SimpleJarUITests"
                ReferencedContainer = "container:SimpleJar.xcodeproj">
