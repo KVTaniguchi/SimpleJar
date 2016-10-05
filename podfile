@@ -1,2 +1,5 @@
 use_frameworks!
-pod 'URBNAlert', '~> 1.8'
+
+target 'SimpleJar' do 
+pod 'URBNAlert'
+end

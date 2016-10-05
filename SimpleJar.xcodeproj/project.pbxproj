@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6703310000F789F84C9261E1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BBB34D4C275BE6B7A43F90 /* Pods.framework */; };
+		3FC0E617F326DF38C8DD9B57 /* Pods_SimpleJar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC15A83F9C962ECA2527FC4 /* Pods_SimpleJar.framework */; };
 		F61021291B88F42600442741 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61021281B88F42600442741 /* AppDelegate.swift */; };
 		F610212E1B88F42600442741 /* JarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610212D1B88F42600442741 /* JarViewController.swift */; };
 		F61021331B88F42600442741 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F61021321B88F42600442741 /* Images.xcassets */; };
@@ -99,8 +99,9 @@
 
 /* Begin PBXFileReference section */
 		18BBB34D4C275BE6B7A43F90 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		77402D769F6754A16CD38223 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		B0ACB9A440DF6829AEB67356 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		783F636CB4A726AA7BCB3045 /* Pods-SimpleJar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleJar.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleJar/Pods-SimpleJar.release.xcconfig"; sourceTree = "<group>"; };
+		A852323BDA9D0658DBB86B9C /* Pods-SimpleJar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleJar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleJar/Pods-SimpleJar.debug.xcconfig"; sourceTree = "<group>"; };
+		DBC15A83F9C962ECA2527FC4 /* Pods_SimpleJar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleJar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61021231B88F42600442741 /* SimpleJar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleJar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61021271B88F42600442741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F61021281B88F42600442741 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,11 +140,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		728F25AAEA14BB56E618BC15 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F61021201B88F42600442741 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6703310000F789F84C9261E1 /* Pods.framework in Frameworks */,
+				3FC0E617F326DF38C8DD9B57 /* Pods_SimpleJar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,15 +183,16 @@
 			isa = PBXGroup;
 			children = (
 				18BBB34D4C275BE6B7A43F90 /* Pods.framework */,
+				DBC15A83F9C962ECA2527FC4 /* Pods_SimpleJar.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D70F1C1E13C2FD821693F2D1 /* Pods */ = {
+		8BD29589183995BB162DA4ED /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				77402D769F6754A16CD38223 /* Pods.debug.xcconfig */,
-				B0ACB9A440DF6829AEB67356 /* Pods.release.xcconfig */,
+				A852323BDA9D0658DBB86B9C /* Pods-SimpleJar.debug.xcconfig */,
+				783F636CB4A726AA7BCB3045 /* Pods-SimpleJar.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -197,8 +206,8 @@
 				F6C7C9D81B92510500D8DE7A /* SimpleJarWatch Extension */,
 				F64256951B9A521D001A0497 /* SimpleJarUITests */,
 				F61021241B88F42600442741 /* Products */,
-				D70F1C1E13C2FD821693F2D1 /* Pods */,
 				857C65D3044B8C08F610D1A7 /* Frameworks */,
+				8BD29589183995BB162DA4ED /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -302,13 +311,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F61021451B88F42600442741 /* Build configuration list for PBXNativeTarget "SimpleJar" */;
 			buildPhases = (
-				CE457AF87B47D6E376984D47 /* Check Pods Manifest.lock */,
+				5B2DA8AB6C7411091C7FCBD0 /* [CP] Check Pods Manifest.lock */,
 				F610211F1B88F42600442741 /* Sources */,
 				F61021201B88F42600442741 /* Frameworks */,
 				F61021211B88F42600442741 /* Resources */,
-				8F45794FE7B9DA20F289B09D /* Embed Pods Frameworks */,
-				06EF9CDA8DD6C1E29838B91B /* Copy Pods Resources */,
 				F6C7C9EC1B92510500D8DE7A /* Embed Watch Content */,
+				345160D79C6881F9CF806BD7 /* [CP] Embed Pods Frameworks */,
+				23489F3BCA14EFAC740D25F2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -362,6 +371,7 @@
 			buildPhases = (
 				F6C7C9C61B92510500D8DE7A /* Resources */,
 				F6C7C9EA1B92510500D8DE7A /* Embed App Extensions */,
+				728F25AAEA14BB56E618BC15 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -506,49 +516,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		06EF9CDA8DD6C1E29838B91B /* Copy Pods Resources */ = {
+		23489F3BCA14EFAC740D25F2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleJar/Pods-SimpleJar-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8F45794FE7B9DA20F289B09D /* Embed Pods Frameworks */ = {
+		345160D79C6881F9CF806BD7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleJar/Pods-SimpleJar-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CE457AF87B47D6E376984D47 /* Check Pods Manifest.lock */ = {
+		5B2DA8AB6C7411091C7FCBD0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -727,7 +737,7 @@
 		};
 		F61021461B88F42600442741 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77402D769F6754A16CD38223 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = A852323BDA9D0658DBB86B9C /* Pods-SimpleJar.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -743,7 +753,7 @@
 		};
 		F61021471B88F42600442741 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B0ACB9A440DF6829AEB67356 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 783F636CB4A726AA7BCB3045 /* Pods-SimpleJar.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

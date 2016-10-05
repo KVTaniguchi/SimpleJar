@@ -1,1 +1,0 @@
-../../../URBNAlert/Pod/Classes/URBNAlertConfig.h
