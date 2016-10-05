@@ -252,6 +252,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
     }
     
     func drawJarAmountViewWithHeight (height : CGFloat) {
+        guard height < UIScreen.mainScreen().bounds.height else { return }
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             NSLayoutConstraint.deactivateConstraints([self.jarHeightConstraint!])
             self.jarHeightConstraint = NSLayoutConstraint(item: self.jarAmountView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: height)
