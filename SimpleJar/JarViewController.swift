@@ -381,6 +381,7 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
         if sharedDefaults.objectForKey(jarKey) == nil {
             titleText = "Welcome!"
             messageText = "Enter your allowance below"
+            self.allowance = 100.0
         }
         else {
             titleText = "Allowance \(allowanceString)"
@@ -408,7 +409,6 @@ class JarViewController: UIViewController, UITextFieldDelegate, UIGestureRecogni
                 updateUIClosure()
             }
             else {
-                self.allowance = 100.0
                 updateUIClosure()
             }
         }))
